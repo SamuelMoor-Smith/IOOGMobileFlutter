@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/models/field.dart';
 import 'package:namer_app/models/text_field.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -11,6 +12,18 @@ class IOOGTextFieldWidget extends StatefulWidget {
 
   @override
   State<IOOGTextFieldWidget> createState() => _IOOGTextFieldWidget();
+
+  IOOGTextField getCustomField() {
+    return ioogTextField;
+  }
+  
+  Field getField() {
+    return ioogTextField.field;
+  }
+
+  void setText(String text) {
+    ioogTextField.enteredText = text;
+  }
 }
 
 class _IOOGTextFieldWidget extends State<IOOGTextFieldWidget> {

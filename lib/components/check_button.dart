@@ -3,6 +3,9 @@ import 'package:namer_app/models/multiple_choice/check_group.dart';
 import 'package:namer_app/style/borders.dart';
 import 'package:namer_app/style/text_styles.dart';
 
+import '../models/field.dart';
+import '../models/multiple_choice/choice.dart';
+
 class IOOGCheckGroup extends StatefulWidget {
 
   final IOOGMultipleChoiceCheckButton ioogMultipleChoiceCheckButton;
@@ -11,6 +14,22 @@ class IOOGCheckGroup extends StatefulWidget {
 
   @override
   State<IOOGCheckGroup> createState() => _IOOGCheckGroup();
+
+  IOOGMultipleChoiceCheckButton getCustomField() {
+    return ioogMultipleChoiceCheckButton;
+  }
+  
+  Field getField() {
+    return ioogMultipleChoiceCheckButton.field;
+  }
+
+  void setChoice(int choiceNum) {
+    for (Choice choice in ioogMultipleChoiceCheckButton.choices) {
+      if (choice.number == choiceNum) {
+        ioogMultipleChoiceCheckButton.selectedChoices.add(choice);
+      }
+    }
+  }
 }
 
 class _IOOGCheckGroup extends State<IOOGCheckGroup> {

@@ -3,37 +3,28 @@ import 'package:namer_app/components/check_button.dart';
 import 'package:namer_app/components/comments_field.dart';
 import 'package:namer_app/components/radio_button.dart';
 import 'package:namer_app/components/text_field.dart';
+import 'package:namer_app/models/multiple_choice/radio_button.dart';
+import 'package:namer_app/models/text_field.dart';
 import 'package:namer_app/pages/study_id.dart';
 import 'package:namer_app/services/REDCapAPI/redcap_api.dart';
 
 import '../components/bottom_nav_bar.dart';
+import '../models/multiple_choice/check_group.dart';
 import '../models/multiple_choice/choice.dart';
 
 String getTitle(fieldWidget) {
-  switch (fieldWidget.runtimeType) {
-    case IOOGTextFieldWidget:
-      return fieldWidget.ioogTextField.field.field_label;
-    case IOOGCommentsFieldWidget:
-      return fieldWidget.ioogTextField.field.field_label;
-    case IOOGRadioGroup:
-      return fieldWidget.ioogMultipleChoiceRadioButton.field.field_label;
-    case IOOGCheckGroup:
-      return fieldWidget.ioogMultipleChoiceCheckButton.field.field_label;
-    default:
-      return "";
-  }
+  return fieldWidget.getField().field_label ?? '';
 }
 
 String getInput(fieldWidget) {
-  switch (fieldWidget.runtimeType) {
-    case IOOGTextFieldWidget:
-      return fieldWidget.ioogTextField.enteredText?.toString() ?? '';
-    case IOOGCommentsFieldWidget:
-      return fieldWidget.ioogTextField.enteredText?.toString() ?? '';
-    case IOOGRadioGroup:
-      return fieldWidget.ioogMultipleChoiceRadioButton.selectedChoice?.name ?? ''; 
-    case IOOGCheckGroup:
-      Set<Choice> selectedChoices =  fieldWidget.ioogMultipleChoiceCheckButton.selectedChoices;
+  var customField = fieldWidget.getCustomField();
+  switch (customField.runtimeType) {
+    case IOOGTextField:
+      return customField.enteredText?.toString() ?? '';
+    case IOOGMultipleChoiceRadioButton:
+      return customField.selectedChoice?.name ?? ''; 
+    case IOOGMultipleChoiceCheckButton:
+      Set<Choice> selectedChoices = customField.selectedChoices;
       return selectedChoices.map((choice) => choice.name).join(', ');
     default:
       return "";

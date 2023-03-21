@@ -3,6 +3,8 @@ import 'package:namer_app/models/text_field.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../models/field.dart';
+
 class IOOGCommentsFieldWidget extends StatefulWidget {
 
   final IOOGTextField ioogTextField;
@@ -11,6 +13,18 @@ class IOOGCommentsFieldWidget extends StatefulWidget {
 
   @override
   State<IOOGCommentsFieldWidget> createState() => _IOOGCommentsFieldWidget();
+
+  IOOGTextField getCustomField() {
+    return ioogTextField;
+  }
+
+  Field getField() {
+    return ioogTextField.field;
+  }
+
+  void setText(String text) {
+    ioogTextField.enteredText = text;
+  }
 }
 
 class _IOOGCommentsFieldWidget extends State<IOOGCommentsFieldWidget> {

@@ -22,9 +22,10 @@ class SelectEntryPage extends StatelessWidget {
         children: entries.map((entry) => 
           TextButton(
             onPressed: () async {
-              final fields = await ApiService().getFields(entry);
+              final fieldWidgets = await ApiService().getFields(entry);
+              final filledWidgets = await ApiService().fillFields(entry, fieldWidgets!.whereType<Widget>().toList());
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => IOOGPage(title: entry.label, fields: fields!),
+                builder: (context) => IOOGPage(title: entry.label, fields: filledWidgets!),
               ));
             },  
             child: Text(entry.label)

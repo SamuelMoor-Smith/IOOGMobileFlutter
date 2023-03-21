@@ -3,6 +3,7 @@ import 'package:namer_app/models/multiple_choice/choice.dart';
 import 'package:namer_app/models/multiple_choice/radio_button.dart';
 import 'package:namer_app/style/text_styles.dart';
 
+import '../models/field.dart';
 import '../style/borders.dart';
 
 class IOOGRadioGroup extends StatefulWidget {
@@ -13,6 +14,22 @@ class IOOGRadioGroup extends StatefulWidget {
 
   @override
   State<IOOGRadioGroup> createState() => _IOOGRadioGroup();
+
+  IOOGMultipleChoiceRadioButton getCustomField() {
+    return ioogMultipleChoiceRadioButton;
+  }
+
+  Field getField() {
+    return ioogMultipleChoiceRadioButton.field;
+  }
+
+  void setChoice(int choiceNum) {
+    for (Choice choice in ioogMultipleChoiceRadioButton.choices) {
+      if (choice.number == choiceNum) {
+        ioogMultipleChoiceRadioButton.selectedChoice = choice;
+      }
+    }
+  }
 }
 
 class _IOOGRadioGroup extends State<IOOGRadioGroup> {

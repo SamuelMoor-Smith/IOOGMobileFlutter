@@ -30,6 +30,46 @@ Widget? fieldWidget(field) {
   }
 }
 
+Widget fillTextWidget(fieldWidget, rawRecord) {
+  var field_name = fieldWidget.getField().field_name;
+  if (rawRecord.containsKey(field_name)) {
+    fieldWidget.setText(rawRecord[field_name]);
+  }
+  return fieldWidget;
+}
+
+Widget fillRadioWidget(fieldWidget, rawRecord) {
+  var field_name = fieldWidget.getField().field_name;
+  if (rawRecord.containsKey(field_name)) {
+    fieldWidget.setChoice(int.parse(rawRecord[field_name]));
+  }
+  return fieldWidget;
+}
+
+Widget fillCheckWidget(fieldWidget, rawRecord) {
+  var field_name = fieldWidget.getField().field_name;
+  for (String name in rawRecord.keys) {
+    if (name.startsWith(field_name) && rawRecord[name] == "1") {
+      fieldWidget.setChoice(int.parse(name.split("___")[1]));
+    }
+  }
+  return fieldWidget;
+}
+
+Widget? fillField(fieldWidget, rawRecord) {
+  var customField = fieldWidget.getCustomField();
+  switch (customField.runtimeType) {
+    case IOOGTextField:
+      return fillTextWidget(fieldWidget, rawRecord);
+    case IOOGMultipleChoiceRadioButton:
+      return fillRadioWidget(fieldWidget, rawRecord); 
+    case IOOGMultipleChoiceCheckButton:
+      return fillCheckWidget(fieldWidget, rawRecord);
+    default:
+      return null;
+  }
+}
+
 class ApiService {
 
   Future<bool> apiOK() async {
@@ -93,5 +133,26 @@ class ApiService {
       log(e.toString());
     }
     return null;
+  }
+
+  Future<List<Widget?>?> fillFields(Instrument instrument, List<Widget> fieldWidgets) async {
+    try {
+      var url = Uri.parse(APIConstants.apiUrl!);
+      var response = await http.post(
+        url, 
+        body: APIConstants.fieldsFillBody(instrument), 
+        headers: APIConstants.headers()
+      );
+
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        List<dynamic> rawRecords = json.decode(response.body);
+        return fieldWidgets.map((fieldWidget) => fillField(fieldWidget, rawRecords[0])).toList();
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }

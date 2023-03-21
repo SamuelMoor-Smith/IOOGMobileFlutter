@@ -37,4 +37,15 @@ class APIConstants {
         "forms[0]": instrument.name
       });
     }
+
+    static Object fieldsFillBody(Instrument instrument) {
+      return Map.of({
+        "token": APIConstants.token!,
+        "content": "record",
+        "format": "json",
+        "type": "flat",
+        "forms[0]": instrument.name,
+        "records[0]": APIConstants.studyId!,
+      });
+    }
 }
