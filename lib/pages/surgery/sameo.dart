@@ -7,21 +7,21 @@
 // import '../../components/page.dart';
 
 // List<Widget> fields = [
-//   RadioGroup(field: s_stateofsurgery),
-//   IOOGTextField(field: nth_operation),
-//   RadioGroup(field: a_approach),
-//   RadioGroup(field: cohen_classification),
-//   CheckGroup(field: size_of_endoscope),
-//   CheckGroup(field: angle_of_endoscope),
-//   RadioGroup(field: length_of_endoscope),
-//   RadioGroup(field: m_mastoid),
-//   RadioGroup(field: e_eam_recon),
-//   CheckGroup(field: eam_recon_material),
-//   IOOGTextField(field: other_eam_recon_mat),
-//   RadioGroup(field: o_obliteration),
-//   CheckGroup(field: obliteration_flap),
-//   CheckGroup(field: obliteration_material),
-//   IOOGTextField(field: other_oblit_mat)
+//   IOOGRadioGroup(field: s_stateofsurgery),
+//   IOOGTextFieldWidget(field: nth_operation),
+//   IOOGRadioGroup(field: a_approach),
+//   IOOGRadioGroup(field: cohen_classification),
+//   IOOGCheckGroup(field: size_of_endoscope),
+//   IOOGCheckGroup(field: angle_of_endoscope),
+//   IOOGRadioGroup(field: length_of_endoscope),
+//   IOOGRadioGroup(field: m_mastoid),
+//   IOOGRadioGroup(field: e_eam_recon),
+//   IOOGCheckGroup(field: eam_recon_material),
+//   IOOGTextFieldWidget(field: other_eam_recon_mat),
+//   IOOGRadioGroup(field: o_obliteration),
+//   IOOGCheckGroup(field: obliteration_flap),
+//   IOOGCheckGroup(field: obliteration_material),
+//   IOOGTextFieldWidget(field: other_oblit_mat)
 // ];
 
 // IOOGPage sameoPage = IOOGPage(title: "SAMEO", fields: fields, nextPage: null, lastPage: null);

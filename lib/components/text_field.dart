@@ -3,17 +3,17 @@ import 'package:namer_app/models/text_field.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class IOOGTextField extends StatefulWidget {
+class IOOGTextFieldWidget extends StatefulWidget {
 
-  final REDCapTextField redCapTextField;
+  final IOOGTextField ioogTextField;
 
-  const IOOGTextField ({ Key? key, required this.redCapTextField }): super(key: key);
+  const IOOGTextFieldWidget ({ Key? key, required this.ioogTextField }): super(key: key);
 
   @override
-  State<IOOGTextField> createState() => _IOOGTextField();
+  State<IOOGTextFieldWidget> createState() => _IOOGTextFieldWidget();
 }
 
-class _IOOGTextField extends State<IOOGTextField> {
+class _IOOGTextFieldWidget extends State<IOOGTextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _IOOGTextField extends State<IOOGTextField> {
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(width: 1, color: iconColorPrimary),
                     ),
-                    labelText: widget.redCapTextField.field.field_label,
+                    labelText: widget.ioogTextField.field.field_label,
                     labelStyle: TextStyle(color: textSecondaryColor),
                     alignLabelWithHint: false,
                     filled: true),

@@ -1,11 +1,11 @@
 import '../field.dart';
 import 'choice.dart';
 
-class MultipleChoice {
+class IOOGMultipleChoice {
   
   Field field;
   Set<Choice> choices;
 
-  MultipleChoice(this.field, this.choices);
+  IOOGMultipleChoice(this.field, this.choices);
 
 }

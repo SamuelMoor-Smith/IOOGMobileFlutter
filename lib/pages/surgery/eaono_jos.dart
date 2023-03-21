@@ -7,8 +7,8 @@
 // import '../../components/page.dart';
 
 // List<Widget> fields = [
-//   RadioGroup(field: classification),
-//   CheckGroup(field: recidivism),
+//   IOOGRadioGroup(field: classification),
+//   IOOGCheckGroup(field: recidivism),
 // ];
 
 // IOOGPage eaono_josPage = IOOGPage(title: "EAONO/JOS", fields: fields, nextPage: null, lastPage: null);

@@ -6,11 +6,11 @@
 // import '../../components/page.dart';
 
 // List<Widget> fields = [
-//   CheckGroup(field: ossicle_eroded),
-//   CheckGroup(field: ossicle_fixed),
-//   CheckGroup(field: middle_ear_mucosa),
-//   RadioGroup(field: peri_operative),
-//   RadioGroup(field: middle_ear_effusion),
+//   IOOGCheckGroup(field: ossicle_eroded),
+//   IOOGCheckGroup(field: ossicle_fixed),
+//   IOOGCheckGroup(field: middle_ear_mucosa),
+//   IOOGRadioGroup(field: peri_operative),
+//   IOOGRadioGroup(field: middle_ear_effusion),
 // ];
 
 // IOOGPage moreOperativeFindings = IOOGPage(title: "More Operative Findings", fields: fields, nextPage: null, lastPage: null);

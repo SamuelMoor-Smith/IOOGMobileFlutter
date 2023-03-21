@@ -6,9 +6,9 @@
 // import '../../components/page.dart';
 
 // List<Widget> fields = [
-//   IOOGTextField(field: date_surgery),
-//   RadioGroup(field: side_surgery),
-//   IOOGTextField(field: nth_episode_today),
+//   IOOGTextFieldWidget(field: date_surgery),
+//   IOOGRadioGroup(field: side_surgery),
+//   IOOGTextFieldWidget(field: nth_episode_today),
 // ];
 
 // IOOGPage importantPage = IOOGPage(title: "Important Info", fields: fields, nextPage: null, lastPage: null);

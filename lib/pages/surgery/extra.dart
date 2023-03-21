@@ -6,7 +6,7 @@
 // import '../../components/page.dart';
 
 // List<Widget> fields = [
-//   RadioGroup(field: chorda_tympani),
+//   IOOGRadioGroup(field: chorda_tympani),
 // ];
 
 // IOOGPage extraPage = IOOGPage(title: "Extra Surgical Procedures", fields: fields, nextPage: null, lastPage: null);

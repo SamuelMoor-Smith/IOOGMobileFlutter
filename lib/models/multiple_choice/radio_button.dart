@@ -3,11 +3,11 @@ import 'package:namer_app/models/field.dart';
 import 'choice.dart';
 import 'multiple_choice.dart';
 
-class REDCapRadioButton extends MultipleChoice {
+class IOOGMultipleChoiceRadioButton extends IOOGMultipleChoice {
   
   Choice? selectedChoice;
 
-  REDCapRadioButton(Field field, Set<Choice> choices, this.selectedChoice) :
+  IOOGMultipleChoiceRadioButton(Field field, Set<Choice> choices, this.selectedChoice) :
                 
                   super(field, choices);
 

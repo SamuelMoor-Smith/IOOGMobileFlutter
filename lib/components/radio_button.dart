@@ -5,17 +5,17 @@ import 'package:namer_app/style/text_styles.dart';
 
 import '../style/borders.dart';
 
-class RadioGroup extends StatefulWidget {
+class IOOGRadioGroup extends StatefulWidget {
 
-  final REDCapRadioButton redCapRadioButton;
+  final IOOGMultipleChoiceRadioButton ioogMultipleChoiceRadioButton;
 
-  const RadioGroup ({ Key? key, required this.redCapRadioButton }): super(key: key);
+  const IOOGRadioGroup ({ Key? key, required this.ioogMultipleChoiceRadioButton }): super(key: key);
 
   @override
-  State<RadioGroup> createState() => _RadioGroup();
+  State<IOOGRadioGroup> createState() => _IOOGRadioGroup();
 }
 
-class _RadioGroup extends State<RadioGroup> {
+class _IOOGRadioGroup extends State<IOOGRadioGroup> {
 
   @override
   Widget build(BuildContext context) {
@@ -25,17 +25,17 @@ class _RadioGroup extends State<RadioGroup> {
       child: Column(
         children: [
           ListTile(
-            title: Text(widget.redCapRadioButton.field.field_label, style: primaryTextStyle(),),
+            title: Text(widget.ioogMultipleChoiceRadioButton.field.field_label, style: primaryTextStyle(),),
             visualDensity: VisualDensity(vertical: -4)
           )
-          ]..addAll(widget.redCapRadioButton.choices.map((choice) => 
+          ]..addAll(widget.ioogMultipleChoiceRadioButton.choices.map((choice) => 
                 RadioListTile<Choice>(
                   title: Text(choice.name, style: primaryTextStyle(),),
                   value: choice,
-                  groupValue: widget.redCapRadioButton.selectedChoice,
+                  groupValue: widget.ioogMultipleChoiceRadioButton.selectedChoice,
                   onChanged: (Choice? value) {
                     setState(() {
-                      widget.redCapRadioButton.selectChoice(value);
+                      widget.ioogMultipleChoiceRadioButton.selectChoice(value);
                     });
                   },
                   visualDensity: VisualDensity(vertical: -4)

@@ -27,7 +27,7 @@ class StudyIdPage extends StatelessWidget {
               debugPrint(APIConstants.studyId);
               final instruments = await ApiService().getInstruments();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => ImagePage(),
+                builder: (context) => SelectEntryPage(entries: instruments!),
               ));
             },  
             child: Text("Enter")

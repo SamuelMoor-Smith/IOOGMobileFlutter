@@ -7,21 +7,21 @@
 // import '../components/page.dart';
 
 // List<Widget> fields = [
-//   IOOGTextField(field: date_postop),
-//   RadioGroup(field: side_postop),
-//   RadioGroup(field: postop_otorrhoea),
-//   CheckGroup(field: postop_otoscopy),
-//   RadioGroup(field: orp_status),
-//   CheckGroup(field: postop_complication),
-//   IOOGTextField(field: other_complication),
-//   IOOGTextField(field: postopwrsright),
-//   IOOGTextField(field: postopwrsleft),
-//   IOOGTextField(field: postopmepright),
-//   IOOGTextField(field: postopmepleft),
-//   IOOGTextField(field: postopcomplianceright),
-//   IOOGTextField(field: postopcomplianceleft),
-//   IOOGTextField(field: postopvolright),
-//   IOOGTextField(field: postopvolleft),
+//   IOOGTextFieldWidget(field: date_postop),
+//   IOOGRadioGroup(field: side_postop),
+//   IOOGRadioGroup(field: postop_otorrhoea),
+//   IOOGCheckGroup(field: postop_otoscopy),
+//   IOOGRadioGroup(field: orp_status),
+//   IOOGCheckGroup(field: postop_complication),
+//   IOOGTextFieldWidget(field: other_complication),
+//   IOOGTextFieldWidget(field: postopwrsright),
+//   IOOGTextFieldWidget(field: postopwrsleft),
+//   IOOGTextFieldWidget(field: postopmepright),
+//   IOOGTextFieldWidget(field: postopmepleft),
+//   IOOGTextFieldWidget(field: postopcomplianceright),
+//   IOOGTextFieldWidget(field: postopcomplianceleft),
+//   IOOGTextFieldWidget(field: postopvolright),
+//   IOOGTextFieldWidget(field: postopvolleft),
 // ];
 
 // IOOGPage postopPage = IOOGPage(title: "Post-Op", fields: fields, nextPage: null, lastPage: null);

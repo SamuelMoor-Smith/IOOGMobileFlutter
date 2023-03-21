@@ -16,10 +16,18 @@ import '../../models/multiple_choice/radio_button.dart';
 import '../../models/text_field.dart';
 
 Widget? fieldWidget(field) {
-  if (field.field_type == 'text') { return IOOGTextField(redCapTextField: REDCapTextField(field)); }
-  if (field.field_type == 'notes') { return IOOGCommentsField(redCapTextField: REDCapTextField(field)); }
-  if (field.field_type == 'radio') { return RadioGroup(redCapRadioButton: REDCapRadioButton(field, field.createChoices(), null)); }
-  if (field.field_type == 'checkbox') { return CheckGroup(redCapCheckButton: REDCapCheckButton(field, field.createChoices(), {})); }
+  switch (field.field_type) {
+    case 'text':
+      return IOOGTextFieldWidget(ioogTextField: IOOGTextField(field));
+    case 'notes':
+      return IOOGCommentsFieldWidget(ioogTextField: IOOGTextField(field));
+    case 'radio':
+      return IOOGRadioGroup(ioogMultipleChoiceRadioButton: IOOGMultipleChoiceRadioButton(field, field.createChoices(), null));
+    case 'checkbox':
+      return IOOGCheckGroup(ioogMultipleChoiceCheckButton: IOOGMultipleChoiceCheckButton(field, field.createChoices(), {}));
+    default:
+      return null;
+  }
 }
 
 class ApiService {

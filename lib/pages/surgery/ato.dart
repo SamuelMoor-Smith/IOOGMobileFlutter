@@ -7,15 +7,15 @@
 // import '../../components/page.dart';
 
 // List<Widget> fields = [
-//   RadioGroup(field: a_access),
-//   RadioGroup(field: t_tm_repair),
-//   CheckGroup(field: tm_graft_material),
-//   IOOGTextField(field: other_tm_graft_mat),
-//   RadioGroup(field: tm_graft_position),
-//   IOOGTextField(field: other_tm_graft_pos),
-//   RadioGroup(field: o_ossiculoplasty),
-//   RadioGroup(field: orp_material),
-//   IOOGTextField(field: other_orp_mat),
+//   IOOGRadioGroup(field: a_access),
+//   IOOGRadioGroup(field: t_tm_repair),
+//   IOOGCheckGroup(field: tm_graft_material),
+//   IOOGTextFieldWidget(field: other_tm_graft_mat),
+//   IOOGRadioGroup(field: tm_graft_position),
+//   IOOGTextFieldWidget(field: other_tm_graft_pos),
+//   IOOGRadioGroup(field: o_ossiculoplasty),
+//   IOOGRadioGroup(field: orp_material),
+//   IOOGTextFieldWidget(field: other_orp_mat),
 // ];
 
 // IOOGPage atoPage = IOOGPage(title: "ATO", fields: fields, nextPage: null, lastPage: null);

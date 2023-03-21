@@ -6,7 +6,7 @@ def isRequired(field):
     return "true" if field["required_field"] == "y" else "false"
 
 def create_text(field, isRequired, form):
-    print('REDCapTextField {} = REDCapTextField("{}", "{}", {}, {});'.format(field['field_name'], field['field_label'], field['field_name'], form, isRequired))
+    print('IOOGTextField {} = IOOGTextField("{}", "{}", {}, {});'.format(field['field_name'], field['field_label'], field['field_name'], form, isRequired))
 
 def create_choices(field):
     print('Set<Choice> {}__choices = {{'.format(field['field_name']))

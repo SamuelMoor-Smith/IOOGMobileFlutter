@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:namer_app/pages/image_page.dart';
 import 'package:namer_app/pages/login/login.dart';
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ImagePage(),
+      home: LoginScreen(),
     );
   }
 }

@@ -5,7 +5,7 @@
 // import '../../components/page.dart';
 
 // List<Widget> fields = [
-//   CheckGroup(field: perforation_location),
+//   IOOGCheckGroup(field: perforation_location),
 // ];
 
 // IOOGPage perforationPage = IOOGPage(title: "Perforation", fields: fields, nextPage: null, lastPage: null);

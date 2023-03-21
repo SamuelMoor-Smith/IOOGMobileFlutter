@@ -1,10 +1,10 @@
 import 'package:namer_app/models/field.dart';
 
-class REDCapTextField {
+class IOOGTextField {
 
   Field field;
   String? enteredText;
 
-  REDCapTextField(this.field);
+  IOOGTextField(this.field);
 
 }

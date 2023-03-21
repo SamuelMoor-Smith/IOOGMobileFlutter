@@ -3,12 +3,14 @@ import 'package:namer_app/components/bottom_nav_bar.dart';
 import 'package:namer_app/pages/login/login.dart';
 import 'package:namer_app/pages/study_id.dart';
 
+import '../pages/summary.dart';
+
 class IOOGPage extends StatelessWidget {
 
   final String title;
   final List<Widget?> fields;
-  final Page? nextPage;
-  final Page? lastPage;
+  final Widget? nextPage;
+  final Widget? lastPage;
 
   const IOOGPage({Key? key, 
     required this.title, 
@@ -27,7 +29,7 @@ class IOOGPage extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         children: fields.whereType<Widget>().toList(), // Filter null from list until handling all
       ),
-      bottomNavigationBar: createBottomNavigationBar(context, StudyIdPage(), LoginScreen()),
+      bottomNavigationBar: createBottomNavigationBar(context, SummaryPage(fields: fields, nextPage: StudyIdPage(), lastPage: this), StudyIdPage()),
     );
   }
 }

@@ -5,8 +5,8 @@
 // import '../../components/page.dart';
 
 // List<Widget> fields = [
-//   RadioGroup(field: pocket_location),
-//   RadioGroup(field: pocket_mobility),
+//   IOOGRadioGroup(field: pocket_location),
+//   IOOGRadioGroup(field: pocket_mobility),
 // ];
 
 // IOOGPage retractionPocketPage = IOOGPage(title: "Retraction Pocket", fields: fields, nextPage: null, lastPage: null);
