@@ -3,7 +3,7 @@ import 'package:namer_app/models/multiple_choice/check_group.dart';
 import 'package:namer_app/style/borders.dart';
 import 'package:namer_app/style/text_styles.dart';
 
-import '../models/field.dart';
+import '../models/field/field.dart';
 import '../models/multiple_choice/choice.dart';
 
 class IOOGCheckGroup extends StatefulWidget {

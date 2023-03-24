@@ -1,4 +1,4 @@
-import 'package:namer_app/models/field.dart';
+import 'package:namer_app/models/field/field.dart';
 
 class IOOGTextField {
 

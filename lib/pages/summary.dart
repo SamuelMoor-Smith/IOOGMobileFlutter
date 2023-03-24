@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/components/check_button.dart';
-import 'package:namer_app/components/comments_field.dart';
-import 'package:namer_app/components/radio_button.dart';
-import 'package:namer_app/components/text_field.dart';
-import 'package:namer_app/models/multiple_choice/radio_button.dart';
-import 'package:namer_app/models/text_field.dart';
+import 'package:namer_app/models/app_field/multiple_choice/radio_button.dart';
+import 'package:namer_app/models/app_field/text_field.dart';
 import 'package:namer_app/pages/study_id.dart';
-import 'package:namer_app/services/REDCapAPI/redcap_api.dart';
 
 import '../components/bottom_nav_bar.dart';
-import '../models/multiple_choice/check_group.dart';
-import '../models/multiple_choice/choice.dart';
+import '../models/app_field/multiple_choice/check_group.dart';
+import '../models/app_field/multiple_choice/choice.dart';
 
 String getTitle(fieldWidget) {
   return fieldWidget.getField().field_label ?? '';

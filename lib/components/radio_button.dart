@@ -3,7 +3,7 @@ import 'package:namer_app/models/multiple_choice/choice.dart';
 import 'package:namer_app/models/multiple_choice/radio_button.dart';
 import 'package:namer_app/style/text_styles.dart';
 
-import '../models/field.dart';
+import '../models/field/field.dart';
 import '../style/borders.dart';
 
 class IOOGRadioGroup extends StatefulWidget {

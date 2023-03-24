@@ -1,4 +1,4 @@
-import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/models/app_field/instrument.dart';
 
 class APIConstants {
 
@@ -10,42 +10,6 @@ class APIConstants {
       return Map.of({
         "Content-Type": "application/x-www-form-urlencoded",
         "charset": "UTF-8"
-      });
-    }
-
-    static Map<String, String> okBody() {
-      return Map.of({
-        "token": APIConstants.token!,
-        "content": "version",
-        "format": "json",
-      });
-    }
-
-    static Map<String, String> instrumentsBody() {
-      return Map.of({
-        "token": APIConstants.token!,
-        "content": "instrument",
-        "format": "json",
-      });
-    }
-
-    static Object fieldsBody(Instrument instrument) {
-      return Map.of({
-        "token": APIConstants.token!,
-        "content": "metadata",
-        "format": "json",
-        "forms[0]": instrument.name
-      });
-    }
-
-    static Object fieldsFillBody(Instrument instrument) {
-      return Map.of({
-        "token": APIConstants.token!,
-        "content": "record",
-        "format": "json",
-        "type": "flat",
-        "forms[0]": instrument.name,
-        "records[0]": APIConstants.studyId!,
       });
     }
 }

@@ -1,4 +1,4 @@
-import '../field.dart';
+import '../field/field.dart';
 import 'choice.dart';
 import 'multiple_choice.dart';
 

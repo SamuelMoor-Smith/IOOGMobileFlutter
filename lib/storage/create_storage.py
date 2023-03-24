@@ -28,8 +28,8 @@ def create_checkbox(field, isRequired, form):
 
 def create_storage(form, title):
 
-    print("import 'package:namer_app/models/instrument.dart';")
-    print("import 'package:namer_app/models/text_field.dart';")
+    print("import 'package:namer_app/models/app_field/instrument.dart';")
+    print("import 'package:namer_app/models/text_field/field.dart';")
     print("import 'package:namer_app/models/multiple_choice/choice.dart';")
     print("import 'package:namer_app/models/multiple_choice/radio_button.dart';")
     print("import 'package:namer_app/models/multiple_choice/check_group.dart';")

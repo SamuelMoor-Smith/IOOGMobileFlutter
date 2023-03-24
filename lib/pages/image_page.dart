@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/components/page.dart';
-import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/pages/ioog_page.dart';
+import 'package:namer_app/models/app_field/instrument.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
 import 'package:namer_app/services/REDCapAPI/redcap_api.dart';
 

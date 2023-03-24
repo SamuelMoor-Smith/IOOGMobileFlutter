@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:namer_app/services/REDCapAPI/redcap_api.dart';
+import 'package:namer_app/services/REDCapAPI/ok.dart';
 import 'package:namer_app/services/login.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
-
 import '../study_id.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -26,7 +25,7 @@ class LoginScreen extends StatelessWidget {
       APIConstants.token = user.token;
       debugPrint('apiUrl: ${APIConstants.apiUrl}, token: ${APIConstants.token}');
     }
-    await ApiService().getInstruments();
+    await apiOK();
     return success == true ? null : "Something went wrong";
   }
 

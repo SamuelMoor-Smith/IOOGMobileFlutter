@@ -3,7 +3,7 @@ import 'package:namer_app/components/bottom_nav_bar.dart';
 import 'package:namer_app/pages/login/login.dart';
 import 'package:namer_app/pages/study_id.dart';
 
-import '../pages/summary.dart';
+import 'summary.dart';
 
 class IOOGPage extends StatelessWidget {
 

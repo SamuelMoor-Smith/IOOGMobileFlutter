@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/models/field.dart';
-import 'package:namer_app/models/text_field.dart';
+import 'package:namer_app/models/field/field.dart';
+import 'package:namer_app/models/app_field/text_field.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 

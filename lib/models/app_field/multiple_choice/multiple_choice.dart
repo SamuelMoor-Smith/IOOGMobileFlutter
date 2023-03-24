@@ -1,4 +1,6 @@
-import '../field.dart';
+import 'package:namer_app/models/branching_logic/branching_logic.dart';
+
+import '../../field/field.dart';
 import 'choice.dart';
 
 class IOOGMultipleChoice {

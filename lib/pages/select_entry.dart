@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/components/page.dart';
-import 'package:namer_app/models/instrument.dart';
-import 'package:namer_app/services/REDCapAPI/redcap_api.dart';
+import 'package:namer_app/pages/ioog_page.dart';
+import 'package:namer_app/models/app_field/instrument.dart';
+
+import '../services/REDCapAPI/services/fields_service.dart';
 
 class SelectEntryPage extends StatelessWidget {
 
@@ -22,8 +23,8 @@ class SelectEntryPage extends StatelessWidget {
         children: entries.map((entry) => 
           TextButton(
             onPressed: () async {
-              final fieldWidgets = await ApiService().getFields(entry);
-              final filledWidgets = await ApiService().fillFields(entry, fieldWidgets!.whereType<Widget>().toList());
+              final fieldWidgets = await getFields(entry);
+              final filledWidgets = await fillFields(entry, fieldWidgets!.whereType<Widget>().toList());
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (context) => IOOGPage(title: entry.label, fields: filledWidgets!),
               ));
