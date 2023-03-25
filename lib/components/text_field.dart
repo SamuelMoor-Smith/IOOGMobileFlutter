@@ -7,7 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 class IOOGTextFieldWidget extends StatefulWidget {
 
   final IOOGTextField ioogTextField;
-
+  
   const IOOGTextFieldWidget ({ Key? key, required this.ioogTextField }): super(key: key);
 
   @override
@@ -23,6 +23,14 @@ class IOOGTextFieldWidget extends StatefulWidget {
 
   void setText(String text) {
     ioogTextField.enteredText = text;
+  }
+
+  String labelText() {
+    if (getField().required_field == 'y') {
+      return '${getField().field_label}*:';
+    } else {
+      return '${getField().field_label}:';
+    }
   }
 }
 
@@ -43,7 +51,7 @@ class _IOOGTextFieldWidget extends State<IOOGTextFieldWidget> {
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(width: 1, color: iconColorPrimary),
                     ),
-                    labelText: widget.ioogTextField.field.field_label,
+                    labelText: widget.labelText(),
                     labelStyle: TextStyle(color: textSecondaryColor),
                     alignLabelWithHint: false,
                     filled: true),

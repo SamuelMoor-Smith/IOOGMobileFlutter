@@ -15,7 +15,7 @@ Widget _fillTextWidget(fieldWidget, rawRecord) {
 Widget _fillRadioWidget(fieldWidget, rawRecord) {
   var field_name = fieldWidget.getField().field_name;
   if (rawRecord.containsKey(field_name)) {
-    fieldWidget.setChoice(int.parse(rawRecord[field_name]));
+    fieldWidget.setChoice(rawRecord[field_name]);
   }
   return fieldWidget;
 }
@@ -24,7 +24,7 @@ Widget _fillCheckWidget(fieldWidget, rawRecord) {
   var field_name = fieldWidget.getField().field_name;
   for (String name in rawRecord.keys) {
     if (name.startsWith(field_name) && rawRecord[name] == "1") {
-      fieldWidget.setChoice(int.parse(name.split("___")[1]));
+      fieldWidget.setChoice(name.split("___")[1]);
     }
   }
   return fieldWidget;

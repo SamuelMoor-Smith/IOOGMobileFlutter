@@ -1,44 +1,36 @@
-import '../field/field.dart';
-import 'branching_logic.dart';
+import 'package:petitparser/petitparser.dart';
+
+import 'expressions.dart';
 
 class BranchingLogicParser {
-  final List<Field> fields;
+  final Parser parser;
 
-  BranchingLogicParser(this.fields);
+  BranchingLogicParser() : parser = _buildParser();
 
-  List<BranchingLogic> parse(String branchingLogicStr) {
-    final regex = RegExp(
-      '\\[([^\\]]+)\\] *([=<>]+) *(?:\\\'|\\"|)([\\w]+)(?:\\\'|\\"|)',
-    );
-    final matches = regex.allMatches(branchingLogicStr);
-    final branchingLogics = <BranchingLogic>[];
+  static Parser _buildParser() {
+    final builder = ExpressionBuilder();
 
-    for (final match in matches) {
-      final fieldName = match.group(1);
-      final comparison = match.group(2);
-      final value = match.group(3);
+    // Define field names and values
+    final fieldName = (char('[') & letter().plus() & char(']')).flatten().trim();
+    final value = (char('"') & any().starLazy(char('"')) & char('"')).flatten().trim();
 
-      try {
-        final field = _findField(fieldName);
-        branchingLogics.add(BranchingLogic(field, comparison!, value!));
-      } catch (e) {
-        print('Error: $e');
-      }
-    }
+    // Define field name and value comparison
+    final comparison = (fieldName & (string('=') | string('>') | string('<') | string('>=') | string('<=') | string('<>')) & value).trim();
 
-    return branchingLogics;
+    // Define basic expressions
+    builder.group()
+      ..primitive(comparison)
+      ..wrapper(char('(').trim(), char(')').trim(), (l, a, r) => a);
+
+    // Define AND and OR expressions
+    builder.group()
+      ..left(string('and').trim(), (a, op, b) => AndExpression(a, b))
+      ..left(string('or').trim(), (a, op, b) => OrExpression(a, b));
+
+    return builder.build().end();
   }
 
-  Field _findField(String? fieldName) {
-    if (fieldName == null) {
-      throw ArgumentError('Invalid field name');
-    }
-
-    final field = fields.firstWhere(
-      (f) => f.field_name == fieldName,
-      orElse: () => throw ArgumentError('Field not found: $fieldName'),
-    );
-
-    return field;
+  Expression parse(String input) {
+    return parser.parse(input).value;
   }
 }

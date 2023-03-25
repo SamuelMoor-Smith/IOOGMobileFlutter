@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/pages/ioog_page.dart';
 import 'package:namer_app/models/app_field/instrument.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
-import 'package:namer_app/services/REDCapAPI/redcap_api.dart';
+import 'package:namer_app/services/REDCapAPI/services/import_service.dart';
 
 import 'select_entry.dart';
 

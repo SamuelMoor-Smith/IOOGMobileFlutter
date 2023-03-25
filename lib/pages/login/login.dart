@@ -39,6 +39,11 @@ class LoginScreen extends StatelessWidget {
     );
 
     UserSecureStorage.addUser(user);
+
+    APIConstants.apiUrl = user.apiUrl;
+    APIConstants.token = user.token;
+    debugPrint('apiUrl: ${APIConstants.apiUrl}, token: ${APIConstants.token}');
+
     return null;
   }
 

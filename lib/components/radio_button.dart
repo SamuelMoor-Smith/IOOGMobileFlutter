@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/models/multiple_choice/choice.dart';
-import 'package:namer_app/models/multiple_choice/radio_button.dart';
+import 'package:namer_app/models/app_field/multiple_choice/choice.dart';
+import 'package:namer_app/models/app_field/multiple_choice/radio_button.dart';
 import 'package:namer_app/style/text_styles.dart';
 
 import '../models/field/field.dart';
@@ -23,7 +23,7 @@ class IOOGRadioGroup extends StatefulWidget {
     return ioogMultipleChoiceRadioButton.field;
   }
 
-  void setChoice(int choiceNum) {
+  void setChoice(String choiceNum) {
     for (Choice choice in ioogMultipleChoiceRadioButton.choices) {
       if (choice.number == choiceNum) {
         ioogMultipleChoiceRadioButton.selectedChoice = choice;
