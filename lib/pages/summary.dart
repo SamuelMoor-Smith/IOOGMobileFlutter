@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/models/app_field/multiple_choice/radio_button.dart';
-import 'package:namer_app/models/app_field/text_field.dart';
+import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choice.dart';
+import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/pages/study_id.dart';
 
 import '../components/bottom_nav_bar.dart';
-import '../models/app_field/multiple_choice/check_group.dart';
-import '../models/app_field/multiple_choice/choice.dart';
+import '../models/choice.dart';
 
 String getTitle(fieldWidget) {
   return fieldWidget.getField().field_label ?? '';
 }
 
 String getInput(fieldWidget) {
-  var customField = fieldWidget.getCustomField();
-  switch (customField.runtimeType) {
-    case IOOGTextField:
-      return customField.enteredText?.toString() ?? '';
-    case IOOGMultipleChoiceRadioButton:
-      return customField.selectedChoice?.name ?? ''; 
-    case IOOGMultipleChoiceCheckButton:
-      Set<Choice> selectedChoices = customField.selectedChoices;
-      return selectedChoices.map((choice) => choice.name).join(', ');
+  switch (fieldWidget.runtimeType) {
+    case IOOGTextWidget:
+      return fieldWidget.getEnteredText();
+    case IOOGMultipleChoice:
+      return fieldWidget.getSelectedChoices().map((choice) => choice.name).join(', ');
     default:
       return "";
   }

@@ -3,7 +3,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:namer_app/models/branching_logic/branching_logic.dart';
 
-import '../app_field/multiple_choice/choice.dart';
+import '../choice.dart';
 
 /// This allows the `User` class to access private members in
 /// the generated file. The value for this is *.g.dart, where

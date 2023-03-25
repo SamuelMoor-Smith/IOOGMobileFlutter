@@ -617,7 +617,7 @@ packages:
     source: hosted
     version: "2.1.4"
   petitparser:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: petitparser
       sha256: "49392a45ced973e8d94a85fdb21293fbb40ba805fc49f2965101ae748a3683b4"

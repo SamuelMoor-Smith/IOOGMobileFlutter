@@ -1,40 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/models/field/field.dart';
-import 'package:namer_app/models/app_field/text_field.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class IOOGTextFieldWidget extends StatefulWidget {
+class IOOGTextField extends IOOGTextWidget {
 
-  final IOOGTextField ioogTextField;
-  
-  const IOOGTextFieldWidget ({ Key? key, required this.ioogTextField }): super(key: key);
+
+  IOOGTextField ({ Key? key, required Field field }): super(key: key, field: field);
 
   @override
-  State<IOOGTextFieldWidget> createState() => _IOOGTextFieldWidget();
-
-  IOOGTextField getCustomField() {
-    return ioogTextField;
-  }
-  
-  Field getField() {
-    return ioogTextField.field;
-  }
-
-  void setText(String text) {
-    ioogTextField.enteredText = text;
-  }
-
-  String labelText() {
-    if (getField().required_field == 'y') {
-      return '${getField().field_label}*:';
-    } else {
-      return '${getField().field_label}:';
-    }
-  }
+  State<IOOGTextField> createState() => _IOOGTextField();
 }
 
-class _IOOGTextFieldWidget extends State<IOOGTextFieldWidget> {
+class _IOOGTextField extends State<IOOGTextField> {
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +30,7 @@ class _IOOGTextFieldWidget extends State<IOOGTextFieldWidget> {
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(width: 1, color: iconColorPrimary),
                     ),
-                    labelText: widget.labelText(),
+                    labelText: widget.getLabelText(),
                     labelStyle: TextStyle(color: textSecondaryColor),
                     alignLabelWithHint: false,
                     filled: true),

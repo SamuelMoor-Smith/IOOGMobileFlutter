@@ -1,33 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/models/app_field/text_field.dart';
+import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../models/field/field.dart';
+import '../../../models/field/field.dart';
 
-class IOOGCommentsFieldWidget extends StatefulWidget {
+class IOOGCommentsField extends IOOGTextWidget {
 
-  final IOOGTextField ioogTextField;
-
-  const IOOGCommentsFieldWidget ({ Key? key, required this.ioogTextField }): super(key: key);
+  IOOGCommentsField ({ Key? key, required Field field }): super(key: key, field: field);
 
   @override
-  State<IOOGCommentsFieldWidget> createState() => _IOOGCommentsFieldWidget();
-
-  IOOGTextField getCustomField() {
-    return ioogTextField;
-  }
-
-  Field getField() {
-    return ioogTextField.field;
-  }
-
-  void setText(String text) {
-    ioogTextField.enteredText = text;
-  }
+  State<IOOGCommentsField> createState() => _IOOGCommentsField();
 }
 
-class _IOOGCommentsFieldWidget extends State<IOOGCommentsFieldWidget> {
+class _IOOGCommentsField extends State<IOOGCommentsField> {
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +30,7 @@ class _IOOGCommentsFieldWidget extends State<IOOGCommentsFieldWidget> {
                     borderRadius: BorderRadius.circular(25.0),
                     borderSide: BorderSide(width: 1, color: iconColorPrimary),
                   ),
-                  labelText: widget.ioogTextField.field.field_label,
+                  labelText: widget.getLabelText(),
                   hintText: "write....",
                   hintStyle: TextStyle(color: textSecondaryColor),
                   labelStyle: TextStyle(color: textSecondaryColor),

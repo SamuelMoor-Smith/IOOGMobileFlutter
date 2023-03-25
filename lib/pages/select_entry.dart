@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/pages/ioog_page.dart';
-import 'package:namer_app/models/app_field/instrument.dart';
+import 'package:namer_app/models/instrument.dart';
 
 import '../services/REDCapAPI/services/fields_service.dart';
 
@@ -51,12 +51,12 @@ class SelectEntryPage extends StatelessWidget {
     );
   }
   
-  createFieldValues(List<Widget?>? filledWidgets) {
-    Map<String, String> fieldValues = {};
+  // createFieldValues(List<Widget?>? filledWidgets) {
+  //   Map<String, String> fieldValues = {};
 
-    for (final widget in filledWidgets!.whereType<Widget>().toList()) {
-      var fieldWidget;
-      fieldValues[fieldWidget.getField().field_label] = fieldWidget.fieldValue;
-    }
-  }
+  //   for (final widget in filledWidgets!.whereType<Widget>().toList()) {
+  //     var fieldWidget;
+  //     fieldValues[fieldWidget.getField().field_label] = fieldWidget.fieldValue;
+  //   }
+  // }
 }

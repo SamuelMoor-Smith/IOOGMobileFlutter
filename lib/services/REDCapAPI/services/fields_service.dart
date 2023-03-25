@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../../models/app_field/instrument.dart';
+import '../../../models/instrument.dart';
 import '../../../models/field/field.dart';
 import '../../utils/create_widgets.dart';
 import '../../utils/fill_fields.dart';

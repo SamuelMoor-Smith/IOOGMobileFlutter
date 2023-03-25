@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:namer_app/pages/image_page.dart';
 import 'package:namer_app/pages/login/login.dart';
 
 void main() => runApp(const MyApp());

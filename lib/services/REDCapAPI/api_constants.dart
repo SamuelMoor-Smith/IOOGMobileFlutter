@@ -1,4 +1,4 @@
-import 'package:namer_app/models/app_field/instrument.dart';
+import 'package:namer_app/models/instrument.dart';
 
 class APIConstants {
 
