@@ -7,26 +7,49 @@ import '../../../models/field/field.dart';
 import '../../../style/borders.dart';
 
 class IOOGRadioGroup extends IOOGMultipleChoice {
+  final Field field;
+  final Set<Choice> choices;
 
-  IOOGRadioGroup ({ Key? key, required Field field, required Set<Choice> choices }): super(key: key, field: field, choices: choices);
+  IOOGRadioGroup({
+    Key? key,
+    required this.field,
+    required this.choices,
+  }) : super(
+          key: key,
+          field: field,
+          choices: choices,
+          builder: (FormFieldState<String> state) {
+            return _IOOGRadioGroupBody(
+              state: state as _IOOGRadioGroupState,
+              field: field,
+              choices: choices,
+            );
+          },
+        );
 
   @override
-  State<IOOGRadioGroup> createState() => _IOOGRadioGroup();
+  _IOOGRadioGroupState createState() => _IOOGRadioGroupState();
+}
 
+class _IOOGRadioGroupState extends FormFieldState<String> {
+  Choice? _selectedChoice;
 
-  @override
-  selectChoice(Choice choice) {
-    selectedChoices.removeAll(choices); // Only 1 choice can be selected
-    selectedChoices.add(choice);
-  }
-
-  @override
-  unselectChoice(Choice choice) {
-    selectedChoices.remove(choice);
+  void updateSelectedChoice(Choice? choice) {
+    _selectedChoice = choice;
+    didChange(_selectedChoice?.value);
   }
 }
 
-class _IOOGRadioGroup extends State<IOOGRadioGroup> {
+class _IOOGRadioGroupBody extends StatelessWidget {
+  final _IOOGRadioGroupState state;
+  final Field field;
+  final Set<Choice> choices;
+
+  _IOOGRadioGroupBody({
+    required this.state,
+    required this.field,
+    required this.choices,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,20 +59,28 @@ class _IOOGRadioGroup extends State<IOOGRadioGroup> {
       child: Column(
         children: [
           ListTile(
-            title: Text(widget.getLabelText(), style: primaryTextStyle(),),
-            visualDensity: VisualDensity(vertical: -4)
-          ), ...widget.getChoices().map((choice) => 
-                RadioListTile<Choice>(
-                  title: Text(choice.name, style: primaryTextStyle(),),
-                  value: choice,
-                  groupValue: widget.getSelectedChoices().first, // Only ever 1 choice selected
-                  onChanged: (Choice? value) {
-                    setState(() {
-                      widget.selectChoice(value!);
-                    });
-                  },
-                  visualDensity: VisualDensity(vertical: -4)
-                )).toList()
-          ]));
+            title: Text(
+              field.getLabelText(),
+              style: primaryTextStyle(),
+            ),
+            visualDensity: VisualDensity(vertical: -4),
+          ),
+          ...choices.map(
+            (choice) => RadioListTile<Choice>(
+              title: Text(
+                choice.name,
+                style: primaryTextStyle(),
+              ),
+              value: choice,
+              groupValue: state._selectedChoice,
+              onChanged: (Choice? value) {
+                state.updateSelectedChoice(value);
+              },
+              visualDensity: VisualDensity(vertical: -4),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

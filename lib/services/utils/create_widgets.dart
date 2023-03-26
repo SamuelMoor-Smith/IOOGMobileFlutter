@@ -6,6 +6,7 @@ import '../../components/field_widgets/multiple_choice/radio_button.dart';
 import '../../components/field_widgets/text_widgets/text_field.dart';
 
 Widget? fieldWidget(field) {
+  addToForm(field)
   switch (field.field_type) {
     case 'text':
       return IOOGTextField(field: field);
@@ -18,4 +19,24 @@ Widget? fieldWidget(field) {
     default:
       return null;
   }
+}
+
+void addToForm(field, fieldValues) {
+  final fieldKey = field.field_name as GlobalKey<FormFieldState>;
+  fieldValues[fieldKey] = "";
+}
+
+Map<String, String> getFieldValuesFromWidgets() {
+  final fieldValues = <String, String>{};
+
+  formKey.currentState!.save();
+
+  
+
+  for (final fieldWidget in fieldWidgets) {
+    final fieldKey = fieldWidget.key as GlobalKey<FormFieldState>;
+    fieldValues[fieldKey.currentState!.widget.fieldName] = fieldKey.currentState!.value;
+  }
+
+  return fieldValues;
 }

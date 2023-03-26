@@ -32,7 +32,7 @@ class SelectEntryPage extends StatelessWidget {
                   final fieldWidgets = await getFields(entry);
                   final filledWidgets =
                       await fillFields(entry, fieldWidgets!.whereType<Widget>().toList());
-                  var fieldValues = createFieldValues(filledWidgets);
+                  // var fieldValues = createFieldValues(filledWidgets);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => IOOGPage(title: entry.label, fields: filledWidgets!),
                   ));
@@ -50,13 +50,4 @@ class SelectEntryPage extends StatelessWidget {
       ),
     );
   }
-  
-  // createFieldValues(List<Widget?>? filledWidgets) {
-  //   Map<String, String> fieldValues = {};
-
-  //   for (final widget in filledWidgets!.whereType<Widget>().toList()) {
-  //     var fieldWidget;
-  //     fieldValues[fieldWidget.getField().field_label] = fieldWidget.fieldValue;
-  //   }
-  // }
 }

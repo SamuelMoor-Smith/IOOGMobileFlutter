@@ -7,7 +7,15 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
 
   String enteredText = "";
 
-  IOOGTextWidget ({ Key? key, required Field field }): super(key: key, field: field);
+  IOOGTextWidget ({ 
+    Key? key,
+    required Field field,
+    required Widget Function(FormFieldState<String>) builder,
+  }) : super(
+          key: key,
+          field: field,
+          builder: builder,
+        );
 
   @override
   bool isFilled() {

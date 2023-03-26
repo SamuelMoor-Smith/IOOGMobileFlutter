@@ -1,38 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/field/field.dart';
 
-abstract class IOOGFieldWidget extends StatefulWidget {
+abstract class IOOGFieldWidgetState<String> extends FormFieldState<String> {
+}
 
+abstract class IOOGFieldWidget extends FormField<String> {
   final Field field;
 
-  IOOGFieldWidget ({ Key? key, required this.field }): super(key: key);
+  IOOGFieldWidget({
+    Key? key,
+    required this.field,
+    required Widget Function(FormFieldState<String>) builder,
+  }) : super(
+          key: key,
+          builder: (state) => builder(state),
+        );
 
   Field getField() {
     return field;
   }
 
   String getFieldLabel() {
-    return field.field_label;
+    return field.getFieldLabel();
   }
 
   String getFieldName() {
-    return field.field_name;
+    return field.getFieldName();
   }
 
   String getFieldType() {
-    return field.field_type;
+    return field.getFieldType();
   }
 
   bool isRequired() {
-    return field.required_field == 'y';
+    return field.isRequired();
   }
 
   String getLabelText() {
-    if (isRequired()) {
-      return '${getFieldLabel()}*:';
-    } else {
-      return '${getFieldLabel()}:';
-    }
+    return field.getLabelText();
   }
 
   bool isFilled();
