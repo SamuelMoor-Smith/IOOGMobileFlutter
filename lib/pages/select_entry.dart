@@ -33,16 +33,17 @@ class SelectEntryPage extends StatelessWidget {
                   final filledWidgets =
                       await fillFields(entry, fieldWidgets!.whereType<Widget>().toList());
                   // var fieldValues = createFieldValues(filledWidgets);
+                  // debugPrint(filledWidgets as String?);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => IOOGPage(title: entry.label, fields: filledWidgets!),
                   ));
                 },
-                child: Text(entry.label),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.deepPurple, // Change the button color
                   textStyle: TextStyle(fontSize: 18),
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 ),
+                child: Text(entry.label),
               ),
             );
           },

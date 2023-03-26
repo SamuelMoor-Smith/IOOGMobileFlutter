@@ -1,24 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/main.dart';
 import 'package:namer_app/models/field/field.dart';
 
 import '../field_widget.dart';
 
 abstract class IOOGTextWidget extends IOOGFieldWidget {
 
-  String enteredText = "";
+  final textController = TextEditingController();
 
   IOOGTextWidget ({ Key? key, required Field field }): super(key: key, field: field);
 
   @override
   bool isFilled() {
-    return enteredText.isNotEmpty;
+    return textController.text.isNotEmpty;
   }
 
   setEnteredText(String text) {
-    enteredText = text;
+    textController.text = text;
+    updateForm();
   }
 
   String getEnteredText() {
-    return enteredText;
+    return textController.text;
+  }
+
+  @override
+  updateForm() {
+    formKey.currentState!.fields[getFieldName()]?.didChange(getEnteredText());
   }
 }

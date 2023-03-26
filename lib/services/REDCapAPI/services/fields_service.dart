@@ -64,9 +64,14 @@ Future<List<Widget?>?> getFields(Instrument instrument) async {
       debugPrint('Response status: ${response.statusCode}');
       debugPrint('Response body: ${response.body}');
 
+
       if (response.statusCode == 200) {
         List<dynamic> rawRecords = json.decode(response.body);
-        return fieldWidgets.map((fieldWidget) => fillField(fieldWidget, rawRecords[0])).toList();
+        if (rawRecords.isNotEmpty) {
+          return fieldWidgets.map((fieldWidget) => fillField(fieldWidget, rawRecords[0])).toList();
+        } else {
+          return fieldWidgets;
+        }
       }
     } catch (e) {
       log(e.toString());

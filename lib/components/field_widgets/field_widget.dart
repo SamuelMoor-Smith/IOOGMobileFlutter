@@ -12,28 +12,25 @@ abstract class IOOGFieldWidget extends StatefulWidget {
   }
 
   String getFieldLabel() {
-    return field.field_label;
+    return field.getFieldLabel();
   }
 
   String getFieldName() {
-    return field.field_name;
+    return field.getFieldName();
   }
 
   String getFieldType() {
-    return field.field_type;
+    return field.getFieldType();
   }
 
   bool isRequired() {
-    return field.required_field == 'y';
+    return field.isRequired();
   }
 
   String getLabelText() {
-    if (isRequired()) {
-      return '${getFieldLabel()}*:';
-    } else {
-      return '${getFieldLabel()}:';
-    }
+    return field.getLabelText();
   }
 
   bool isFilled();
+  updateForm();
 }

@@ -30,11 +30,23 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
   selectChoice(Choice choice) {
     selectedChoices.removeAll(choices); // Only 1 choice can be selected
     selectedChoices.add(choice);
+    updateForm();
   }
 
   @override
   unselectChoice(Choice choice) {
     selectedChoices.remove(choice);
+    updateForm();
+  }
+
+  @override 
+  updateForm() {
+    var field = formKey.currentState!.fields[getFieldName()];
+    if (selectedChoices.isNotEmpty) {
+      field?.didChange(selectedChoices.first.number);
+    } else {
+      field?.didChange(null);
+    }
   }
 }
 
@@ -58,10 +70,8 @@ class _IOOGRadioGroup extends State<IOOGRadioGroup> {
                       RadioListTile<Choice>(
                         title: Text(choice.name, style: primaryTextStyle(),),
                         value: choice,
-                        groupValue: widget.getSelectedChoices().first, // Only ever 1 choice selected
+                        groupValue: widget.getSelectedChoices().isEmpty ? null : widget.getSelectedChoices().first, // Only ever 1 choice selected
                         onChanged: (Choice? value) {
-                          state.didChange(value);
-                          log(formKey.currentState!.fields as String);
                           setState(() {
                             widget.selectChoice(value!);
                           });

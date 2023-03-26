@@ -87,4 +87,28 @@ class Field {
   Set<Choice> createChoices() {
     return Set<Choice>.from(select_choices_or_calculations.split(" | ").map((choiceString) => Choice.fromString(choiceString)));
   }
+
+  String getFieldLabel() {
+    return field_label;
+  }
+
+  String getFieldName() {
+    return field_name;
+  }
+
+  String getFieldType() {
+    return field_type;
+  }
+
+  bool isRequired() {
+    return required_field == 'y';
+  }
+
+  String getLabelText() {
+    if (isRequired()) {
+      return '${getFieldLabel()}*:';
+    } else {
+      return '${getFieldLabel()}:';
+    }
+  }
 }
