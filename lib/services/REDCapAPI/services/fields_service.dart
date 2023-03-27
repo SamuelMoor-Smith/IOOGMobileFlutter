@@ -38,9 +38,6 @@ Future<List<Widget?>?> getFields(Instrument instrument) async {
         headers: APIConstants.headers()
       );
 
-      debugPrint('Response status: ${response.statusCode}');
-      debugPrint('Response body: ${response.body}');
-
       if (response.statusCode == 200) {
         List<dynamic> rawFields = json.decode(response.body);
         List<Field> fields = rawFields.map((raw) => Field.fromJson(raw)).toList();
@@ -60,10 +57,6 @@ Future<List<Widget?>?> getFields(Instrument instrument) async {
         body: fieldsFillBody(instrument), 
         headers: APIConstants.headers()
       );
-
-      debugPrint('Response status: ${response.statusCode}');
-      debugPrint('Response body: ${response.body}');
-
 
       if (response.statusCode == 200) {
         List<dynamic> rawRecords = json.decode(response.body);

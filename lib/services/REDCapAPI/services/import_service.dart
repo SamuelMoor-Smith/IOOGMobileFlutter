@@ -30,9 +30,6 @@ Future<bool> import(Instrument instrument, List<Widget> fieldWidgets) async {
       headers: APIConstants.headers()
     );
 
-    debugPrint('Response status: ${response.statusCode}');
-    debugPrint('Response body: ${response.body}');
-
     return (response.statusCode == 200);
   } catch (e) {
     log(e.toString());

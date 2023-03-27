@@ -1,8 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:namer_app/models/branching_logic/branching_logic.dart';
+import 'package:namer_app/main.dart';
 
+import '../branching_logic/branching_logic_parser.dart';
 import '../choice.dart';
 
 /// This allows the `User` class to access private members in
@@ -87,6 +88,10 @@ class Field {
   Set<Choice> createChoices() {
     return Set<Choice>.from(select_choices_or_calculations.split(" | ").map((choiceString) => Choice.fromString(choiceString)));
   }
+
+  // bool shouldShow() {
+  //   BranchingLogicParser().parse(branching_logic).evaluate(formKey.currentState!.fields)
+  // }
 
   String getFieldLabel() {
     return field_label;

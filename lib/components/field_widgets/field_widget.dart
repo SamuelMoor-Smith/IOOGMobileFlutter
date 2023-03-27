@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/field/field.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 abstract class IOOGFieldWidget extends StatefulWidget {
 
   final Field field;
 
   IOOGFieldWidget ({ Key? key, required this.field }): super(key: key);
+
+  FormFieldValidator<String>? validator(BuildContext context) {
+    return isRequired()
+        ? FormBuilderValidators.required(context, errorText: 'Please select an option')
+        : null;
+  }
 
   Field getField() {
     return field;

@@ -50,7 +50,6 @@ class _IOOGPageState extends State<IOOGPage> {
         key: formKey,
         onChanged: () {
           formKey.currentState!.save();
-          debugPrint(formKey.currentState!.value.toString());
         },
         autovalidateMode: AutovalidateMode.disabled,
         initialValue: const {},

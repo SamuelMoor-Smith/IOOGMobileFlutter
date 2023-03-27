@@ -46,7 +46,6 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
       field?.didChange(null);
     }
     formKey.currentState!.save();
-    debugPrint(formKey.currentState!.value.toString());
   }
 }
 
