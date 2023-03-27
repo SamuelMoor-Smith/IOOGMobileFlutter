@@ -56,6 +56,7 @@ class _IOOGRadioGroup extends State<IOOGRadioGroup> {
     return 
       FormBuilderField(
         name: widget.getFieldName(),
+        validator: widget.validator(),
         builder: (FormFieldState<dynamic> state) {
           return Container(
             margin: EdgeInsets.symmetric(vertical: 10.0),

@@ -54,6 +54,7 @@ class _IOOGCheckGroup extends State<IOOGCheckGroup> {
           ), ...widget.getChoices().map((choice) => 
             FormBuilderField(
               name: "${widget.getFieldName()}___${choice.number}",
+              validator: widget.validator(),
               builder: (FormFieldState<dynamic> state) {
                 return CheckboxListTile(
                   title: Text(choice.name, style: primaryTextStyle(),),

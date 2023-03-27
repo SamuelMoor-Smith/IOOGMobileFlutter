@@ -30,6 +30,7 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: widget.getFieldName(),
+      validator: widget.validator(),
       controller: widget.textController,
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
