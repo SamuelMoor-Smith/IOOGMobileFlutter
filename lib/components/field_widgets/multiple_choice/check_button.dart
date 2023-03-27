@@ -18,13 +18,11 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
   @override
   selectChoice(Choice choice) {
     selectedChoices.add(choice);
-    updateForm();
   }
 
   @override
   unselectChoice(Choice choice) {
     selectedChoices.remove(choice);
-    updateForm();
   }
 
   @override 
@@ -37,6 +35,7 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
         fields["${getFieldName()}___${choice.number}"]?.didChange("0");
       }
     }
+    formKey.currentState!.save();
   }
 }
 
@@ -63,6 +62,7 @@ class _IOOGCheckGroup extends State<IOOGCheckGroup> {
                     setState(() {
                       if (value != null) {
                         value ? widget.selectChoice(choice) : widget.unselectChoice(choice);
+                        widget.updateForm();
                       }
                     });
                   },

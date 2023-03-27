@@ -37,7 +37,6 @@ class StudyIdPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 APIConstants.studyId = studyIdController.text;
-                debugPrint(APIConstants.studyId);
                 final instruments = await getInstruments();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => SelectEntryPage(entries: instruments!),

@@ -17,7 +17,6 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
 
   setEnteredText(String text) {
     textController.text = text;
-    updateForm();
   }
 
   String getEnteredText() {
@@ -27,5 +26,6 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
   @override
   updateForm() {
     formKey.currentState!.fields[getFieldName()]?.didChange(getEnteredText());
+    formKey.currentState!.save();
   }
 }

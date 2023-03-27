@@ -23,7 +23,6 @@ class LoginScreen extends StatelessWidget {
     if (success) {
       APIConstants.apiUrl = user.apiUrl;
       APIConstants.token = user.token;
-      debugPrint('apiUrl: ${APIConstants.apiUrl}, token: ${APIConstants.token}');
     }
     await apiOK();
     return success == true ? null : "Something went wrong";
@@ -42,13 +41,11 @@ class LoginScreen extends StatelessWidget {
 
     APIConstants.apiUrl = user.apiUrl;
     APIConstants.token = user.token;
-    debugPrint('apiUrl: ${APIConstants.apiUrl}, token: ${APIConstants.token}');
 
     return null;
   }
 
   Future<String?>? _onRecoverPassword(String name) {
-    debugPrint('Name: $name');
     return null;
   }
 

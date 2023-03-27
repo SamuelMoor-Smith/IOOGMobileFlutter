@@ -22,15 +22,8 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
     widget.textController.addListener(_onTextChanged);
   }
 
-  @override
-  void dispose() {
-    widget.textController.removeListener(_onTextChanged);
-    widget.textController.dispose();
-    super.dispose();
-  }
-
   void _onTextChanged() {
-    // Do something when the text changes, e.g., update the form state.
+    widget.updateForm();
   }
 
   @override

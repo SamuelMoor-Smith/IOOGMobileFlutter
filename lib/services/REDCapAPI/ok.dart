@@ -20,9 +20,6 @@ Future<bool> apiOK() async {
         headers: APIConstants.headers()
       );
 
-      debugPrint('Response status: ${response.statusCode}');
-      debugPrint('Response body: ${response.body}');
-
       if (response.statusCode == 200) {
         return true;
       }

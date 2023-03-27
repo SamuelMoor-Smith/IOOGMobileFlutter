@@ -30,13 +30,11 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
   selectChoice(Choice choice) {
     selectedChoices.removeAll(choices); // Only 1 choice can be selected
     selectedChoices.add(choice);
-    updateForm();
   }
 
   @override
   unselectChoice(Choice choice) {
     selectedChoices.remove(choice);
-    updateForm();
   }
 
   @override 
@@ -47,6 +45,8 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
     } else {
       field?.didChange(null);
     }
+    formKey.currentState!.save();
+    debugPrint(formKey.currentState!.value.toString());
   }
 }
 
@@ -74,6 +74,7 @@ class _IOOGRadioGroup extends State<IOOGRadioGroup> {
                         onChanged: (Choice? value) {
                           setState(() {
                             widget.selectChoice(value!);
+                            widget.updateForm();
                           });
                         },
                         visualDensity: VisualDensity(vertical: -4)
