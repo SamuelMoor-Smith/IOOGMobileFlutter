@@ -41,7 +41,7 @@ Future<List<Widget?>?> getFields(Instrument instrument) async {
       if (response.statusCode == 200) {
         List<dynamic> rawFields = json.decode(response.body);
         List<Field> fields = rawFields.map((raw) => Field.fromJson(raw)).toList();
-        return fields.map((field) => fieldWidget(field)).toList();
+        return fields.map((field) => fieldWidget(field, instrument)).toList();
       }
     } catch (e) {
       log(e.toString());

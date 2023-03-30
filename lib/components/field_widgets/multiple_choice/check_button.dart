@@ -7,10 +7,21 @@ import 'package:namer_app/style/text_styles.dart';
 import '../../../main.dart';
 import '../../../models/field/field.dart';
 import '../../../models/choice.dart';
+import '../../../models/instrument.dart';
 
 class IOOGCheckGroup extends IOOGMultipleChoice {
 
-  IOOGCheckGroup ({ Key? key, required Field field, required Set<Choice> choices }): super(key: key, field: field, choices: choices);
+  IOOGCheckGroup ({ 
+    Key? key,
+    required Field field,
+    required Instrument instrument,
+    required Set<Choice> choices,
+  }) : super(
+          key: key,
+          choices: choices,
+          field: field,
+          instrument: instrument
+        );
 
   @override
   State<IOOGCheckGroup> createState() => _IOOGCheckGroup();
@@ -27,7 +38,7 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
 
   @override 
   updateForm() {
-    var fields = formKey.currentState!.fields;
+    var fields = instrument.getFormKey().currentState!.fields;
     for (Choice choice in choices) {
       if (selectedChoices.contains(choice)) {
         fields["${getFieldName()}___${choice.number}"]?.didChange("1");
@@ -35,44 +46,59 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
         fields["${getFieldName()}___${choice.number}"]?.didChange("0");
       }
     }
-    formKey.currentState!.save();
+    instrument.getFormKey().currentState!.save();
   }
 }
 
 class _IOOGCheckGroup extends State<IOOGCheckGroup> {
 
   @override
+  void initState() {
+    super.initState();
+    widget.getFormStateNotifier().addListener(() => widget.checkBranchingLogic(setState));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      decoration: bordered,
-      child: Column(
-        children: [
-          ListTile(
-            title: Text(widget.getLabelText(), style: primaryTextStyle(),),
-            visualDensity: VisualDensity(vertical: -4)
-          ), ...widget.getChoices().map((choice) => 
-            FormBuilderField(
-              name: "${widget.getFieldName()}___${choice.number}",
-              validator: widget.validator(),
-              builder: (FormFieldState<dynamic> state) {
-                return CheckboxListTile(
-                  title: Text(choice.name, style: primaryTextStyle(),),
-                  value: widget.getSelectedChoices().contains(choice),
-                  onChanged: (bool? value) {
-                    setState(() {
-                      if (value != null) {
-                        value ? widget.selectChoice(choice) : widget.unselectChoice(choice);
-                        widget.updateForm();
-                      }
-                    });
-                  },
-                  controlAffinity: ListTileControlAffinity.leading,
-                  visualDensity: VisualDensity(vertical: -4)
-                );
-              })).toList()
-          ]
-      )
+    return Visibility(
+      visible: widget.shouldShow,
+      child: FormBuilderField(
+          name: widget.getFieldName(),
+          validator: widget.validator(),
+          builder: (FormFieldState<dynamic> state) {
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 10.0),
+              decoration: bordered,
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(widget.getLabelText(), style: primaryTextStyle(),),
+                    visualDensity: VisualDensity(vertical: -4)
+                  ), ...widget.getChoices().map((choice) => 
+                    FormBuilderField(
+                      name: "${widget.getFieldName()}___${choice.number}",
+                      validator: widget.validator(),
+                      builder: (FormFieldState<dynamic> state) {
+                        return CheckboxListTile(
+                          title: Text(choice.name, style: primaryTextStyle(),),
+                          value: widget.getSelectedChoices().contains(choice),
+                          onChanged: (bool? value) {
+                            setState(() {
+                              if (value != null) {
+                                value ? widget.selectChoice(choice) : widget.unselectChoice(choice);
+                                widget.updateForm();
+                              }
+                            });
+                            widget.updateFormState();
+                          },
+                          controlAffinity: ListTileControlAffinity.leading,
+                          visualDensity: VisualDensity(vertical: -4)
+                        );
+                      })).toList()
+                  ]
+              )
+            );}
+      ),
     );
   }
 }

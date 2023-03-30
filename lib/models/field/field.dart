@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:namer_app/main.dart';
 
 import '../branching_logic/branching_logic_parser.dart';
 import '../choice.dart';
@@ -115,5 +114,9 @@ class Field {
     } else {
       return '${getFieldLabel()}:';
     }
+  }
+
+  String getParsedBranchingLogic() {
+    return BranchingLogicParser().parseBranchingLogic(branching_logic).toString();
   }
 }

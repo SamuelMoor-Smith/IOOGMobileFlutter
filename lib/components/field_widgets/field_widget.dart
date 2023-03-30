@@ -1,13 +1,20 @@
+import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:namer_app/models/field/field.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:namer_app/models/instrument.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+import '../../main.dart';
 
 abstract class IOOGFieldWidget extends StatefulWidget {
 
   final Field field;
+  final Instrument instrument;
+  bool shouldShow = true;
 
-  IOOGFieldWidget ({ Key? key, required this.field }): super(key: key);
+  IOOGFieldWidget ({ Key? key, required this.field, required this.instrument }): super(key: key);
 
   FormFieldValidator<String>? validator() {
     return isRequired()
@@ -39,6 +46,41 @@ abstract class IOOGFieldWidget extends StatefulWidget {
     return field.getLabelText();
   }
 
+  String getParsedBranchingLogic() {
+    return field.getParsedBranchingLogic();
+  }
+
+  GlobalKey<FormBuilderState> getFormKey() {
+    return instrument.getFormKey();
+  }
+
+  ValueNotifier<Map<String, String>> getFormStateNotifier() {
+    return instrument.getFormStateNotifier();
+  }
+
   bool isFilled();
   updateForm();
+
+  updateFormState() {
+    debugPrint(getFormKey().currentState!.fields.toString());
+    getFormStateNotifier().value = getFormKey().currentState!.fields.map<String, String>(
+      (key, fieldState) => MapEntry(key, fieldState.value.toString()),
+    );
+  }
+
+  void checkBranchingLogic(setState) {
+    String branchingLogic = field.getParsedBranchingLogic();
+    if (!branchingLogic.isEmptyOrNull) {
+      var expression = Expression.parse(branchingLogic);
+      try {
+        setState(() {
+          shouldShow = evaluator.eval(expression, getFormStateNotifier().value);
+        });
+      } catch (e) {
+        debugPrint(branchingLogic);
+        debugPrint(field.getFieldLabel());
+        debugPrint(e.toString());
+      }
+    }
+  }
 }

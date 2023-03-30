@@ -1,36 +1,27 @@
-import 'package:petitparser/petitparser.dart';
-
-import 'expressions.dart';
-
 class BranchingLogicParser {
-  final Parser parser;
 
-  BranchingLogicParser() : parser = _buildParser();
+  String? parseBranchingLogic(String branchingLogicString) {
 
-  static Parser _buildParser() {
-    final builder = ExpressionBuilder();
+    String modifiedInput = branchingLogicString.toLowerCase();
+    modifiedInput = modifiedInput.replaceAll('\n', '');
+    modifiedInput = modifiedInput.replaceAll(' or ', ' || ');
+    modifiedInput = modifiedInput.replaceAll(' and ', ' && ');
 
-    // Define field names and values
-    final fieldName = (char('[') & letter().plus() & char(']')).flatten().trim();
-    final value = (char('"') & any().starLazy(char('"')) & char('"')).flatten().trim();
+    String pattern = r'([a-z,0-9,_])\((?<=\()(.*?)(?=\))\)';
+    RegExp regex = RegExp(pattern);
+    modifiedInput = modifiedInput.replaceAllMapped(regex, (match) => '${match.group(1)}___${match.group(2)}');
 
-    // Define field name and value comparison
-    final comparison = (fieldName & (string('=') | string('>') | string('<') | string('>=') | string('<=') | string('<>')) & value).trim();
+    modifiedInput = modifiedInput.replaceAll('[', '').replaceAll(']', '');
+    modifiedInput = modifiedInput.replaceAll('=', '==');
+    modifiedInput = modifiedInput.replaceAll('!=', '!');
+    modifiedInput = modifiedInput.replaceAll('<=', '<');
+    modifiedInput = modifiedInput.replaceAll('>=', '>');
+    modifiedInput = modifiedInput.replaceAll('<>', '!=');
 
-    // Define basic expressions
-    builder.group()
-      ..primitive(comparison)
-      ..wrapper(char('(').trim(), char(')').trim(), (l, a, r) => a);
+    if (modifiedInput.isEmpty) {
+      return null;
+    }
 
-    // Define AND and OR expressions
-    builder.group()
-      ..left(string('and').trim(), (a, op, b) => AndExpression(a, b))
-      ..left(string('or').trim(), (a, op, b) => OrExpression(a, b));
-
-    return builder.build().end();
-  }
-
-  Expression parse(String input) {
-    return parser.parse(input).value;
+    return modifiedInput;
   }
 }

@@ -5,11 +5,13 @@ import 'package:namer_app/pages/study_id.dart';
 
 import '../components/field_widgets/field_widget.dart';
 import '../main.dart';
+import '../models/instrument.dart';
 import 'summary.dart';
 
 class IOOGPage extends StatefulWidget {
   final String title;
   final List<Widget?> fields;
+  final Instrument instrument;
   final Widget? nextPage;
   final Widget? lastPage;
 
@@ -17,12 +19,17 @@ class IOOGPage extends StatefulWidget {
     Key? key,
     required this.title,
     required this.fields,
+    required this.instrument,
     this.nextPage,
     this.lastPage,
   }) : super(key: key);
 
   @override
   _IOOGPageState createState() => _IOOGPageState();
+
+  GlobalKey<FormBuilderState> getFormKey() {
+    return instrument.formKey;
+  }
 }
 
 class _IOOGPageState extends State<IOOGPage> {
@@ -32,7 +39,7 @@ class _IOOGPageState extends State<IOOGPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (formKey.currentState != null) {
+      if (widget.getFormKey().currentState != null) {
         for (IOOGFieldWidget fieldWidget in widget.fields.whereType<IOOGFieldWidget>().toList()) {
           fieldWidget.updateForm();
         }
@@ -47,9 +54,9 @@ class _IOOGPageState extends State<IOOGPage> {
         title: Text(widget.title),
       ),
       body: FormBuilder(
-        key: formKey,
+        key: widget.getFormKey(),
         onChanged: () {
-          formKey.currentState!.save();
+          widget.getFormKey().currentState!.save();
         },
         autovalidateMode: AutovalidateMode.disabled,
         initialValue: const {},

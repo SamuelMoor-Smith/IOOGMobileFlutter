@@ -5,10 +5,12 @@ import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../models/field/field.dart';
+import '../../../models/instrument.dart';
 
 class IOOGCommentsField extends IOOGTextWidget {
 
-  IOOGCommentsField ({ Key? key, required Field field }): super(key: key, field: field);
+  IOOGCommentsField ({ Key? key, required Field field, required Instrument instrument })
+  : super(key: key, field: field, instrument: instrument);
 
   @override
   State<IOOGCommentsField> createState() => _IOOGCommentsField();
@@ -20,38 +22,43 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
   void initState() {
     super.initState();
     widget.textController.addListener(_onTextChanged);
+    widget.getFormStateNotifier().addListener(() => widget.checkBranchingLogic(setState));
   }
 
   void _onTextChanged() {
     widget.updateForm();
+    widget.updateFormState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilderTextField(
-      name: widget.getFieldName(),
-      validator: widget.validator(),
-      controller: widget.textController,
-      decoration: InputDecoration(
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide(color: iconColorPrimary),
+    return Visibility(
+      visible: widget.shouldShow,
+      child: FormBuilderTextField(
+        name: widget.getFieldName(),
+        validator: widget.validator(),
+        controller: widget.textController,
+        decoration: InputDecoration(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            borderSide: BorderSide(color: iconColorPrimary),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+            borderSide: BorderSide(width: 1, color: iconColorPrimary),
+          ),
+          labelText: widget.getLabelText(),
+          hintText: "write....",
+          hintStyle: TextStyle(color: textSecondaryColor),
+          labelStyle: TextStyle(color: textSecondaryColor),
+          alignLabelWithHint: true,
+          filled: true,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
-          borderSide: BorderSide(width: 1, color: iconColorPrimary),
-        ),
-        labelText: widget.getLabelText(),
-        hintText: "write....",
-        hintStyle: TextStyle(color: textSecondaryColor),
-        labelStyle: TextStyle(color: textSecondaryColor),
-        alignLabelWithHint: true,
-        filled: true,
+        cursorColor: blackColor,
+        keyboardType: TextInputType.multiline,
+        maxLines: 4,
+        textInputAction: TextInputAction.done,
       ),
-      cursorColor: blackColor,
-      keyboardType: TextInputType.multiline,
-      maxLines: 4,
-      textInputAction: TextInputAction.done,
     );
   }
 }

@@ -34,7 +34,7 @@ class SelectEntryPage extends StatelessWidget {
                   final filledWidgets =
                       await fillFields(entry, fieldWidgets!.whereType<Widget>().toList());
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => IOOGPage(title: entry.label, fields: filledWidgets!),
+                    builder: (context) => IOOGPage(title: entry.label, fields: filledWidgets!, instrument: entry),
                   ));
                 },
                 style: ElevatedButton.styleFrom(

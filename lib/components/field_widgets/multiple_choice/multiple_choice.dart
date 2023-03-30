@@ -3,6 +3,7 @@ import 'package:namer_app/models/field/field.dart';
 
 import '../../../main.dart';
 import '../../../models/choice.dart';
+import '../../../models/instrument.dart';
 import '../field_widget.dart';
 
 abstract class IOOGMultipleChoice extends IOOGFieldWidget {
@@ -10,7 +11,8 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
   final Set<Choice> choices;
   Set<Choice> selectedChoices = {};
 
-  IOOGMultipleChoice ({ Key? key, required Field field, required this.choices }): super(key: key, field: field);
+  IOOGMultipleChoice ({ Key? key, required Field field, required Instrument instrument, required this.choices })
+  : super(key: key, field: field, instrument: instrument);
 
   @override
   bool isFilled() {
