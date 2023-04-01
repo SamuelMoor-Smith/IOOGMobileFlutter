@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:namer_app/models/field/field.dart';
-import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/models/instrument/instrument.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../main.dart';
@@ -46,6 +46,10 @@ abstract class IOOGFieldWidget extends StatefulWidget {
     return field.getLabelText();
   }
 
+  String getSectionHeader() {
+    return field.getSectionHeader();
+  }
+
   String getParsedBranchingLogic() {
     return field.getParsedBranchingLogic();
   }
@@ -59,7 +63,8 @@ abstract class IOOGFieldWidget extends StatefulWidget {
   }
 
   bool isFilled();
-  updateForm();
+  void updateForm();
+  void fillField(Map<String, String> rawRecord);
 
   updateFormState() {
     debugPrint(getFormKey().currentState!.fields.toString());

@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../../models/instrument.dart';
+import '../../../models/instrument/instrument.dart';
 import '../api_constants.dart';
 
 Map<String, String> instrumentsBody() {

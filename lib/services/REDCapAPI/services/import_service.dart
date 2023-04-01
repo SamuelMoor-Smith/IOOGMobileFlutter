@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/models/instrument/instrument.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
 
 import '../../utils/create_import.dart';

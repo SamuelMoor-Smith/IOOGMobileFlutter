@@ -8,7 +8,7 @@ import 'package:namer_app/style/text_styles.dart';
 
 import '../../../main.dart';
 import '../../../models/field/field.dart';
-import '../../../models/instrument.dart';
+import '../../../models/instrument/instrument.dart';
 import '../../../style/borders.dart';
 
 class IOOGRadioGroup extends IOOGMultipleChoice {
@@ -38,6 +38,14 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
   @override
   unselectChoice(Choice choice) {
     selectedChoices.remove(choice);
+  }
+
+  @override
+  fillField(Map<String, String> rawRecord) {
+    var fieldName = getFieldName();
+    if (rawRecord.containsKey(fieldName)) {
+      fillChoiceByNum(rawRecord[fieldName]!);
+    }
   }
 
   @override 

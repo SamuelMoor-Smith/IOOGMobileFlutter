@@ -3,10 +3,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/bottom_nav_bar.dart';
 import 'package:namer_app/pages/study_id.dart';
 
-import '../components/field_widgets/field_widget.dart';
-import '../main.dart';
-import '../models/instrument.dart';
-import 'summary.dart';
+import '../../components/field_widgets/field_widget.dart';
+import '../../main.dart';
+import '../../models/instrument/instrument.dart';
+import '../summary.dart';
 
 class IOOGPage extends StatefulWidget {
   final String title;

@@ -7,7 +7,7 @@ import 'package:namer_app/style/text_styles.dart';
 import '../../../main.dart';
 import '../../../models/field/field.dart';
 import '../../../models/choice.dart';
-import '../../../models/instrument.dart';
+import '../../../models/instrument/instrument.dart';
 
 class IOOGCheckGroup extends IOOGMultipleChoice {
 
@@ -34,6 +34,16 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
   @override
   unselectChoice(Choice choice) {
     selectedChoices.remove(choice);
+  }
+
+  @override
+  fillField(Map<String, String> rawRecord) {
+    var fieldName = getFieldName();
+    for (String name in rawRecord.keys) {
+      if (name.startsWith(fieldName) && rawRecord[name] == "1") {
+        fillChoiceByNum(name.split("___")[1]);
+      }
+    }
   }
 
   @override 

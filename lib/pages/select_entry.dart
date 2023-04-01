@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/pages/ioog_page.dart';
-import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/pages/survey_pages/ioog_page.dart';
+import 'package:namer_app/models/instrument/instrument.dart';
+import 'package:namer_app/pages/survey_pages/ioog_page_view.dart';
 
 import '../main.dart';
 import '../services/REDCapAPI/services/fields_service.dart';
@@ -30,11 +31,10 @@ class SelectEntryPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 8.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  final fieldWidgets = await getFields(entry);
-                  final filledWidgets =
-                      await fillFields(entry, fieldWidgets!.whereType<Widget>().toList());
+                  await getFields(entry);
+                  await fillFields(entry);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => IOOGPage(title: entry.label, fields: filledWidgets!, instrument: entry),
+                    builder: (context) => IOOGPageView(instrument: entry),
                   ));
                 },
                 style: ElevatedButton.styleFrom(

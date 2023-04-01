@@ -5,7 +5,7 @@ import 'package:namer_app/models/field/field.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../models/instrument.dart';
+import '../../../models/instrument/instrument.dart';
 
 class IOOGTextField extends IOOGTextWidget {
 

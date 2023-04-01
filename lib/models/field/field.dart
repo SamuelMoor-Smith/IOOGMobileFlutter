@@ -104,6 +104,10 @@ class Field {
     return field_type;
   }
 
+  String getSectionHeader() {
+    return section_header;
+  }
+
   bool isRequired() {
     return required_field == 'y';
   }

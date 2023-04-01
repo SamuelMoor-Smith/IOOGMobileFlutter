@@ -3,7 +3,7 @@ import 'package:namer_app/models/field/field.dart';
 
 import '../../../main.dart';
 import '../../../models/choice.dart';
-import '../../../models/instrument.dart';
+import '../../../models/instrument/instrument.dart';
 import '../field_widget.dart';
 
 abstract class IOOGMultipleChoice extends IOOGFieldWidget {

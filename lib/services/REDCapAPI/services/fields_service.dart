@@ -3,10 +3,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../../models/instrument.dart';
+import 'package:namer_app/components/field_widgets/field_widget.dart';
+import 'package:nb_utils/nb_utils.dart';
+import '../../../models/instrument/instrument.dart';
 import '../../../models/field/field.dart';
 import '../../utils/create_widgets.dart';
-import '../../utils/fill_fields.dart';
 import '../api_constants.dart';
 
 Object fieldsBody(Instrument instrument) {
@@ -29,27 +30,35 @@ Object fieldsFillBody(Instrument instrument) {
       });
     }
 
-Future<List<Widget?>?> getFields(Instrument instrument) async {
-    try {
-      var url = Uri.parse(APIConstants.apiUrl!);
-      var response = await http.post(
-        url, 
-        body: fieldsBody(instrument), 
-        headers: APIConstants.headers()
-      );
+Future<void> getFields(Instrument instrument) async {
+  try {
+    var url = Uri.parse(APIConstants.apiUrl!);
+    var response = await http.post(
+      url,
+      body: fieldsBody(instrument),
+      headers: APIConstants.headers(),
+    );
 
-      if (response.statusCode == 200) {
-        List<dynamic> rawFields = json.decode(response.body);
-        List<Field> fields = rawFields.map((raw) => Field.fromJson(raw)).toList();
-        return fields.map((field) => fieldWidget(field, instrument)).toList();
+    if (response.statusCode == 200) {
+      List<dynamic> rawFields = json.decode(response.body);
+      List<Field> fields = rawFields.map((raw) => Field.fromJson(raw)).toList();
+      String? section;
+      for (Field field in fields) {
+        IOOGFieldWidget? fieldWidgetInstance = fieldWidget(field, instrument);
+        if (fieldWidgetInstance != null) {
+          if (!fieldWidgetInstance.getSectionHeader().isEmptyOrNull) {
+            section = fieldWidgetInstance.getSectionHeader();
+          }
+          instrument.addFieldWidget(fieldWidgetInstance, section);
+        }
       }
-    } catch (e) {
-      log(e.toString());
     }
-    return null;
+  } catch (e) {
+    log(e.toString());
   }
+}
 
-  Future<List<Widget?>?> fillFields(Instrument instrument, List<Widget> fieldWidgets) async {
+  Future<void> fillFields(Instrument instrument) async {
     try {
       var url = Uri.parse(APIConstants.apiUrl!);
       var response = await http.post(
@@ -59,11 +68,9 @@ Future<List<Widget?>?> getFields(Instrument instrument) async {
       );
 
       if (response.statusCode == 200) {
-        List<dynamic> rawRecords = json.decode(response.body);
+        List<Map<String, String>> rawRecords = json.decode(response.body);
         if (rawRecords.isNotEmpty) {
-          return fieldWidgets.map((fieldWidget) => fillField(fieldWidget, rawRecords[0])).toList();
-        } else {
-          return fieldWidgets;
+          instrument.getAllFieldWidgets().forEach((fieldWidget) => fieldWidget.fillField(rawRecords[0]));
         }
       }
     } catch (e) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/main.dart';
 import 'package:namer_app/models/field/field.dart';
-import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/models/instrument/instrument.dart';
 
 import '../field_widget.dart';
 
@@ -23,6 +23,14 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
 
   String getEnteredText() {
     return textController.text;
+  }
+
+  @override
+  fillField(Map<String, String> rawRecord) {
+    var fieldName = getFieldName();
+    if (rawRecord.containsKey(fieldName)) {
+      setEnteredText(rawRecord[fieldName]!);
+    }
   }
 
   @override
