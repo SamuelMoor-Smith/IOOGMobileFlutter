@@ -1,6 +1,7 @@
 import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:namer_app/pages/image_page.dart';
 import 'package:namer_app/pages/login/login.dart';
 
 void main() => runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: ImagePage(),
     );
   }
 }
