@@ -1,28 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
+import '../../models/choice.dart';
+import '../../models/field/field.dart';
+import '../../models/instrument/instrument.dart';
+import '../field_widgets/multiple_choice/check_button.dart';
 import '../image_buttons/oval.dart';
 
-class Diagram extends StatelessWidget {
+class Diagram extends IOOGCheckGroup {
+
+  Diagram({
+    Key? key,
+    required Field field,
+    required Instrument instrument,
+    required Set<Choice> choices,
+  }) : super(
+          key: key,
+          choices: choices,
+          field: field,
+          instrument: instrument,
+        );
+
+  @override
+  State<Diagram> createState() => _DiagramState();
+}
+
+class _DiagramState extends State<Diagram> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Stack(
-        children: [
-          Image(
-            image: AssetImage(
-                '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/diagram.jpg'),
-            width: 260,
-            height: 184,
-          ),
-          Oval(left: 31, top: 61, width: 40, height: 40),
-          Oval(left: 80, top: 34, width: 40, height: 40),
-          Oval(left: 172, top: 46, width: 40, height: 40),
-          Oval(left: 80, top: 112, width: 40, height: 40),
-          Oval(left: 130, top: 92, width: 40, height: 40),
-          Oval(left: 178, top: 107, width: 40, height: 40),
-        ],
-      ),
-    );
+    return Visibility(
+        visible: widget.shouldShow,
+        child: FormBuilderField(
+          name: widget.getFieldName(),
+          validator: widget.validator(),
+          builder: (FormFieldState<dynamic> state) {
+            return Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Stack(
+                children: [
+                  Image(
+                    image: AssetImage(
+                        '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/diagram.jpg'),
+                    width: 260,
+                    height: 184,
+                  ),
+                  Oval(group: widget, name: "S1 Protympanum", left: 31, top: 61, width: 40, height: 40),
+                  Oval(group: widget, name: "A Epitympanum", left: 80, top: 34, width: 40, height: 40),
+                  Oval(group: widget, name: "Ma Antrum", left: 172, top: 46, width: 40, height: 40),
+                  Oval(group: widget, name: "T Meso/Hypo-Tympanum", left: 80, top: 112, width: 40, height: 40),
+                  Oval(group: widget, name: "S2 Sinus Tympani", left: 130, top: 92, width: 40, height: 40),
+                  Oval(group: widget, name: "Mc Mastoid cells", left: 178, top: 107, width: 40, height: 40),
+                ],
+              ),
+            );
+          }),
+      );
   }
 }

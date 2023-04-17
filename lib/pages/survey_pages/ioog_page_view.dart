@@ -24,6 +24,9 @@ class IOOGPageView extends StatefulWidget {
   @override
   _IOOGPageViewState createState() => _IOOGPageViewState();
 
+  GlobalKey<FormBuilderState> getFormKey() {
+    return instrument.getFormKey();
+  }
 
   List<Widget> getPages() {
     if (!instrument.isSectioned()) {
@@ -43,9 +46,16 @@ class _IOOGPageViewState extends State<IOOGPageView> {
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
-    return PageView(
-      controller: controller,
-      children: widget.getPages()
-    );
+    return FormBuilder(
+        key: widget.getFormKey(),
+        onChanged: () {
+          widget.getFormKey().currentState!.save();
+        },
+        autovalidateMode: AutovalidateMode.disabled,
+        initialValue: const {},
+        child: PageView(
+          controller: controller,
+          children: widget.getPages()
+        ));
   }
 }

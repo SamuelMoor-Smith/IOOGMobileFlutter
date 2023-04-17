@@ -28,7 +28,7 @@ class IOOGPage extends StatefulWidget {
   _IOOGPageState createState() => _IOOGPageState();
 
   GlobalKey<FormBuilderState> getFormKey() {
-    return instrument.formKey;
+    return instrument.getFormKey();
   }
 }
 
@@ -53,17 +53,9 @@ class _IOOGPageState extends State<IOOGPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: FormBuilder(
-        key: widget.getFormKey(),
-        onChanged: () {
-          widget.getFormKey().currentState!.save();
-        },
-        autovalidateMode: AutovalidateMode.disabled,
-        initialValue: const {},
-        child: ListView(
-          padding: const EdgeInsets.all(8),
-          children: widget.fields.whereType<Widget>().toList(),
-        ),
+      body: ListView(
+        padding: const EdgeInsets.all(8),
+        children: widget.fields.whereType<Widget>().toList(),
       ),
       bottomNavigationBar: createBottomNavigationBar(
         context,
