@@ -28,7 +28,7 @@ class Oval extends StatefulWidget {
   }
 
   @override
-  _OvalState createState() => _OvalState();
+  State<Oval> createState() => _OvalState();
 }
 
 class _OvalState extends State<Oval> {

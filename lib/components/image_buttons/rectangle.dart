@@ -27,7 +27,7 @@ class Rectangle extends StatefulWidget {
   }
 
   @override
-  _RectangleState createState() => _RectangleState();
+  State<Rectangle> createState() => _RectangleState();
 }
 
 class _RectangleState extends State<Rectangle> {

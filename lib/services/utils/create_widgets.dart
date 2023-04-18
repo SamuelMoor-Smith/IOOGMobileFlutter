@@ -9,12 +9,15 @@ import 'package:namer_app/components/image_fields/ossicularchain.dart';
 import '../../components/field_widgets/multiple_choice/check_button.dart';
 import '../../components/field_widgets/multiple_choice/radio_button.dart';
 import '../../components/field_widgets/text_widgets/text_field.dart';
+import '../../components/image_fields/audiograms/audiogram.dart';
 import '../../models/field/field.dart';
 import '../../models/instrument/instrument.dart';
 
 IOOGFieldWidget? fieldWidget(Field field, Instrument instrument) {
 
   switch (field.getFieldName()) {
+    // case 'reac':
+    //   return AudiogramGroup(field: field, instrument: instrument, choices: field.createChoices(),);
     case 'classification':
       return Cholesteatoma(field: field, instrument: instrument, choices: field.createChoices(),);
     case 'extent_cholesteatoma':
