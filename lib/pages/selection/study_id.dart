@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
 
-import '../services/REDCapAPI/services/instrument_service.dart';
+import '../../services/REDCapAPI/services/instrument_service.dart';
 import 'select_entry.dart';
 
 class StudyIdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final studyIdController = TextEditingController();
+    final primaryColor = Theme.of(context).primaryColor; // Get primary color from the theme
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Study Id Page"),
-        backgroundColor: Colors.deepPurple, // Change the AppBar color
+        title: Text("Study ID"),
+        backgroundColor: primaryColor, // Use the primary color from the theme
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
@@ -20,11 +21,14 @@ class StudyIdPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 20.0),
             TextField(
               controller: studyIdController,
               decoration: InputDecoration(
-                labelText: 'Enter Study ID',
-                border: OutlineInputBorder(),
+                hintText: 'Study ID',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
                 filled: true,
                 fillColor: Colors.white,
               ),
@@ -33,16 +37,18 @@ class StudyIdPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 APIConstants.studyId = studyIdController.text;
-                final instruments = await getInstruments();
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => SelectEntryPage(entries: instruments!),
+                  builder: (context) => SelectEntryPage(),
                 ));
               },
               child: Text("Enter"),
               style: ElevatedButton.styleFrom(
-                primary: Colors.deepPurple, // Change the button color
-                textStyle: TextStyle(fontSize: 18),
+                primary: primaryColor, // Use the primary color from the theme
+                textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
           ],

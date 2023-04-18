@@ -3,7 +3,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:namer_app/services/REDCapAPI/ok.dart';
 import 'package:namer_app/services/login.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
-import '../study_id.dart';
+import '../selection/study_id.dart';
 
 class LoginScreen extends StatelessWidget {
 
@@ -52,8 +52,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      title: 'IOOG Mobile',
-      logo: "assets/sam_is_now_forever_in_my_debt.png",
+      title: '',
+      logo: "assets/IOOGicon.png",
       onLogin: _onLogin,
       onSignup: _onSignup,
       onRecoverPassword: _onRecoverPassword,

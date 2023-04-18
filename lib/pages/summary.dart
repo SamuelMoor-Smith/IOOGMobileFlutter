@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choice.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
-import 'package:namer_app/pages/study_id.dart';
+import 'package:namer_app/pages/selection/study_id.dart';
 
 import '../components/bottom_nav_bar.dart';
 import '../models/choice.dart';

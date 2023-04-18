@@ -1,9 +1,7 @@
 import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/pages/login/login.dart';
-
-import 'components/image_fields/audiograms/audiogram.dart';
-import 'components/image_fields/audiograms/reac.dart';
+import 'package:namer_app/pages/selection/select_form.dart';
 
 void main() => runApp(const MyApp());
 
@@ -18,9 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Navigation Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        // primaryColor: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: REAC(),
+      home: LoginScreen(),
     );
   }
 }

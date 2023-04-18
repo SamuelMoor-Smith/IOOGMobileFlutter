@@ -38,11 +38,18 @@ class _REACButtonState extends State<REACButton> {
         width: widget.width,
         height: widget.height,
         child: GestureDetector(
-          onTap: () {return;},
+          onTap: () {
+            setState(() {
+              _isSelected = !_isSelected;
+            });
+          },
           child: Container(
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.elliptical(widget.width / 2, widget.height / 2),
+              ),
               border: Border.all(
-                color: _isSelected ? Colors.green : Colors.black,
+                color: _isSelected ? Colors.red : Colors.black,
                 width: 2.0,
               ),
             ),

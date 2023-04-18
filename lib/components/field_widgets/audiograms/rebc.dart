@@ -39,13 +39,18 @@ class _REBCButtonState extends State<REBCButton> {
         width: widget.width,
         height: widget.height,
         child: GestureDetector(
-          onTap: () {return;},
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: _isSelected ? Colors.green : Colors.black,
-                width: 2.0,
-              ),
+          onTap: () {
+            setState(() {
+              _isSelected = !_isSelected;
+            });
+          },
+          child: ColorFiltered(
+            colorFilter: _isSelected
+                ? ColorFilter.mode(Colors.black, BlendMode.srcIn)
+                : ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+            child: Image.asset(
+              '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/audiograms/rebc.png',
+              fit: BoxFit.contain,
             ),
           ),
         ),

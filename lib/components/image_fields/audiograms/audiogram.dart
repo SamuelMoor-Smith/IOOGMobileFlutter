@@ -5,7 +5,7 @@ import 'package:namer_app/components/field_widgets/audiograms/reac.dart';
 
 import '../../field_widgets/audiograms/rebc.dart';
 
-abstract class Audiogram extends StatefulWidget {
+class Audiogram extends StatefulWidget {
 
   final double TOP_INIT = 100;
   final double LEFT_INIT = 44.8;
@@ -21,7 +21,7 @@ abstract class Audiogram extends StatefulWidget {
 
   List<Widget> createButtons() {
     List<Widget> buttons = [];
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
       for (int j = 0; j < 21; j++) {
         // Add group dependant on i
         String value = (i * 5).toString();

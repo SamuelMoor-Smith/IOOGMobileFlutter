@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/bottom_nav_bar.dart';
-import 'package:namer_app/pages/study_id.dart';
+import 'package:namer_app/pages/selection/study_id.dart';
 
 import '../../components/field_widgets/field_widget.dart';
 import '../../main.dart';
