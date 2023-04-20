@@ -41,7 +41,7 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
   }
 
   @override
-  fillField(Map<String, String> rawRecord) {
+  fillField(dynamic rawRecord) {
     var fieldName = getFieldName();
     if (rawRecord.containsKey(fieldName)) {
       fillChoiceByNum(rawRecord[fieldName]!);

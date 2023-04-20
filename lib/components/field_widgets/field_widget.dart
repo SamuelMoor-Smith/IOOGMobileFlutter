@@ -64,7 +64,7 @@ abstract class IOOGFieldWidget extends StatefulWidget {
 
   bool isFilled();
   void updateForm();
-  void fillField(Map<String, String> rawRecord);
+  void fillField(dynamic rawRecord);
 
   updateFormState() {
     debugPrint(getFormKey().currentState!.fields.toString());

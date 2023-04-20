@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/pages/selection/select_entry.dart';
+import 'package:namer_app/models/instrument/form.dart';
+import 'package:namer_app/pages/selection/select_instrument.dart';
 
-class SelectForm extends StatelessWidget {
+import '../../models/instrument/instrument.dart';
+import '../../services/REDCapAPI/services/fields_service.dart';
+import '../survey_pages/ioog_page_view.dart';
+
+class SelectForm extends StatefulWidget {
+  final Instrument instrument;
+
+  SelectForm({required this.instrument});
+
+  List<IOOGForm> getForms() {
+    return instrument.getForms();
+  }
+
+  @override
+  _SelectFormState createState() => _SelectFormState();
+}
+
+class _SelectFormState extends State<SelectForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Edit or Create Form"),
-        leading: IconButton( // Add this IconButton as a leading widget in AppBar
+        leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () async {
             Navigator.of(context).pushReplacement(
@@ -39,9 +57,10 @@ class SelectForm extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Navigate to create form page
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                    builder: (context) => IOOGPageView(instrument: widget.instrument),
+                                  ));
                         },
-                        child: Text("Create New Form"),
                         style: ElevatedButton.styleFrom(
                           primary: Theme.of(context).primaryColor,
                           textStyle: TextStyle(fontSize: 18),
@@ -50,6 +69,7 @@ class SelectForm extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
+                        child: Text("Create New Form"),
                       ),
                     ),
                   ],
@@ -76,19 +96,18 @@ class SelectForm extends StatelessWidget {
                       // Search bar or filters can be placed here if needed
                       Expanded(
                         child: ListView.builder(
-                          itemCount: 10, // Replace this with the number of old forms
+                          itemCount: widget.getForms().length,
                           itemBuilder: (BuildContext context, int index) {
-                            // Replace the following with the actual form data (label and date)
-                            String formLabel = "R";
-                            String formDate = "2023-04-17";
-                            
                             return ListTile(
-                              title: Text("$formLabel - $formDate"),
+                              title: Text(widget.getForms()[index].toString()),
                               trailing: IconButton(
                                 icon: Icon(Icons.edit),
                                 color: Theme.of(context).primaryColor,
-                                onPressed: () {
-                                  // Navigate to edit form page
+                                onPressed: () async {
+                                  await fillFieldsFromRecord(widget.instrument, widget.getForms()[index].getRecord());
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                    builder: (context) => IOOGPageView(instrument: widget.instrument),
+                                  ));
                                 },
                               ),
                             );

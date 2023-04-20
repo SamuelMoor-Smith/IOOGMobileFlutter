@@ -37,7 +37,7 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
   }
 
   @override
-  fillField(Map<String, String> rawRecord) {
+  fillField(dynamic rawRecord) {
     var fieldName = getFieldName();
     for (String name in rawRecord.keys) {
       if (name.startsWith(fieldName) && rawRecord[name] == "1") {

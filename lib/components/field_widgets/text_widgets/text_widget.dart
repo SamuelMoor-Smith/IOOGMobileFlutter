@@ -26,7 +26,7 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
   }
 
   @override
-  fillField(Map<String, String> rawRecord) {
+  fillField(dynamic rawRecord) {
     var fieldName = getFieldName();
     if (rawRecord.containsKey(fieldName)) {
       setEnteredText(rawRecord[fieldName]!);

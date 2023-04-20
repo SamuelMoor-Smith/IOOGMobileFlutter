@@ -52,7 +52,7 @@ class _SelectEntryPageState extends State<SelectEntryPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: List<Widget>.generate(instruments.length, (int index) {
-          Instrument entry = instruments[index];
+          Instrument instrument = instruments[index];
           double intensity = (index / instruments.length);
           Color buttonColor = Color.lerp(Colors.blue.shade300, Colors.blue.shade800, intensity)!;
 
@@ -61,17 +61,18 @@ class _SelectEntryPageState extends State<SelectEntryPage> {
               padding: EdgeInsets.symmetric(vertical: 0.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  await getFields(entry);
-                  await fillFields(entry);
-                  if (entry.label == "Basic Demography Form") {
+                  await getFields(instrument);
+                  if (instrument.label == "Basic Demography Form") {
+                    await fillFields(instrument);
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => IOOGPageView(instrument: entry),
+                      builder: (context) => IOOGPageView(instrument: instrument),
                     ));
-                    return;
+                  } else {
+                    await fillForms(instrument);
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SelectForm(instrument: instrument),
+                    ));
                   }
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => SelectForm(instrument: entry),
-                  ));
                 },
                 style: ElevatedButton.styleFrom(
                   primary: buttonColor,
@@ -81,7 +82,7 @@ class _SelectEntryPageState extends State<SelectEntryPage> {
                     borderRadius: BorderRadius.circular(0),
                   ),
                 ),
-                child: Text(entry.label),
+                child: Text(instrument.label),
               ),
             ),
           );

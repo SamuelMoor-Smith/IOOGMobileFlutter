@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
 
 import '../../services/REDCapAPI/services/instrument_service.dart';
-import 'select_entry.dart';
+import './select_instrument.dart';
 
 class StudyIdPage extends StatelessWidget {
   @override

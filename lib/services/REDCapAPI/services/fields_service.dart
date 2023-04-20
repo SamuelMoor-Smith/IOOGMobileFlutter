@@ -58,7 +58,35 @@ Future<void> getFields(Instrument instrument) async {
   }
 }
 
-  Future<void> fillFields(Instrument instrument) async {
+Future<void> fillFields(Instrument instrument) async {
+  try {
+    var url = Uri.parse(APIConstants.apiUrl!);
+    var response = await http.post(
+      url, 
+      body: fieldsFillBody(instrument), 
+      headers: APIConstants.headers()
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> rawRecords = json.decode(response.body);
+      if (rawRecords.isNotEmpty) {
+        instrument.getAllFieldWidgets().forEach((fieldWidget) => fieldWidget.fillField(rawRecords[0]));
+      }
+    }
+  } catch (e) {
+    log(e.toString());
+  }
+}
+
+Future<void> fillFieldsFromRecord(Instrument instrument, dynamic record) async {
+  try {
+    instrument.getAllFieldWidgets().forEach((fieldWidget) => fieldWidget.fillField(record));
+  } catch (e) {
+    log(e.toString());
+  }
+}
+
+Future<void> fillForms(Instrument instrument) async {
     try {
       var url = Uri.parse(APIConstants.apiUrl!);
       var response = await http.post(
@@ -68,9 +96,27 @@ Future<void> getFields(Instrument instrument) async {
       );
 
       if (response.statusCode == 200) {
-        List<Map<String, String>> rawRecords = json.decode(response.body);
+        List<dynamic> rawRecords = json.decode(response.body);
         if (rawRecords.isNotEmpty) {
-          instrument.getAllFieldWidgets().forEach((fieldWidget) => fieldWidget.fillField(rawRecords[0]));
+          for (dynamic record in rawRecords) {
+            switch (instrument.name) {
+              case "preop_data":
+                if (record["preop_data_complete"] == "2") {
+                  instrument.addForm(record['date_preop'], record['side_preop'], record);
+                }
+                break;
+              case "postop_data":
+                if (record["postop_data_complete"] == "2") {
+                  instrument.addForm(record['date_preop'], record['side_preop'], record);
+                }
+                break;
+              case "surgical_information":
+                if (record["surgical_information_complete"] == "2") {
+                  instrument.addForm(record['date_surgery'], record['side_surgery'], record);
+                }
+                break;
+            }
+          }
         }
       }
     } catch (e) {
