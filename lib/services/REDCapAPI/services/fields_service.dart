@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:nb_utils/nb_utils.dart';

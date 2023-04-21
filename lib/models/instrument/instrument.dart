@@ -54,6 +54,10 @@ class Instrument {
     forms.add(IOOGForm(date, side, record));
   }
 
+  void clearForms() {
+    forms = [];
+  }
+
   List<IOOGForm> getForms() {
     return forms;
   }

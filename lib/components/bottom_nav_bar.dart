@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/utils.dart';
 
-BottomNavigationBar createBottomNavigationBar(BuildContext context, Widget forward, Widget backwards) {
+BottomNavigationBar createBottomNavigationBar(
+  BuildContext context, 
+  Widget forward, 
+  [PageController? controller, int pageLength = 1]) 
+{
   void _onItemTapped(int index) {
     if (index == 0) {
-      Navigator.pop(context);
+      if (controller != null && controller.hasClients && controller.page! > 0) {
+        controller.animateToPage(
+          controller.page!.round() - 1,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        Navigator.pop(context);
+      }
     } else {
-      nextPage(context, forward);
+      if (controller != null && controller.hasClients && controller.page! < pageLength - 1) {
+        controller.animateToPage(
+          controller.page!.round() + 1,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        nextPage(context, forward);
+      }
     }
   }
   return BottomNavigationBar(

@@ -3,7 +3,6 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:namer_app/services/REDCapAPI/ok.dart';
 import 'package:namer_app/services/login.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
-import 'package:namer_app/utils.dart';
 import '../selection/study_id.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -60,7 +59,9 @@ class LoginScreen extends StatelessWidget {
       onRecoverPassword: _onRecoverPassword,
       additionalSignupFields: [apiUrl, token],
       onSubmitAnimationCompleted: () {
-        nextPage(context, StudyIdPage());
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => StudyIdPage(),
+        ));
       },
     );
   }

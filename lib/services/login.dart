@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_login/flutter_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class User {

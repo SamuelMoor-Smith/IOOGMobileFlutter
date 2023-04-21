@@ -5,7 +5,6 @@ import 'package:namer_app/pages/selection/study_id.dart';
 
 import '../components/app_bar.dart';
 import '../components/bottom_nav_bar.dart';
-import '../models/choice.dart';
 
 String getTitle(fieldWidget) {
   return fieldWidget.getField().field_label ?? '';
@@ -67,7 +66,10 @@ class SummaryPage extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: createBottomNavigationBar(context, SummaryPage(fields: fields, nextPage: StudyIdPage(), lastPage: this), StudyIdPage()),
+      bottomNavigationBar: createBottomNavigationBar(
+        context, 
+        SummaryPage(fields: fields, nextPage: StudyIdPage()
+      )),
     );
   }
 }

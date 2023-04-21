@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/instrument/form.dart';
-import 'package:namer_app/pages/selection/select_instrument.dart';
 import 'package:namer_app/utils.dart';
 
 import '../../components/app_bar.dart';
@@ -52,7 +51,7 @@ class _SelectFormState extends State<SelectForm> {
                           nextPage(context, IOOGPageView(instrument: widget.instrument));
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Theme.of(context).primaryColor,
+                          backgroundColor: Theme.of(context).primaryColor,
                           textStyle: TextStyle(fontSize: 18),
                           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                           shape: RoundedRectangleBorder(

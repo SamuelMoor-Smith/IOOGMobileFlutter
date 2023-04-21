@@ -5,7 +5,6 @@ import 'package:namer_app/pages/selection/study_id.dart';
 
 import '../../components/app_bar.dart';
 import '../../components/field_widgets/field_widget.dart';
-import '../../main.dart';
 import '../../models/instrument/instrument.dart';
 import '../summary.dart';
 
@@ -13,12 +12,16 @@ class IOOGPage extends StatefulWidget {
   final String title;
   final List<Widget?> fields;
   final Instrument instrument;
+  final PageController controller;
+  final int pageLength;
 
   const IOOGPage({
     Key? key,
     required this.title,
     required this.fields,
     required this.instrument,
+    required this.controller,
+    required this.pageLength,
   }) : super(key: key);
 
   @override
@@ -55,7 +58,7 @@ class _IOOGPageState extends State<IOOGPage> {
       bottomNavigationBar: createBottomNavigationBar(
         context,
         SummaryPage(fields: widget.fields, nextPage: StudyIdPage(), lastPage: widget),
-        StudyIdPage(),
+        widget.controller, widget.pageLength,
       ),
     );
   }

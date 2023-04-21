@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -6,7 +5,6 @@ import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choi
 import 'package:namer_app/models/choice.dart';
 import 'package:namer_app/style/text_styles.dart';
 
-import '../../../main.dart';
 import '../../../models/field/field.dart';
 import '../../../models/instrument/instrument.dart';
 import '../../../style/borders.dart';

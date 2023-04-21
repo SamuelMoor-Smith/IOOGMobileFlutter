@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/main.dart';
 import 'package:namer_app/models/field/field.dart';
 import 'package:namer_app/models/instrument/instrument.dart';
 

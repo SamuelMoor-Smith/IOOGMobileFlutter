@@ -4,7 +4,6 @@ import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choi
 import 'package:namer_app/style/borders.dart';
 import 'package:namer_app/style/text_styles.dart';
 
-import '../../../main.dart';
 import '../../../models/field/field.dart';
 import '../../../models/choice.dart';
 import '../../../models/instrument/instrument.dart';

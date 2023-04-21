@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/pages/selection/select_form.dart';
-import 'package:namer_app/pages/selection/study_id.dart';
-import 'package:namer_app/pages/survey_pages/ioog_page.dart';
 import 'package:namer_app/models/instrument/instrument.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page_view.dart';
 import 'package:namer_app/utils.dart';
 
 import '../../components/app_bar.dart';
-import '../../main.dart';
 import '../../services/REDCapAPI/services/fields_service.dart';
 import '../../services/REDCapAPI/services/instrument_service.dart';
 
@@ -61,7 +58,7 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: buttonColor,
+                  backgroundColor: buttonColor,
                   textStyle: TextStyle(fontSize: 25),
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   shape: RoundedRectangleBorder(

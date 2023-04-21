@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/field/field.dart';
 
-import '../../../main.dart';
 import '../../../models/choice.dart';
 import '../../../models/instrument/instrument.dart';
 import '../field_widget.dart';
