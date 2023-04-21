@@ -3,6 +3,7 @@ import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choi
 import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/pages/selection/study_id.dart';
 
+import '../components/app_bar.dart';
 import '../components/bottom_nav_bar.dart';
 import '../models/choice.dart';
 
@@ -37,9 +38,7 @@ class SummaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Summary Page"),
-      ),
+      appBar: CustomAppBar(title: "Summary of Entries"),
       body: ListView.builder(
         padding: const EdgeInsets.all(8),
         itemCount: fields.length,

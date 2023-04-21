@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/instrument/form.dart';
 import 'package:namer_app/pages/selection/select_instrument.dart';
+import 'package:namer_app/utils.dart';
 
+import '../../components/app_bar.dart';
 import '../../models/instrument/instrument.dart';
 import '../../services/REDCapAPI/services/fields_service.dart';
 import '../survey_pages/ioog_page_view.dart';
@@ -23,17 +25,7 @@ class _SelectFormState extends State<SelectForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit or Create Form"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () async {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => SelectEntryPage()),
-            );
-          },
-        ),
-      ),
+      appBar: CustomAppBar(title: "Edit or Create Form"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -57,9 +49,7 @@ class _SelectFormState extends State<SelectForm> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                    builder: (context) => IOOGPageView(instrument: widget.instrument),
-                                  ));
+                          nextPage(context, IOOGPageView(instrument: widget.instrument));
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Theme.of(context).primaryColor,
@@ -105,9 +95,7 @@ class _SelectFormState extends State<SelectForm> {
                                 color: Theme.of(context).primaryColor,
                                 onPressed: () async {
                                   await fillFieldsFromRecord(widget.instrument, widget.getForms()[index].getRecord());
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                    builder: (context) => IOOGPageView(instrument: widget.instrument),
-                                  ));
+                                  nextPage(context, IOOGPageView(instrument: widget.instrument));
                                 },
                               ),
                             );

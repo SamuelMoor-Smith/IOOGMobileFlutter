@@ -4,17 +4,19 @@ import 'package:namer_app/pages/selection/study_id.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page.dart';
 import 'package:namer_app/models/instrument/instrument.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page_view.dart';
+import 'package:namer_app/utils.dart';
 
+import '../../components/app_bar.dart';
 import '../../main.dart';
 import '../../services/REDCapAPI/services/fields_service.dart';
 import '../../services/REDCapAPI/services/instrument_service.dart';
 
-class SelectEntryPage extends StatefulWidget {
+class SelectInstrumentsPage extends StatefulWidget {
   @override
-  _SelectEntryPageState createState() => _SelectEntryPageState();
+  _SelectInstrumentsPageState createState() => _SelectInstrumentsPageState();
 }
 
-class _SelectEntryPageState extends State<SelectEntryPage> {
+class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
   List<Instrument> instruments = [];
 
   @override
@@ -35,19 +37,7 @@ class _SelectEntryPageState extends State<SelectEntryPage> {
     final primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(""),
-        backgroundColor: primaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () async {
-            await Future.delayed(Duration(milliseconds: 300));
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => StudyIdPage()),
-            );
-          },
-        ),
-      ),
+      appBar: CustomAppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -64,14 +54,10 @@ class _SelectEntryPageState extends State<SelectEntryPage> {
                   await getFields(instrument);
                   if (instrument.label == "Basic Demography Form") {
                     await fillFields(instrument);
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => IOOGPageView(instrument: instrument),
-                    ));
+                    nextPage(context, IOOGPageView(instrument: instrument));
                   } else {
                     await fillForms(instrument);
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => SelectForm(instrument: instrument),
-                    ));
+                    nextPage(context, SelectForm(instrument: instrument));
                   }
                 },
                 style: ElevatedButton.styleFrom(

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/utils.dart';
 
 BottomNavigationBar createBottomNavigationBar(BuildContext context, Widget forward, Widget backwards) {
   void _onItemTapped(int index) {
     if (index == 0) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => backwards,
-        ));
+      Navigator.pop(context);
     } else {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => forward,
-        ));
+      nextPage(context, forward);
     }
   }
   return BottomNavigationBar(

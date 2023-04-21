@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
+import 'package:namer_app/utils.dart';
 
+import '../../components/app_bar.dart';
 import '../../services/REDCapAPI/services/instrument_service.dart';
 import './select_instrument.dart';
 
@@ -11,10 +13,7 @@ class StudyIdPage extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor; // Get primary color from the theme
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Study ID"),
-        backgroundColor: primaryColor, // Use the primary color from the theme
-      ),
+      appBar: CustomAppBar(title: "Study ID"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: Column(
@@ -37,9 +36,7 @@ class StudyIdPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 APIConstants.studyId = studyIdController.text;
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => SelectEntryPage(),
-                ));
+                nextPage(context, SelectInstrumentsPage());
               },
               child: Text("Enter"),
               style: ElevatedButton.styleFrom(
