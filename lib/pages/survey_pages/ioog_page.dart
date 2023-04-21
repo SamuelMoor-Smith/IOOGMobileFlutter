@@ -58,7 +58,9 @@ class _IOOGPageState extends State<IOOGPage> {
       bottomNavigationBar: createBottomNavigationBar(
         context,
         SummaryPage(fields: widget.fields, nextPage: StudyIdPage(), lastPage: widget),
-        widget.controller, widget.pageLength,
+        widget.instrument.formKey,
+        widget.controller, 
+        widget.pageLength,
       ),
     );
   }

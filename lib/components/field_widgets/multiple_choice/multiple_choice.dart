@@ -18,6 +18,11 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
     return choices.isNotEmpty;
   }
 
+  @override
+  validated() {
+    return selectedChoices.isNotEmpty;
+  }
+
   Set<Choice> getSelectedChoices() {
     return selectedChoices;
   }

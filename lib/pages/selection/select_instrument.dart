@@ -48,6 +48,7 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
               padding: EdgeInsets.symmetric(vertical: 0.0),
               child: ElevatedButton(
                 onPressed: () async {
+                  instrument.clear();
                   await getFields(instrument);
                   if (instrument.label == "Basic Demography Form") {
                     await fillFields(instrument);

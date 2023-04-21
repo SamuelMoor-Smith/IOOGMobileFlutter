@@ -9,7 +9,7 @@ class Instrument {
 
   String name;
   String label;
-  final formKey = GlobalKey<FormBuilderState>();
+  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
   final ValueNotifier<Map<String, String>> formStateNotifier = ValueNotifier<Map<String, String>>({});
   Map<String, List<IOOGFieldWidget>> fields = {"base": []};
   List<String> sections = [];
@@ -54,8 +54,24 @@ class Instrument {
     forms.add(IOOGForm(date, side, record));
   }
 
+  void clear() {
+    clearForms();
+    clearFields();
+    regenerateFormKeyAndNotifier();
+  }
+
+  void regenerateFormKeyAndNotifier() {
+    formKey = GlobalKey<FormBuilderState>();
+    formStateNotifier.value = {};
+  }
+  
   void clearForms() {
     forms = [];
+  }
+
+  void clearFields() {
+    fields = {"base": []};
+    sections = [];
   }
 
   List<IOOGForm> getForms() {

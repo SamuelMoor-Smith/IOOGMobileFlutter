@@ -22,7 +22,11 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
   void initState() {
     super.initState();
     widget.textController.addListener(_onTextChanged);
-    widget.getFormStateNotifier().addListener(() => widget.checkBranchingLogic(setState));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.checkBranchingLogic(setState);
+    });
+    widget.getFormStateNotifier().addListener(() => 
+      widget.checkBranchingLogic(setState));
   }
 
   void _onTextChanged() {

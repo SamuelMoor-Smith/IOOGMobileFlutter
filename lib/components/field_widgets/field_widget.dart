@@ -17,9 +17,15 @@ abstract class IOOGFieldWidget extends StatefulWidget {
   IOOGFieldWidget ({ Key? key, required this.field, required this.instrument }): super(key: key);
 
   FormFieldValidator<String>? validator() {
-    return isRequired()
-        ? FormBuilderValidators.required(errorText: 'Please select an option')
-        : null;
+    if (shouldShow && isRequired()) {
+      if (isFilled()) {
+        return null;
+      } else {
+        return FormBuilderValidators.required(errorText: 'This field is required.');
+      }
+    } else {
+      return null;
+    }
   }
 
   Field getField() {

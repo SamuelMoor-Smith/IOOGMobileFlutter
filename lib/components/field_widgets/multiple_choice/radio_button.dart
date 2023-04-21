@@ -26,6 +26,10 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
   @override
   State<IOOGRadioGroup> createState() => _IOOGRadioGroup();
 
+  @override
+  validated() {
+    return selectedChoices.isNotEmpty;
+  }
 
   @override
   selectChoice(Choice choice) {
@@ -63,7 +67,11 @@ class _IOOGRadioGroup extends State<IOOGRadioGroup> {
   @override
   void initState() {
     super.initState();
-    widget.getFormStateNotifier().addListener(() => widget.checkBranchingLogic(setState));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.checkBranchingLogic(setState);
+    });
+    widget.getFormStateNotifier().addListener(() => 
+      widget.checkBranchingLogic(setState));
   }
 
   @override
