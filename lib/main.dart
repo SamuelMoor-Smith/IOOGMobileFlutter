@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Navigation Demo',
+      title: 'IOOG Mobile',
       theme: ThemeData(
         // primaryColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,

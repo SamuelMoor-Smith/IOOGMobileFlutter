@@ -6,7 +6,6 @@ import '../field_widgets/multiple_choice/multiple_choice.dart';
 import '../field_widgets/multiple_choice/radio_button.dart';
 
 abstract class ImageButton extends StatefulWidget {
-
   final IOOGMultipleChoice group;
   final String name;
   late Choice choice;
@@ -36,18 +35,16 @@ abstract class ImageButton extends StatefulWidget {
         group.updateForm();
       } else if (group is IOOGCheckGroup) {
         _isSelected = !_isSelected;
-        _isSelected
-            ? group.selectChoice(choice)
-            : group.unselectChoice(choice);
+        _isSelected ? group.selectChoice(choice) : group.unselectChoice(choice);
         group.updateForm();
       }
     });
-    group.updateFormState();
   }
 
   Border border() {
     return Border.all(
-      color: group.selectedChoices.contains(choice) ? Colors.green : Colors.black,
+      color:
+          group.selectedChoices.contains(choice) ? Colors.green : Colors.black,
       width: 2.0,
     );
   }

@@ -3,47 +3,62 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../components/field_widgets/field_widget.dart';
+import '../../services/form_key_manager.dart';
 import 'form.dart';
 
 class Instrument {
+  String _name;
+  String _label;
 
-  String name;
-  String label;
-  GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
-  final ValueNotifier<Map<String, String>> formStateNotifier = ValueNotifier<Map<String, String>>({});
-  Map<String, List<IOOGFieldWidget>> fields = {"base": []};
-  List<String> sections = [];
-  List<IOOGForm> forms = [];
+  FormKeyManager _formKeyManager = FormKeyManager();
 
-  Instrument(this.name, this.label);
-  
-  GlobalKey<FormBuilderState> getFormKey() {
-    return formKey;
+  List<IOOGForm> _forms = [];
+  List<String> _sections = [];
+  Map<String, List<IOOGFieldWidget>> _fields = {"base": []};
+
+  Instrument(this._name, this._label);
+
+  // Getters for all variables
+  String getName() {
+    return _name;
   }
 
-  ValueNotifier<Map<String, String>> getFormStateNotifier() {
-    return formStateNotifier;
+  String getLabel() {
+    return _label;
+  }
+
+  // Caller needs access to form key
+  GlobalKey<FormBuilderState> getFormKey() {
+    return _formKeyManager.getFormKey();
+  }
+
+  FormKeyManager getFormKeyManager() {
+    return _formKeyManager;
+  }
+
+  void updateAllFormFields(List<IOOGFieldWidget> fieldWidgets) {
+    _formKeyManager.updateAllFormFields(fieldWidgets);
   }
 
   bool isSectioned() {
-    return sections.isNotEmpty;
+    return _sections.isNotEmpty;
   }
 
   List<IOOGFieldWidget> getFields(String? section) {
-    if (section.isEmptyOrNull){
-      return fields['base']!;
+    if (section.isEmptyOrNull) {
+      return _fields['base']!;
     }
 
-    return fields[section]!;
+    return _fields[section]!;
   }
 
   List<String> getSections() {
-    return sections;
+    return _sections;
   }
 
   List<IOOGFieldWidget> getAllFieldWidgets() {
     List<IOOGFieldWidget> allFieldWidgets = [];
-    fields.forEach((key, value) {
+    _fields.forEach((key, value) {
       allFieldWidgets.addAll(value);
     });
     debugPrint(allFieldWidgets.toString());
@@ -51,44 +66,39 @@ class Instrument {
   }
 
   void addForm(date, side, record) {
-    forms.add(IOOGForm(date, side, record));
+    _forms.add(IOOGForm(date, side, record));
   }
 
   void clear() {
     clearForms();
     clearFields();
-    regenerateFormKeyAndNotifier();
+    _formKeyManager.regenerateFormKeyAndNotifier();
   }
 
-  void regenerateFormKeyAndNotifier() {
-    formKey = GlobalKey<FormBuilderState>();
-    formStateNotifier.value = {};
-  }
-  
   void clearForms() {
-    forms = [];
+    _forms = [];
   }
 
   void clearFields() {
-    fields = {"base": []};
-    sections = [];
+    _fields = {"base": []};
+    _sections = [];
   }
 
   List<IOOGForm> getForms() {
-    return forms;
+    return _forms;
   }
 
   void addFieldWidget(IOOGFieldWidget fieldWidget, String? section) {
     if (section.isEmptyOrNull) {
-      fields['base']!.add(fieldWidget);
+      _fields['base']!.add(fieldWidget);
       return;
-    } 
+    }
 
-    if (!fields.containsKey(section)) {
-      fields[section!] = [fieldWidget];
-      sections.add(section);
+    if (!_fields.containsKey(section)) {
+      _fields[section!] = [fieldWidget];
+      _sections.add(section);
     } else {
-      fields[section!]!.add(fieldWidget);
+      _fields[section!]!.add(fieldWidget);
     }
   }
 }

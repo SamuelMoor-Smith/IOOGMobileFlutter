@@ -5,14 +5,12 @@ import '../../models/instrument/instrument.dart';
 
 class IOOGPageView extends StatefulWidget {
   final Instrument instrument;
-  final Widget? nextPage;
 
   final PageController controller = PageController();
 
   IOOGPageView({
     Key? key,
     required this.instrument,
-    this.nextPage,
   }) : super(key: key);
 
   @override
@@ -24,26 +22,37 @@ class IOOGPageView extends StatefulWidget {
 
   List<Widget> getPages() {
     if (!instrument.isSectioned()) {
-      return [IOOGPage(title: instrument.label, fields: instrument.getFields(null), instrument: instrument, controller: controller, pageLength: 1,)];
+      return [
+        IOOGPage(
+          title: instrument.getLabel(),
+          fields: instrument.getFields(null),
+          instrument: instrument,
+          controller: controller,
+          pageLength: 1,
+        )
+      ];
     }
 
     List<IOOGPage> pages = [];
     for (String section in instrument.getSections()) {
-      pages.add(IOOGPage(title: section, fields: instrument.getFields(section), instrument: instrument, controller: controller, pageLength: instrument.getSections().length,));
+      pages.add(IOOGPage(
+        title: section,
+        fields: instrument.getFields(section),
+        instrument: instrument,
+        controller: controller,
+        pageLength: instrument.getSections().length,
+      ));
     }
     return pages;
   }
 }
 
 class _IOOGPageViewState extends State<IOOGPageView> {
-
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
         key: widget.getFormKey(),
-        onChanged: () {
-          widget.getFormKey().currentState!.save();
-        },
+        onChanged: () {},
         autovalidateMode: AutovalidateMode.disabled,
         initialValue: const {},
         child: PageView(

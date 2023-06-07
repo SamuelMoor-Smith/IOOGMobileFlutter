@@ -41,19 +41,25 @@ class _SelectFormState extends State<SelectForm> {
                   children: [
                     Text(
                       "Create New Entry",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          nextPage(context, IOOGPageView(instrument: widget.instrument));
+                          widget.instrument
+                              .getFormKeyManager()
+                              .regenerateFormKeyAndNotifier();
+                          nextPage(context,
+                              IOOGPageView(instrument: widget.instrument));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
                           textStyle: TextStyle(fontSize: 18),
-                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -79,7 +85,8 @@ class _SelectFormState extends State<SelectForm> {
                     children: [
                       Text(
                         "Select Old Form",
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10),
                       // Search bar or filters can be placed here if needed
@@ -93,8 +100,12 @@ class _SelectFormState extends State<SelectForm> {
                                 icon: Icon(Icons.edit),
                                 color: Theme.of(context).primaryColor,
                                 onPressed: () async {
-                                  await fillFieldsFromRecord(widget.instrument, widget.getForms()[index].getRecord());
-                                  nextPage(context, IOOGPageView(instrument: widget.instrument));
+                                  await fillFieldsFromRecord(widget.instrument,
+                                      widget.getForms()[index].getRecord());
+                                  nextPage(
+                                      context,
+                                      IOOGPageView(
+                                          instrument: widget.instrument));
                                 },
                               ),
                             );

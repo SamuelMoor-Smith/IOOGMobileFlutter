@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/field/field.dart';
+import 'package:namer_app/services/form_key_manager.dart';
 
 import '../../../models/choice.dart';
-import '../../../models/instrument/instrument.dart';
 import '../field_widget.dart';
 
 abstract class IOOGMultipleChoice extends IOOGFieldWidget {
-
   final Set<Choice> choices;
   Set<Choice> selectedChoices = {};
 
-  IOOGMultipleChoice ({ Key? key, required Field field, required Instrument instrument, required this.choices })
-  : super(key: key, field: field, instrument: instrument);
+  IOOGMultipleChoice(
+      {Key? key,
+      required Field field,
+      required FormKeyManager formKeyManager,
+      required this.choices})
+      : super(key: key, field: field, formKeyManager: formKeyManager);
 
   @override
   bool isFilled() {
@@ -33,7 +36,7 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
 
   selectChoice(Choice choice);
   unselectChoice(Choice choice);
-  
+
   fillChoiceByNum(String choiceNum) {
     for (Choice choice in choices) {
       if (choice.number == choiceNum) {

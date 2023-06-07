@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:namer_app/services/form_key_manager.dart';
 
 import '../../models/choice.dart';
 import '../../models/field/field.dart';
-import '../../models/instrument/instrument.dart';
 import '../field_widgets/multiple_choice/check_button.dart';
 import '../image_buttons/oval.dart';
 
 class Diagram extends IOOGCheckGroup {
-
   Diagram({
     Key? key,
     required Field field,
-    required Instrument instrument,
+    required FormKeyManager formKeyManager,
     required Set<Choice> choices,
   }) : super(
           key: key,
           choices: choices,
           field: field,
-          instrument: instrument,
+          formKeyManager: formKeyManager,
         );
 
   @override
@@ -29,8 +28,8 @@ class _DiagramState extends State<Diagram> {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-        visible: widget.shouldShow,
-        child: FormBuilderField(
+      visible: widget.shouldShow,
+      child: FormBuilderField(
           name: widget.getFieldName(),
           validator: widget.validator(),
           builder: (FormFieldState<dynamic> state) {
@@ -44,16 +43,52 @@ class _DiagramState extends State<Diagram> {
                     width: 260,
                     height: 184,
                   ),
-                  Oval(group: widget, name: "S1 Protympanum", left: 31, top: 61, width: 40, height: 40),
-                  Oval(group: widget, name: "A Epitympanum", left: 80, top: 34, width: 40, height: 40),
-                  Oval(group: widget, name: "Ma Antrum", left: 172, top: 46, width: 40, height: 40),
-                  Oval(group: widget, name: "T Meso/Hypo-Tympanum", left: 80, top: 112, width: 40, height: 40),
-                  Oval(group: widget, name: "S2 Sinus Tympani", left: 130, top: 92, width: 40, height: 40),
-                  Oval(group: widget, name: "Mc Mastoid cells", left: 178, top: 107, width: 40, height: 40),
+                  Oval(
+                      group: widget,
+                      name: "S1 Protympanum",
+                      left: 31,
+                      top: 61,
+                      width: 40,
+                      height: 40),
+                  Oval(
+                      group: widget,
+                      name: "A Epitympanum",
+                      left: 80,
+                      top: 34,
+                      width: 40,
+                      height: 40),
+                  Oval(
+                      group: widget,
+                      name: "Ma Antrum",
+                      left: 172,
+                      top: 46,
+                      width: 40,
+                      height: 40),
+                  Oval(
+                      group: widget,
+                      name: "T Meso/Hypo-Tympanum",
+                      left: 80,
+                      top: 112,
+                      width: 40,
+                      height: 40),
+                  Oval(
+                      group: widget,
+                      name: "S2 Sinus Tympani",
+                      left: 130,
+                      top: 92,
+                      width: 40,
+                      height: 40),
+                  Oval(
+                      group: widget,
+                      name: "Mc Mastoid cells",
+                      left: 178,
+                      top: 107,
+                      width: 40,
+                      height: 40),
                 ],
               ),
             );
           }),
-      );
+    );
   }
 }

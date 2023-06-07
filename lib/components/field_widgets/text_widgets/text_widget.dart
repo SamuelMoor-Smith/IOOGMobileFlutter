@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/field/field.dart';
-import 'package:namer_app/models/instrument/instrument.dart';
+import 'package:namer_app/services/form_key_manager.dart';
 
 import '../field_widget.dart';
 
 abstract class IOOGTextWidget extends IOOGFieldWidget {
-
   final textController = TextEditingController();
 
-  IOOGTextWidget ({ Key? key, required Field field, required Instrument instrument })
-  : super(key: key, field: field, instrument: instrument);
+  IOOGTextWidget(
+      {Key? key, required Field field, required FormKeyManager formKeyManager})
+      : super(key: key, field: field, formKeyManager: formKeyManager);
 
   @override
   bool isFilled() {
@@ -34,7 +34,6 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
 
   @override
   updateForm() {
-    instrument.getFormKey().currentState!.fields[getFieldName()]?.didChange(getEnteredText());
-    instrument.getFormKey().currentState!.save();
+    formKeyManager.updateForm(getFieldName(), getEnteredText());
   }
 }

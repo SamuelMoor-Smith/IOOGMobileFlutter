@@ -4,37 +4,66 @@ import 'package:namer_app/components/image_fields/cholesteatoma.dart';
 import 'package:namer_app/components/image_fields/diagram.dart';
 import 'package:namer_app/components/image_fields/mastoidectomy.dart';
 import 'package:namer_app/components/image_fields/ossicularchain.dart';
+import 'package:namer_app/services/form_key_manager.dart';
 
 import '../../components/field_widgets/multiple_choice/check_button.dart';
 import '../../components/field_widgets/multiple_choice/radio_button.dart';
 import '../../components/field_widgets/text_widgets/text_field.dart';
 import '../../models/field/field.dart';
-import '../../models/instrument/instrument.dart';
 
-IOOGFieldWidget? fieldWidget(Field field, Instrument instrument) {
-
+IOOGFieldWidget? fieldWidget(Field field, FormKeyManager formKeyManager) {
   switch (field.getFieldName()) {
     // case 'reac':
     //   return AudiogramGroup(field: field, instrument: instrument, choices: field.createChoices(),);
     case 'classification':
-      return Cholesteatoma(field: field, instrument: instrument, choices: field.createChoices(),);
+      return Cholesteatoma(
+        field: field,
+        formKeyManager: formKeyManager,
+        choices: field.createChoices(),
+      );
     case 'extent_cholesteatoma':
-      return Diagram(field: field, instrument: instrument, choices: field.createChoices(),);
+      return Diagram(
+        field: field,
+        formKeyManager: formKeyManager,
+        choices: field.createChoices(),
+      );
     case 'm_mastoid':
-      return Mastoidectomy(field: field, instrument: instrument, choices: field.createChoices(),);
+      return Mastoidectomy(
+        field: field,
+        formKeyManager: formKeyManager,
+        choices: field.createChoices(),
+      );
     case 'o_ossiculoplasty':
-      return OssicularChain(field: field, instrument: instrument, choices: field.createChoices(),); 
+      return OssicularChain(
+        field: field,
+        formKeyManager: formKeyManager,
+        choices: field.createChoices(),
+      );
   }
 
   switch (field.getFieldType()) {
     case 'text':
-      return IOOGTextField(field: field, instrument: instrument,);
+      return IOOGTextField(
+        field: field,
+        formKeyManager: formKeyManager,
+      );
     case 'notes':
-      return IOOGCommentsField(field: field, instrument: instrument,);
+      return IOOGCommentsField(
+        field: field,
+        formKeyManager: formKeyManager,
+      );
     case 'radio':
-      return IOOGRadioGroup(field: field, instrument: instrument, choices: field.createChoices(),);
+      return IOOGRadioGroup(
+        field: field,
+        formKeyManager: formKeyManager,
+        choices: field.createChoices(),
+      );
     case 'checkbox':
-      return IOOGCheckGroup(field: field, instrument: instrument, choices: field.createChoices(),);
+      return IOOGCheckGroup(
+        field: field,
+        formKeyManager: formKeyManager,
+        choices: field.createChoices(),
+      );
     default:
       return null;
   }

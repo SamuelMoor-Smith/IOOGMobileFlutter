@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/pages/selection/select_form.dart';
 import 'package:namer_app/models/instrument/instrument.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page_view.dart';
+import 'package:namer_app/services/REDCapAPI/api_constants.dart';
 import 'package:namer_app/utils.dart';
 
 import '../../components/app_bar.dart';
@@ -34,14 +35,17 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
     final primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        title: APIConstants.studyId!,
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: List<Widget>.generate(instruments.length, (int index) {
           Instrument instrument = instruments[index];
           double intensity = (index / instruments.length);
-          Color buttonColor = Color.lerp(Colors.blue.shade300, Colors.blue.shade800, intensity)!;
+          Color buttonColor = Color.lerp(
+              Colors.blue.shade300, Colors.blue.shade800, intensity)!;
 
           return Expanded(
             child: Padding(
@@ -50,7 +54,7 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
                 onPressed: () async {
                   instrument.clear();
                   await getFields(instrument);
-                  if (instrument.label == "Basic Demography Form") {
+                  if (instrument.getLabel() == "Basic Demography Form") {
                     await fillFields(instrument);
                     nextPage(context, IOOGPageView(instrument: instrument));
                   } else {
@@ -66,7 +70,7 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
                     borderRadius: BorderRadius.circular(0),
                   ),
                 ),
-                child: Text(instrument.label),
+                child: Text(instrument.getLabel()),
               ),
             ),
           );

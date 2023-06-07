@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/bottom_nav_bar.dart';
-import 'package:namer_app/pages/selection/study_id.dart';
+import 'package:namer_app/services/form_key_manager.dart';
 
 import '../../components/app_bar.dart';
 import '../../components/field_widgets/field_widget.dart';
@@ -27,23 +27,20 @@ class IOOGPage extends StatefulWidget {
   @override
   _IOOGPageState createState() => _IOOGPageState();
 
-  GlobalKey<FormBuilderState> getFormKey() {
-    return instrument.getFormKey();
+  FormKeyManager getFormKeyManager() {
+    return instrument.getFormKeyManager();
   }
 }
 
 class _IOOGPageState extends State<IOOGPage> {
-
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.getFormKey().currentState != null) {
-        for (IOOGFieldWidget fieldWidget in widget.fields.whereType<IOOGFieldWidget>().toList()) {
-          fieldWidget.updateForm();
-        }
-      }
+      List<IOOGFieldWidget> fieldWidgets =
+          widget.fields.whereType<IOOGFieldWidget>().toList();
+      widget.getFormKeyManager().updateAllFormFields(fieldWidgets);
     });
   }
 
@@ -52,14 +49,14 @@ class _IOOGPageState extends State<IOOGPage> {
     return Scaffold(
       appBar: CustomAppBar(title: widget.title),
       body: ListView(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(16),
         children: widget.fields.whereType<Widget>().toList(),
       ),
       bottomNavigationBar: createBottomNavigationBar(
         context,
-        SummaryPage(fields: widget.fields, nextPage: StudyIdPage(), lastPage: widget),
-        widget.instrument.formKey,
-        widget.controller, 
+        SummaryPage(fields: widget.fields, instrument: widget.instrument),
+        widget.getFormKeyManager(),
+        widget.controller,
         widget.pageLength,
       ),
     );

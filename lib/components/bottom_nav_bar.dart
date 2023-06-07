@@ -1,60 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:namer_app/services/form_key_manager.dart';
 import 'package:namer_app/utils.dart';
 
+void animateToPage(PageController controller, int nextPage) {
+  controller.animateToPage(
+    nextPage,
+    duration: Duration(milliseconds: 300),
+    curve: Curves.easeInOut,
+  );
+}
+
+int getNextPageNumber(
+    PageController? controller, int pageLength, int difference) {
+  if (controller != null && controller.hasClients) {
+    final nextPageNumber = controller.page!.round() + difference;
+    if (nextPageNumber >= 0 && nextPageNumber < pageLength) {
+      return nextPageNumber;
+    }
+  }
+  return -1;
+}
+
 BottomNavigationBar createBottomNavigationBar(
-  BuildContext context, 
-  Widget forward,
-  [GlobalKey<FormBuilderState>? formKey, PageController? controller, int pageLength = 1]) 
-{
+    BuildContext context, Widget forward, FormKeyManager formKeyManager,
+    [PageController? controller, int pageLength = 1]) {
   void _onItemTapped(int index) {
+    int nextPageNumber;
     if (index == 0) {
-      if (controller != null && controller.hasClients && controller.page! > 0) {
-        controller.animateToPage(
-          controller.page!.round() - 1,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
+      nextPageNumber = getNextPageNumber(controller, pageLength, -1);
+      if (nextPageNumber >= 0) {
+        animateToPage(controller!, nextPageNumber);
       } else {
         Navigator.pop(context);
       }
     } else {
-      bool isFormValid = formKey == null || formKey.currentState!.validate();
-      debugPrint('Form is valid: $isFormValid');
-      if (!isFormValid) {
-        formKey.currentState!.fields.forEach((fieldName, field) {
-          if (field.validate() != null) {
-            debugPrint('Field "$fieldName" had validation with message: ${field.validate()}');
-          }
-        });
-      }
-      // Validate returns true if the form is valid, or false otherwise.
-      if (formKey == null || formKey.currentState!.validate()) {
-        if (controller != null && controller.hasClients && controller.page! < pageLength - 1) {
-        controller.animateToPage(
-          controller.page!.round() + 1,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
+      if (formKeyManager.formIsValid()) {
+        nextPageNumber = getNextPageNumber(controller, pageLength, 1);
+        if (nextPageNumber >= 0) {
+          animateToPage(controller!, nextPageNumber);
         } else {
           nextPage(context, forward);
         }
       }
     }
   }
+
   return BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_back),
-            label: 'Back',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_forward),
-            label: 'Forward',
-            backgroundColor: Colors.blue,
-          ),
-        ],
-        onTap: _onItemTapped,
-      );
+    items: const <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(Icons.arrow_back),
+        label: 'Back',
+        backgroundColor: Colors.blue,
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.arrow_forward),
+        label: 'Forward',
+        backgroundColor: Colors.blue,
+      ),
+    ],
+    onTap: _onItemTapped,
+  );
 }
