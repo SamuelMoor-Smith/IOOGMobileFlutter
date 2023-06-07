@@ -6,3 +6,11 @@ void nextPage(BuildContext context, Widget nextPage) {
     MaterialPageRoute(builder: (context) => nextPage),
   );
 }
+
+void printError(text) {
+  debugPrint("ERROR: $text");
+}
+
+void printLog(text) {
+  debugPrint("LOG: $text");
+}

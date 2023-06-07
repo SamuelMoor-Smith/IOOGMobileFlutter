@@ -38,9 +38,12 @@ class _IOOGPageState extends State<IOOGPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      List<IOOGFieldWidget> fieldWidgets =
-          widget.fields.whereType<IOOGFieldWidget>().toList();
-      widget.getFormKeyManager().updateAllFormFields(fieldWidgets);
+      Future.delayed(Duration(milliseconds: 300), () {
+        // Delay until all widgets have been rendered
+        List<IOOGFieldWidget> fieldWidgets =
+            widget.fields.whereType<IOOGFieldWidget>().toList();
+        widget.getFormKeyManager().updateAllFormFields(fieldWidgets);
+      });
     });
   }
 

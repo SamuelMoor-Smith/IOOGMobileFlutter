@@ -1,6 +1,7 @@
 import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:namer_app/utils.dart';
 
 import '../components/field_widgets/field_widget.dart';
 import '../main.dart';
@@ -39,7 +40,7 @@ class FormKeyManager {
     // Check if the formFieldName exists
     final formFields = _formKey.currentState!.fields;
     if (!formFields.containsKey(formFieldName)) {
-      print("no key $formFieldName in the state");
+      printError("no key $formFieldName in the state");
       return;
     }
 
@@ -59,6 +60,8 @@ class FormKeyManager {
       return;
     }
 
+    printLog("update all form fields");
+
     // Update all form fields
     for (IOOGFieldWidget fieldWidget in fieldWidgets) {
       fieldWidget.updateForm();
@@ -75,8 +78,8 @@ class FormKeyManager {
     if (!isFormValid) {
       _formKey.currentState!.fields.forEach((fieldName, field) {
         if (!field.validate()) {
-          debugPrint(
-              'Field "$fieldName" had validation with message: ${field.validate()}');
+          printError(
+              "Field $fieldName had validation error: ${field.validate()}");
         }
       });
     }
@@ -85,7 +88,7 @@ class FormKeyManager {
 
   bool currentStateExists() {
     if (_formKey.currentState == null) {
-      debugPrint("current state is null");
+      printError("current state is null");
       return false;
     }
     return true;

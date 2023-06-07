@@ -61,7 +61,6 @@ class Instrument {
     _fields.forEach((key, value) {
       allFieldWidgets.addAll(value);
     });
-    debugPrint(allFieldWidgets.toString());
     return allFieldWidgets;
   }
 

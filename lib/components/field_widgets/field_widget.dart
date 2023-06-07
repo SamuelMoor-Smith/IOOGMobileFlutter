@@ -5,6 +5,8 @@ import 'package:namer_app/models/field/field.dart';
 import 'package:namer_app/services/form_key_manager.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../utils.dart';
+
 abstract class IOOGFieldWidget extends StatefulWidget {
   final Field field;
   final FormKeyManager formKeyManager;
@@ -58,14 +60,6 @@ abstract class IOOGFieldWidget extends StatefulWidget {
     return field.getParsedBranchingLogic();
   }
 
-  // GlobalKey<FormBuilderState> getFormKey() {
-  //   return instrument.getFormKey();
-  // }
-
-  // ValueNotifier<Map<String, String>> getFormStateNotifier() {
-  //   return instrument.getFormStateNotifier();
-  // }
-
   bool isFilled();
   void updateForm();
   void fillField(dynamic rawRecord);
@@ -77,12 +71,11 @@ abstract class IOOGFieldWidget extends StatefulWidget {
       try {
         setState(() {
           shouldShow = formKeyManager.shouldShow(expression);
-          // shouldShow = evaluator.eval(expression, getFormStateNotifier().value);
         });
       } catch (e) {
-        debugPrint(branchingLogic);
-        debugPrint(field.getFieldLabel());
-        debugPrint(e.toString());
+        printError("Error evaluating branching logic ${e.toString()}");
+        printError(branchingLogic);
+        printError(field.getFieldLabel());
       }
     }
   }
