@@ -1,6 +1,6 @@
 import json
 
-metadata = json.load(open('/Users/samuelmoor-smith/Desktop/flutter_application_2/lib/storage/metadata.json'))
+metadata = json.load(open('/Users/samuelmoor-smith/Desktop/Desktop/flutter_application_2/lib/storage/metadata.json'))
 
 def isRequired(field):
     return "true" if field["required_field"] == "y" else "false"

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'audiogram_button.dart';
 
 class LEACButton extends AudiogramButton {
-
   LEACButton({
     Key? key,
     required String field,
@@ -12,15 +11,15 @@ class LEACButton extends AudiogramButton {
     required double top,
     required double width,
     required double height,
-  }) : super( 
-    key: key, 
-    field: field,
-    value: value,
-    left: left,
-    top: top,
-    width: width,
-    height: height,
-  );
+  }) : super(
+          key: key,
+          field: field,
+          value: value,
+          left: left,
+          top: top,
+          width: width,
+          height: height,
+        );
 
   @override
   State<LEACButton> createState() => _LEACButtonState();
@@ -48,7 +47,7 @@ class _LEACButtonState extends State<LEACButton> {
                 ? ColorFilter.mode(Colors.blue, BlendMode.srcIn)
                 : ColorFilter.mode(Colors.black, BlendMode.srcIn),
             child: Image.asset(
-              '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/audiograms/leac.png',
+              'assets/images/audiograms/leac.png',
               fit: BoxFit.contain,
             ),
           ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'audiogram_button.dart';
 
 class LEBCButton extends AudiogramButton {
-
   LEBCButton({
     Key? key,
     required String field,
@@ -12,15 +11,15 @@ class LEBCButton extends AudiogramButton {
     required double top,
     required double width,
     required double height,
-  }) : super( 
-    key: key, 
-    field: field,
-    value: value,
-    left: left,
-    top: top,
-    width: width,
-    height: height,
-  );
+  }) : super(
+          key: key,
+          field: field,
+          value: value,
+          left: left,
+          top: top,
+          width: width,
+          height: height,
+        );
 
   @override
   State<LEBCButton> createState() => _LEBCButtonState();
@@ -48,7 +47,7 @@ class _LEBCButtonState extends State<LEBCButton> {
                 ? ColorFilter.mode(Colors.black, BlendMode.srcIn)
                 : ColorFilter.mode(Colors.grey, BlendMode.srcIn),
             child: Image.asset(
-              '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/audiograms/lebc.png',
+              'assets/images/audiograms/lebc.png',
               fit: BoxFit.contain,
             ),
           ),

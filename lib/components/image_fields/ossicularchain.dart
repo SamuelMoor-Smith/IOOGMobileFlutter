@@ -38,8 +38,7 @@ class _OssicularChainState extends State<OssicularChain> {
               child: Stack(
                 children: [
                   Image(
-                    image: AssetImage(
-                        '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/ossicularchain_w_ou.png'),
+                    image: AssetImage('assets/images/ossicularchain_w_ou.png'),
                     width: 260,
                     height: 445.6,
                   ),

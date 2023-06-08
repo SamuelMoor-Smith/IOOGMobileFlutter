@@ -38,8 +38,7 @@ class _DiagramState extends State<Diagram> {
               child: Stack(
                 children: [
                   Image(
-                    image: AssetImage(
-                        '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/diagram.jpg'),
+                    image: AssetImage('assets/images/diagram.jpg'),
                     width: 260,
                     height: 184,
                   ),

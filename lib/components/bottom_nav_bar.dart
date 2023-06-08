@@ -4,11 +4,15 @@ import 'package:namer_app/services/form_key_manager.dart';
 import 'package:namer_app/utils.dart';
 
 void animateToPage(PageController controller, int nextPage) {
-  controller.animateToPage(
-    nextPage,
-    duration: Duration(milliseconds: 300),
-    curve: Curves.easeInOut,
-  );
+  try {
+    controller.animateToPage(
+      nextPage,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  } catch (e) {
+    printError(e.toString());
+  }
 }
 
 int getNextPageNumber(

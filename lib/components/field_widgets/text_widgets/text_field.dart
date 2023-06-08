@@ -21,11 +21,19 @@ class _IOOGTextField extends State<IOOGTextField> {
     super.initState();
     widget.textController.addListener(_onTextChanged);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.checkBranchingLogic(setState);
+      widget.checkBranchingLogic(setState, mounted);
     });
     widget.formKeyManager
         .getFormStateNotifier()
-        .addListener(() => widget.checkBranchingLogic(setState));
+        .addListener(() => widget.checkBranchingLogic(setState, mounted));
+  }
+
+  @override
+  void dispose() {
+    widget.formKeyManager
+        .getFormStateNotifier()
+        .removeListener(() => widget.checkBranchingLogic(setState, mounted));
+    super.dispose();
   }
 
   void _onTextChanged() {

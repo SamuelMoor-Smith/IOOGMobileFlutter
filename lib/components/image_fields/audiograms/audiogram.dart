@@ -90,8 +90,7 @@ class _AudiogramState extends State<Audiogram> {
               child: Stack(
                 children: [
                   Image(
-                    image: AssetImage(
-                        '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/audiogram_small.png'),
+                    image: AssetImage('assets/images/audiogram_small.png'),
                     width: 250,
                     height: 575,
                   ),

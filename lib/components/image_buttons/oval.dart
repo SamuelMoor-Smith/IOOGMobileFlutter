@@ -3,7 +3,6 @@ import '../field_widgets/multiple_choice/multiple_choice.dart';
 import 'image_button.dart';
 
 class Oval extends ImageButton {
-
   Oval({
     required IOOGMultipleChoice group,
     required String name,

@@ -39,8 +39,7 @@ class _CholesteatomaState extends State<Cholesteatoma> {
               child: Stack(
                 children: [
                   Image(
-                    image: AssetImage(
-                        '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/cholesteatoma.png'),
+                    image: AssetImage('assets/images/cholesteatoma.png'),
                     width: 260,
                     height: 173,
                   ),

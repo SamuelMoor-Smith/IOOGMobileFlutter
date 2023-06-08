@@ -64,18 +64,19 @@ abstract class IOOGFieldWidget extends StatefulWidget {
   void updateForm();
   void fillField(dynamic rawRecord);
 
-  void checkBranchingLogic(setState) {
+  void checkBranchingLogic(setState, mounted) {
     String branchingLogic = field.getParsedBranchingLogic();
     if (!branchingLogic.isEmptyOrNull) {
       var expression = Expression.parse(branchingLogic);
       try {
-        setState(() {
-          shouldShow = formKeyManager.shouldShow(expression);
-        });
+        if (mounted) {
+          setState(() {
+            shouldShow = formKeyManager.shouldShow(expression);
+          });
+        }
       } catch (e) {
-        printError("Error evaluating branching logic ${e.toString()}");
-        printError(branchingLogic);
-        printError(field.getFieldLabel());
+        printError(
+            "Error evaluating branching logic for ${field.getFieldLabel()}: ${e.toString()}");
       }
     }
   }

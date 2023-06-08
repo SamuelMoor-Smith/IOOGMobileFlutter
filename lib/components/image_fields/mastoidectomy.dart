@@ -38,8 +38,7 @@ class _MastoidectomyState extends State<Mastoidectomy> {
               child: Stack(
                 children: [
                   Image(
-                    image: AssetImage(
-                        '/Users/samuelmoor-smith/IOOGMobileFlutter/assets/images/mastoidectomy_w_mu.png'),
+                    image: AssetImage('assets/images/mastoidectomy_w_mu.png'),
                     width: 260,
                     height: 440,
                   ),

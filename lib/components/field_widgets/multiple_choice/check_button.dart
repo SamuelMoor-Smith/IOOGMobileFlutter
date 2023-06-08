@@ -61,11 +61,19 @@ class _IOOGCheckGroup extends State<IOOGCheckGroup> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.checkBranchingLogic(setState);
+      widget.checkBranchingLogic(setState, mounted);
     });
     widget.formKeyManager
         .getFormStateNotifier()
-        .addListener(() => widget.checkBranchingLogic(setState));
+        .addListener(() => widget.checkBranchingLogic(setState, mounted));
+  }
+
+  @override
+  void dispose() {
+    widget.formKeyManager
+        .getFormStateNotifier()
+        .removeListener(() => widget.checkBranchingLogic(setState, mounted));
+    super.dispose();
   }
 
   @override

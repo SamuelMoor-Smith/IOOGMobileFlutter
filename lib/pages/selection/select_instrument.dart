@@ -32,8 +32,6 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
-
     return Scaffold(
       appBar: CustomAppBar(
         title: APIConstants.studyId!,

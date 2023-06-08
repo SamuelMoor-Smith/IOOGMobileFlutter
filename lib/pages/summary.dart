@@ -38,53 +38,57 @@ class SummaryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: "Summary of Entries"),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            // make the text bigger
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Text(instrument.getLabel(),
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-            ),
-            Table(
-              columnWidths: {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(1),
-              },
-              children: fields
-                  .where((field) => getInput(field).isNotEmpty)
-                  .toList()
-                  .asMap()
-                  .entries
-                  .map((entry) {
-                int idx = entry.key;
-                Widget? field = entry.value;
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              // make the text bigger
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Text(instrument.getLabel(),
+                    style:
+                        TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              ),
+              Table(
+                columnWidths: {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(1),
+                },
+                children: fields
+                    .where((field) => getInput(field).isNotEmpty)
+                    .toList()
+                    .asMap()
+                    .entries
+                    .map((entry) {
+                  int idx = entry.key;
+                  Widget? field = entry.value;
 
-                return TableRow(
-                    decoration: new BoxDecoration(
-                      color:
-                          idx % 2 == 1 ? Colors.transparent : Colors.blue[50]!,
-                    ),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '${getTitle(field)}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                  return TableRow(
+                      decoration: new BoxDecoration(
+                        color: idx % 2 == 1
+                            ? Colors.transparent
+                            : Colors.blue[50]!,
+                      ),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            '${getTitle(field)}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(getInput(field)),
-                      ),
-                    ]);
-              }).toList(),
-            ),
-          ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(getInput(field)),
+                        ),
+                      ]);
+                }).toList(),
+              ),
+            ],
+          ),
         ),
       ),
       bottomSheet: Container(

@@ -26,15 +26,18 @@ class FormKeyManager {
   }
 
   void saveForm() {
+    if (!currentStateExists()) {
+      return;
+    }
     _formKey.currentState?.save();
   }
 
   bool shouldShow(Expression? expression) {
-    return true;
-    // if (expression == null) {
-    //   return true;
-    // }
-    // return evaluator.eval(expression, _formStateNotifier.value);
+    // return true;
+    if (expression == null) {
+      return true;
+    }
+    return evaluator.eval(expression, _formStateNotifier.value);
   }
 
   void updateForm(String formFieldName, String? newValue) {
