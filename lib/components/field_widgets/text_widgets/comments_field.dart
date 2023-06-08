@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/style/AppColors.dart';
+import 'package:namer_app/utils.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../models/field/field.dart';
@@ -23,6 +24,7 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
     widget.textController.addListener(_onTextChanged);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.checkBranchingLogic(setState);
+      printLog(widget.formKeyManager.getFormKey().currentState!.fields);
     });
     widget.formKeyManager
         .getFormStateNotifier()

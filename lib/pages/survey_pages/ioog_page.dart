@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/bottom_nav_bar.dart';
 import 'package:namer_app/services/form_key_manager.dart';
+import 'package:namer_app/utils.dart';
 
 import '../../components/app_bar.dart';
 import '../../components/field_widgets/field_widget.dart';
@@ -38,7 +39,9 @@ class _IOOGPageState extends State<IOOGPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 300), () {
+      printLog(
+          "The current state is ${widget.instrument.getFormKeyManager().getFormKey().currentState!.fields}");
+      Future.delayed(Duration(milliseconds: 500), () {
         // Delay until all widgets have been rendered
         List<IOOGFieldWidget> fieldWidgets =
             widget.fields.whereType<IOOGFieldWidget>().toList();
@@ -53,7 +56,7 @@ class _IOOGPageState extends State<IOOGPage> {
       appBar: CustomAppBar(title: widget.title),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: widget.fields.whereType<Widget>().toList(),
+        children: widget.fields.whereType<IOOGFieldWidget>().toList(),
       ),
       bottomNavigationBar: createBottomNavigationBar(
         context,

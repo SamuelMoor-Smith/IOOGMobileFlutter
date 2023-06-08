@@ -52,7 +52,9 @@ class _IOOGPageViewState extends State<IOOGPageView> {
   Widget build(BuildContext context) {
     return FormBuilder(
         key: widget.getFormKey(),
-        onChanged: () {},
+        onChanged: () {
+          widget.instrument.getFormKeyManager().saveForm();
+        },
         autovalidateMode: AutovalidateMode.disabled,
         initialValue: const {},
         child: PageView(

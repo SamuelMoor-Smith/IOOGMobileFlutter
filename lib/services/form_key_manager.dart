@@ -21,15 +21,20 @@ class FormKeyManager {
   }
 
   void regenerateFormKeyAndNotifier() {
-    _formKey = GlobalKey<FormBuilderState>();
+    _formKey.currentState?.reset();
     _formStateNotifier.value = {};
   }
 
+  void saveForm() {
+    _formKey.currentState?.save();
+  }
+
   bool shouldShow(Expression? expression) {
-    if (expression == null) {
-      return true;
-    }
-    return evaluator.eval(expression, _formStateNotifier.value);
+    return true;
+    // if (expression == null) {
+    //   return true;
+    // }
+    // return evaluator.eval(expression, _formStateNotifier.value);
   }
 
   void updateForm(String formFieldName, String? newValue) {
@@ -37,9 +42,12 @@ class FormKeyManager {
       return;
     }
 
+    printLog(formFieldName);
     // Check if the formFieldName exists
     final formFields = _formKey.currentState!.fields;
     if (!formFields.containsKey(formFieldName)) {
+      print(formFieldName);
+      print(formFields.keys.toList());
       printError("no key $formFieldName in the state");
       return;
     }
