@@ -27,8 +27,8 @@ class Diagram extends IOOGCheckGroup {
 class _DiagramState extends State<Diagram> {
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: widget.shouldShow,
+    return Offstage(
+      offstage: !widget.shouldShow,
       child: FormBuilderField(
           name: widget.getFieldName(),
           validator: widget.validator(),

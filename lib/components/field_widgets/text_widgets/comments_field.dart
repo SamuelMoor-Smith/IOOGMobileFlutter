@@ -24,7 +24,6 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
     widget.textController.addListener(_onTextChanged);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.checkBranchingLogic(setState, mounted);
-      printLog(widget.formKeyManager.getFormKey().currentState!.fields);
     });
     widget.formKeyManager
         .getFormStateNotifier()
@@ -45,8 +44,8 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: widget.shouldShow,
+    return Offstage(
+      offstage: !widget.shouldShow,
       child: Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: FormBuilderTextField(

@@ -33,6 +33,11 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
   }
 
   @override
+  void clearField() {
+    setEnteredText('');
+  }
+
+  @override
   updateForm() {
     formKeyManager.updateForm(getFieldName(), getEnteredText());
   }

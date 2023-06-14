@@ -28,8 +28,8 @@ class Cholesteatoma extends IOOGRadioGroup {
 class _CholesteatomaState extends State<Cholesteatoma> {
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: widget.shouldShow,
+    return Offstage(
+      offstage: !widget.shouldShow,
       child: FormBuilderField(
           name: widget.getFieldName(),
           validator: widget.validator(),

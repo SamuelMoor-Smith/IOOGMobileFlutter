@@ -5,7 +5,7 @@ import 'package:namer_app/pages/selection/study_id.dart';
 
 import '../components/app_bar.dart';
 import '../components/bottom_nav_bar.dart';
-import '../models/instrument/instrument.dart';
+import '../models/instrument.dart';
 
 String getTitle(fieldWidget) {
   return fieldWidget.getField().field_label ?? '';
@@ -26,7 +26,7 @@ String getInput(fieldWidget) {
 
 class SummaryPage extends StatelessWidget {
   final List<Widget?> fields;
-  final Instrument instrument;
+  final IOOGInstrument instrument;
 
   const SummaryPage({
     Key? key,

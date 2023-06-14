@@ -1,35 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/bottom_nav_bar.dart';
+import 'package:namer_app/models/section.dart';
 import 'package:namer_app/services/form_key_manager.dart';
 import 'package:namer_app/utils.dart';
 
 import '../../components/app_bar.dart';
 import '../../components/field_widgets/field_widget.dart';
-import '../../models/instrument/instrument.dart';
+import '../../models/instrument.dart';
+import '../../style/containers/form_container.dart';
 import '../summary.dart';
 
 class IOOGPage extends StatefulWidget {
-  final String title;
-  final List<Widget?> fields;
-  final Instrument instrument;
-  final PageController controller;
-  final int pageLength;
+  final IOOGSection _section;
+  final IOOGInstrument _instrument;
+  final PageController _controller;
+  final int _pageLength;
 
   const IOOGPage({
     Key? key,
-    required this.title,
-    required this.fields,
-    required this.instrument,
-    required this.controller,
-    required this.pageLength,
-  }) : super(key: key);
+    required IOOGSection section,
+    required IOOGInstrument instrument,
+    required PageController controller,
+    required int pageLength,
+  })  : _controller = controller,
+        _pageLength = pageLength,
+        _instrument = instrument,
+        _section = section,
+        super(key: key);
 
   @override
   _IOOGPageState createState() => _IOOGPageState();
 
   FormKeyManager getFormKeyManager() {
-    return instrument.getFormKeyManager();
+    return _instrument.getFormKeyManager();
+  }
+
+  List<Widget> get fields {
+    return _section.getFields();
   }
 }
 
@@ -38,32 +46,45 @@ class _IOOGPageState extends State<IOOGPage> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      printLog(
-          "The current state is ${widget.instrument.getFormKeyManager().getFormKey().currentState!.fields}");
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   printLog(
+    //       "The current state is ${widget.instrument.getFormKeyManager().getFormKey().currentState!.fields}");
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (mounted) {
       Future.delayed(Duration(milliseconds: 500), () {
         // Delay until all widgets have been rendered
         List<IOOGFieldWidget> fieldWidgets =
             widget.fields.whereType<IOOGFieldWidget>().toList();
         widget.getFormKeyManager().updateAllFormFields(fieldWidgets);
       });
-    });
-  }
+    }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: widget.title),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: widget.fields.whereType<IOOGFieldWidget>().toList(),
-      ),
+      appBar: CustomAppBar(title: widget._section.getLabel()),
+      // body: ListView(
+      //   padding: const EdgeInsets.all(16),
+      //   children: widget.fields.whereType<IOOGFieldWidget>().toList(),
+      // ),
+      body: FormContainer(
+          child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: widget.fields.whereType<IOOGFieldWidget>().toList(),
+          ),
+        ),
+      )),
       bottomNavigationBar: createBottomNavigationBar(
         context,
-        SummaryPage(fields: widget.fields, instrument: widget.instrument),
+        SummaryPage(fields: widget.fields, instrument: widget._instrument),
         widget.getFormKeyManager(),
-        widget.controller,
-        widget.pageLength,
+        widget._controller,
+        widget._pageLength,
       ),
     );
   }

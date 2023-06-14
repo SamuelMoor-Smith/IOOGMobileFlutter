@@ -63,6 +63,7 @@ abstract class IOOGFieldWidget extends StatefulWidget {
   bool isFilled();
   void updateForm();
   void fillField(dynamic rawRecord);
+  void clearField();
 
   void checkBranchingLogic(setState, mounted) {
     String branchingLogic = field.getParsedBranchingLogic();

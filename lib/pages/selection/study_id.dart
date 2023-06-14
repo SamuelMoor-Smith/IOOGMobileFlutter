@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
+import 'package:namer_app/style/containers/form_container.dart';
 import 'package:namer_app/utils.dart';
 
+import '../../models/user-project.dart';
 import './select_instrument.dart';
 
 class StudyIdPage extends StatelessWidget {
+  final UserProject project;
+
+  StudyIdPage(this.project);
+
   @override
   Widget build(BuildContext context) {
     final studyIdController = TextEditingController();
-    final primaryColor = Theme.of(context).primaryColor; // Get primary color from the theme
+    final primaryColor =
+        Theme.of(context).primaryColor; // Get primary color from the theme
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Study ID"),
         backgroundColor: primaryColor,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+      body: FormContainer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,14 +39,17 @@ class StudyIdPage extends StatelessWidget {
                 fillColor: Colors.white,
               ),
             ),
-            SizedBox(height: 20.0), // Add some space between the TextField and Button
+            SizedBox(
+                height:
+                    20.0), // Add some space between the TextField and Button
             ElevatedButton(
               onPressed: () async {
                 APIConstants.studyId = studyIdController.text;
-                nextPage(context, SelectInstrumentsPage());
+                nextPage(context, SelectInstrumentsPage(project));
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: primaryColor, // Use the primary color from the theme
+                backgroundColor:
+                    primaryColor, // Use the primary color from the theme
                 textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 shape: RoundedRectangleBorder(

@@ -36,6 +36,7 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
 
   selectChoice(Choice choice);
   unselectChoice(Choice choice);
+  // buildChoices();
 
   fillChoiceByNum(String choiceNum) {
     for (Choice choice in choices) {

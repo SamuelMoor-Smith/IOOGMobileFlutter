@@ -45,12 +45,9 @@ class FormKeyManager {
       return;
     }
 
-    printLog(formFieldName);
     // Check if the formFieldName exists
     final formFields = _formKey.currentState!.fields;
     if (!formFields.containsKey(formFieldName)) {
-      print(formFieldName);
-      print(formFields.keys.toList());
       printError("no key $formFieldName in the state");
       return;
     }
@@ -71,7 +68,7 @@ class FormKeyManager {
       return;
     }
 
-    printLog("update all form fields");
+    printLog("updating all form fields");
 
     // Update all form fields
     for (IOOGFieldWidget fieldWidget in fieldWidgets) {

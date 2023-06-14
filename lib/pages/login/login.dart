@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:namer_app/models/user-project.dart';
 import 'package:namer_app/services/REDCapAPI/ok.dart';
 import 'package:namer_app/services/login.dart';
 import 'package:namer_app/services/REDCapAPI/api_constants.dart';
 import '../selection/study_id.dart';
 
 class LoginScreen extends StatelessWidget {
-
   final apiUrl = UserFormField(
-    keyName: "apiUrl", 
+    keyName: "apiUrl",
     displayName: "REDCap API url",
   );
 
   final token = UserFormField(
-    keyName: "token", 
+    keyName: "token",
     displayName: "REDCap API Access Token",
   );
 
@@ -24,16 +24,15 @@ class LoginScreen extends StatelessWidget {
       APIConstants.apiUrl = user.apiUrl;
       APIConstants.token = user.token;
     }
-    await apiOK();
+    await apiOK(); // TODO: this returns error i think
     return success == true ? null : "Something went wrong";
   }
 
   Future<String?>? _onSignup(SignupData data) {
-
     final user = UserSecureStorage.createUser(
-      data.name, 
-      data.password, 
-      data.additionalSignupData!['apiUrl'], 
+      data.name,
+      data.password,
+      data.additionalSignupData!['apiUrl'],
       data.additionalSignupData!['token'],
     );
 
@@ -60,7 +59,7 @@ class LoginScreen extends StatelessWidget {
       additionalSignupFields: [apiUrl, token],
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => StudyIdPage(),
+          builder: (context) => StudyIdPage(UserProject()),
         ));
       },
     );

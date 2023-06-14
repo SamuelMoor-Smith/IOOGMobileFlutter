@@ -9,12 +9,18 @@ import 'package:namer_app/services/form_key_manager.dart';
 import '../../components/field_widgets/multiple_choice/check_button.dart';
 import '../../components/field_widgets/multiple_choice/radio_button.dart';
 import '../../components/field_widgets/text_widgets/text_field.dart';
+import '../../components/image_fields/audiograms/enter_audiogram.dart';
 import '../../models/field/field.dart';
 
 IOOGFieldWidget? fieldWidget(Field field, FormKeyManager formKeyManager) {
   switch (field.getFieldName()) {
     // case 'reac':
     //   return AudiogramGroup(field: field, instrument: instrument, choices: field.createChoices(),);
+    case 'last_preop':
+      return EnterAudiogram(
+        field: field,
+        formKeyManager: formKeyManager,
+      );
     case 'classification':
       return Cholesteatoma(
         field: field,

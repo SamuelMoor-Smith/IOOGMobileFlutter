@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:namer_app/components/loading.dart';
+import 'package:namer_app/models/section.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page.dart';
-import '../../models/instrument/instrument.dart';
+import 'package:namer_app/utils.dart';
+import '../../models/instrument.dart';
+import '../../services/REDCapAPI/services/fields_service.dart';
 
 class IOOGPageView extends StatefulWidget {
-  final Instrument instrument;
+  final IOOGInstrument instrument;
 
   final PageController controller = PageController();
 
@@ -21,23 +25,10 @@ class IOOGPageView extends StatefulWidget {
   }
 
   List<Widget> getPages() {
-    if (!instrument.isSectioned()) {
-      return [
-        IOOGPage(
-          title: instrument.getLabel(),
-          fields: instrument.getFields(null),
-          instrument: instrument,
-          controller: controller,
-          pageLength: 1,
-        )
-      ];
-    }
-
     List<IOOGPage> pages = [];
-    for (String section in instrument.getSections()) {
+    for (IOOGSection section in instrument.getSections()) {
       pages.add(IOOGPage(
-        title: section,
-        fields: instrument.getFields(section),
+        section: section,
         instrument: instrument,
         controller: controller,
         pageLength: instrument.getSections().length,
@@ -48,6 +39,37 @@ class IOOGPageView extends StatefulWidget {
 }
 
 class _IOOGPageViewState extends State<IOOGPageView> {
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    loadIOOGPageView();
+  }
+
+  Future<void> loadIOOGPageView() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    // fetch the fields if they aren't there already
+    await widget.instrument.fetchFieldsForInstrument();
+
+    if (widget.instrument.getRecordIndex() != null) {
+      await fillFieldsFromRecord(
+          widget.instrument,
+          widget.instrument
+              .getForms()[widget.instrument.getRecordIndex()!]
+              .getRecord());
+    } else {
+      await fillFields(widget.instrument);
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
@@ -56,11 +78,13 @@ class _IOOGPageViewState extends State<IOOGPageView> {
           widget.instrument.getFormKeyManager().saveForm();
         },
         autovalidateMode: AutovalidateMode.disabled,
-        initialValue: const {},
-        child: PageView(
-          controller: widget.controller,
-          physics: NeverScrollableScrollPhysics(), // Disable swipe navigation
-          children: widget.getPages(),
-        ));
+        child: _isLoading
+            ? Loading()
+            : PageView(
+                controller: widget.controller,
+                physics:
+                    NeverScrollableScrollPhysics(), // Disable swipe navigation
+                children: widget.getPages(),
+              ));
   }
 }

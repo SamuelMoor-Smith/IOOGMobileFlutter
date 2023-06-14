@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import '../../../models/instrument/instrument.dart';
+import '../../../models/instrument.dart';
+import '../../../utils.dart';
 import '../api_constants.dart';
 
 Map<String, String> instrumentsBody() {
@@ -13,7 +14,7 @@ Map<String, String> instrumentsBody() {
   });
 }
 
-Future<List<Instrument>> getInstruments() async {
+Future<List<IOOGInstrument>> getInstruments() async {
   try {
     var url = Uri.parse(APIConstants.apiUrl!);
     var response = await http.post(
@@ -23,18 +24,18 @@ Future<List<Instrument>> getInstruments() async {
     );
 
     if (response.statusCode == 200) {
-      return List<Instrument>.from(json
-              .decode(response.body)
-              .map((raw) =>
-                  Instrument(raw['instrument_name'], raw['instrument_label']))
-              .where((dynamic instrument) =>
-                  (instrument is Instrument) &&
-                  instrument.getLabel() != "Study ID" &&
-                  instrument.getLabel() != "Phenx Audiogram Hearing Test"))
-          .toList();
+      return List<IOOGInstrument>.from(json
+          .decode(response.body)
+          .map((raw) =>
+              IOOGInstrument(raw['instrument_name'], raw['instrument_label']))
+          .where((dynamic instrument) =>
+              (instrument is IOOGInstrument) &&
+              instrument.getLabel() != "Study ID" &&
+              instrument.getLabel() !=
+                  "Phenx Audiogram Hearing Test")).toList();
     }
   } catch (e) {
-    log(e.toString());
+    printError(e.toString());
   }
   return [];
 }

@@ -2,13 +2,15 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:namer_app/components/field_widgets/field_widget.dart';
+import 'package:namer_app/models/section.dart';
 import 'package:nb_utils/nb_utils.dart';
-import '../../../models/instrument/instrument.dart';
+import '../../../models/instrument.dart';
 import '../../../models/field/field.dart';
+import '../../../utils.dart';
 import '../../utils/create_widgets.dart';
 import '../api_constants.dart';
 
-Object fieldsBody(Instrument instrument) {
+Object fieldsBody(IOOGInstrument instrument) {
   return Map.of({
     "token": APIConstants.token!,
     "content": "metadata",
@@ -17,7 +19,7 @@ Object fieldsBody(Instrument instrument) {
   });
 }
 
-Object fieldsFillBody(Instrument instrument) {
+Object fieldsFillBody(IOOGInstrument instrument) {
   return Map.of({
     "token": APIConstants.token!,
     "content": "record",
@@ -28,7 +30,7 @@ Object fieldsFillBody(Instrument instrument) {
   });
 }
 
-Future<void> getFields(Instrument instrument) async {
+Future<void> fetchFields(IOOGInstrument instrument) async {
   try {
     var url = Uri.parse(APIConstants.apiUrl!);
     var response = await http.post(
@@ -40,24 +42,33 @@ Future<void> getFields(Instrument instrument) async {
     if (response.statusCode == 200) {
       List<dynamic> rawFields = json.decode(response.body);
       List<Field> fields = rawFields.map((raw) => Field.fromJson(raw)).toList();
-      String? section;
+
+      // Create new section that is simply the instrument label
+      IOOGSection section = IOOGSection(instrument.getLabel());
+
       for (Field field in fields) {
+        // Create a field widget for the field
         IOOGFieldWidget? fieldWidgetInstance =
             fieldWidget(field, instrument.getFormKeyManager());
         if (fieldWidgetInstance != null) {
           if (!fieldWidgetInstance.getSectionHeader().isEmptyOrNull) {
-            section = fieldWidgetInstance.getSectionHeader();
+            // If the field widget has a section header, create a new section
+            // Add the old section to the instrument
+            instrument.addSection(section);
+            // Create a new section with the section header
+            section = IOOGSection(fieldWidgetInstance.getSectionHeader());
           }
-          instrument.addFieldWidget(fieldWidgetInstance, section);
+          // Add the field widget to the appropriate section
+          section.addFieldWidget(fieldWidgetInstance);
         }
       }
     }
   } catch (e) {
-    log(e.toString());
+    printError(e.toString());
   }
 }
 
-Future<void> fillFields(Instrument instrument) async {
+Future<void> fillFields(IOOGInstrument instrument) async {
   try {
     var url = Uri.parse(APIConstants.apiUrl!);
     var response = await http.post(url,
@@ -72,21 +83,22 @@ Future<void> fillFields(Instrument instrument) async {
       }
     }
   } catch (e) {
-    log(e.toString());
+    printError(e.toString());
   }
 }
 
-Future<void> fillFieldsFromRecord(Instrument instrument, dynamic record) async {
+Future<void> fillFieldsFromRecord(
+    IOOGInstrument instrument, dynamic record) async {
   try {
     instrument
         .getAllFieldWidgets()
         .forEach((fieldWidget) => fieldWidget.fillField(record));
   } catch (e) {
-    log(e.toString());
+    printError(e.toString());
   }
 }
 
-Future<void> fillForms(Instrument instrument) async {
+Future<void> fillForms(IOOGInstrument instrument) async {
   try {
     var url = Uri.parse(APIConstants.apiUrl!);
     var response = await http.post(url,
@@ -120,6 +132,6 @@ Future<void> fillForms(Instrument instrument) async {
       }
     }
   } catch (e) {
-    log(e.toString());
+    printError(e.toString());
   }
 }

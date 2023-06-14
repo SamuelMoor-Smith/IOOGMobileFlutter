@@ -19,10 +19,11 @@ class _IOOGTextField extends State<IOOGTextField> {
   @override
   void initState() {
     super.initState();
-    widget.textController.addListener(_onTextChanged);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // widget.updateForm();
       widget.checkBranchingLogic(setState, mounted);
     });
+    widget.textController.addListener(_onTextChanged);
     widget.formKeyManager
         .getFormStateNotifier()
         .addListener(() => widget.checkBranchingLogic(setState, mounted));
@@ -42,8 +43,8 @@ class _IOOGTextField extends State<IOOGTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: widget.shouldShow,
+    return Offstage(
+      offstage: !widget.shouldShow,
       child: Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: FormBuilderTextField(

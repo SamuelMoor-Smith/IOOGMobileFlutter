@@ -27,8 +27,8 @@ class Mastoidectomy extends IOOGRadioGroup {
 class _MastoidectomyState extends State<Mastoidectomy> {
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: widget.shouldShow,
+    return Offstage(
+      offstage: !widget.shouldShow,
       child: FormBuilderField(
           name: widget.getFieldName(),
           validator: widget.validator(),
