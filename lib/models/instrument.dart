@@ -99,18 +99,4 @@ class IOOGInstrument {
   void addSection(IOOGSection section) {
     _sections.add(section);
   }
-
-  // void addFieldWidget(IOOGFieldWidget fieldWidget, String? section) {
-  //   if (section.isEmptyOrNull) {
-  //     _fields['base']!.add(fieldWidget);
-  //     return;
-  //   }
-
-  //   if (!_fields.containsKey(section)) {
-  //     _fields[section!] = [fieldWidget];
-  //     _sections.add(section);
-  //   } else {
-  //     _fields[section!]!.add(fieldWidget);
-  //   }
-  // }
 }

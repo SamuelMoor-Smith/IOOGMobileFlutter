@@ -88,7 +88,7 @@ class _IOOGCheckGroup extends State<IOOGCheckGroup> {
     return Offstage(
       offstage: !widget.shouldShow,
       child: FormBuilderField(
-          name: widget.getFieldName(),
+          name: "${widget.getFieldName()}---", // I dont want the name in the state notifier particularly. but it needs to be validated. maybe i dont have it in there. maybe i just have it in the form key state. and process accordingly.
           validator: widget.validator(),
           builder: (FormFieldState<dynamic> state) {
             return FieldContainer(

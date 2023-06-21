@@ -28,7 +28,13 @@ Future<bool> import(IOOGInstrument instrument) async {
     var response = await http.post(url,
         body: importBody(data), headers: APIConstants.headers());
 
-    return (response.statusCode == 200);
+    if (response.statusCode == 200) {
+      printLog(response.body);
+      return true;
+    } else {
+      printLog(response.body);
+      return false;
+    }
   } catch (e) {
     printError(e.toString());
     return false;

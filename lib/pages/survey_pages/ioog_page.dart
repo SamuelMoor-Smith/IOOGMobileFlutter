@@ -65,20 +65,21 @@ class _IOOGPageState extends State<IOOGPage> {
 
     return Scaffold(
       appBar: CustomAppBar(title: widget._section.getLabel()),
-      // body: ListView(
-      //   padding: const EdgeInsets.all(16),
-      //   children: widget.fields.whereType<IOOGFieldWidget>().toList(),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: widget.fields.whereType<IOOGFieldWidget>().toList(),
+      ),
+      // body: FormContainer(
+      //   child: SingleChildScrollView(
+      //     child: Padding(
+      //       padding: const EdgeInsets.all(16),
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: widget.fields.whereType<IOOGFieldWidget>().toList(),
+      //       ),
+      //     ),
+      //   )
       // ),
-      body: FormContainer(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: widget.fields.whereType<IOOGFieldWidget>().toList(),
-          ),
-        ),
-      )),
       bottomNavigationBar: createBottomNavigationBar(
         context,
         SummaryPage(fields: widget.fields, instrument: widget._instrument),

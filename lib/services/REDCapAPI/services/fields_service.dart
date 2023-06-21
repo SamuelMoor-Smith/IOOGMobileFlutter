@@ -62,6 +62,8 @@ Future<void> fetchFields(IOOGInstrument instrument) async {
           section.addFieldWidget(fieldWidgetInstance);
         }
       }
+      // Add the last section to the instrument
+      instrument.addSection(section);
     }
   } catch (e) {
     printError(e.toString());

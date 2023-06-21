@@ -3,7 +3,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/loading.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page.dart';
-import 'package:namer_app/utils.dart';
 import '../../models/instrument.dart';
 import '../../services/REDCapAPI/services/fields_service.dart';
 
@@ -24,8 +23,7 @@ class IOOGPageView extends StatefulWidget {
     return instrument.getFormKey();
   }
 
-  List<Widget> getPages() {
-    List<IOOGPage> pages = [];
+  void setPages(List<IOOGPage> pages) {
     for (IOOGSection section in instrument.getSections()) {
       pages.add(IOOGPage(
         section: section,
@@ -34,12 +32,12 @@ class IOOGPageView extends StatefulWidget {
         pageLength: instrument.getSections().length,
       ));
     }
-    return pages;
   }
 }
 
 class _IOOGPageViewState extends State<IOOGPageView> {
   bool _isLoading = false;
+  List<IOOGPage> pages = [];
 
   @override
   void initState() {
@@ -54,6 +52,7 @@ class _IOOGPageViewState extends State<IOOGPageView> {
 
     // fetch the fields if they aren't there already
     await widget.instrument.fetchFieldsForInstrument();
+    widget.setPages(pages);
 
     if (widget.instrument.getRecordIndex() != null) {
       await fillFieldsFromRecord(
@@ -84,7 +83,7 @@ class _IOOGPageViewState extends State<IOOGPageView> {
                 controller: widget.controller,
                 physics:
                     NeverScrollableScrollPhysics(), // Disable swipe navigation
-                children: widget.getPages(),
+                children: pages,
               ));
   }
 }
