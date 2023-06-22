@@ -3,7 +3,9 @@ import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/title_list_tile.dart';
 
+import '../../../pages/survey_pages/ioog_page_view.dart';
 import '../../../style/text/text_styles.dart';
+import '../../../utils.dart';
 
 // ignore: must_be_immutable
 class EnterAudiogram extends IOOGFieldWidget {
@@ -42,7 +44,8 @@ class _EnterAudiogramState extends State<EnterAudiogram> {
         TitleListTile(labelText: 'Enter new audiogram here:'),
         ElevatedButton(
           onPressed: () {
-            // Add your onPressed logic here
+            // nextPage(
+            //   context, IOOGPageView(instrument: instrument));
           },
           child: Text('Enter Audiogram'),
           style: ElevatedButton.styleFrom(

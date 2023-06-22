@@ -30,9 +30,9 @@ Future<List<IOOGInstrument>> getInstruments() async {
               IOOGInstrument(raw['instrument_name'], raw['instrument_label']))
           .where((dynamic instrument) =>
               (instrument is IOOGInstrument) &&
-              instrument.getLabel() != "Study ID" &&
-              instrument.getLabel() !=
-                  "Phenx Audiogram Hearing Test")).toList();
+              instrument.getLabel() != "Study ID" 
+              && instrument.getLabel() != "Phenx Audiogram Hearing Test"
+              )).toList();
     }
   } catch (e) {
     printError(e.toString());
