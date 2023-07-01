@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/form.dart';
-import 'package:namer_app/utils.dart';
+import 'package:namer_app/utils/navigation.dart';
 
 import '../../components/app_bar.dart';
 import '../../components/loading.dart';
 import '../../models/instrument.dart';
-import '../../services/REDCapAPI/services/fields_service.dart';
+import '../../api/old/services/fields_service.dart';
 import '../survey_pages/ioog_page_view.dart';
 
 class SelectForm extends StatefulWidget {
@@ -128,7 +128,7 @@ class _SelectFormState extends State<SelectForm> {
                                       icon: Icon(Icons.edit),
                                       color: Theme.of(context).primaryColor,
                                       onPressed: () {
-                                        widget.instrument.setRecordIndex(index);
+                                        widget.instrument.setFormIndex(index);
                                         nextPage(
                                             context,
                                             IOOGPageView(

@@ -1,4 +1,4 @@
-import 'package:namer_app/utils.dart';
+import 'package:namer_app/utils/logging.dart';
 
 class Choice {
   String number;

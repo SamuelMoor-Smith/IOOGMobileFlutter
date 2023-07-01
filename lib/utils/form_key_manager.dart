@@ -1,7 +1,7 @@
 import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:namer_app/utils.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../components/field_widgets/field_widget.dart';
 import '../main.dart';

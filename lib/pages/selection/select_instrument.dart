@@ -12,7 +12,7 @@ import '../../services/REDCapAPI/services/fields_service.dart';
 import '../../services/REDCapAPI/services/instrument_service.dart';
 
 class SelectInstrumentsPage extends StatefulWidget {
-  UserProject project;
+  IOOGProject project;
   SelectInstrumentsPage(this.project);
 
   @override

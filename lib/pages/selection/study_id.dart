@@ -7,7 +7,7 @@ import '../../models/user-project.dart';
 import './select_instrument.dart';
 
 class StudyIdPage extends StatelessWidget {
-  final UserProject project;
+  final IOOGProject project;
 
   StudyIdPage(this.project);
 

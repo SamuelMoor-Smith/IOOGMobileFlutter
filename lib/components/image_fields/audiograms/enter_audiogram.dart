@@ -3,13 +3,19 @@ import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/title_list_tile.dart';
 
+import '../../../models/user-project.dart';
 import '../../../pages/survey_pages/ioog_page_view.dart';
 import '../../../style/text/text_styles.dart';
 import '../../../utils.dart';
 
 // ignore: must_be_immutable
 class EnterAudiogram extends IOOGFieldWidget {
-  EnterAudiogram({required super.field, required super.formKeyManager});
+  IOOGProject project;
+
+  EnterAudiogram(
+      {required super.field,
+      required super.formKeyManager,
+      required this.project});
 
   @override
   _EnterAudiogramState createState() => _EnterAudiogramState();
@@ -44,6 +50,11 @@ class _EnterAudiogramState extends State<EnterAudiogram> {
         TitleListTile(labelText: 'Enter new audiogram here:'),
         ElevatedButton(
           onPressed: () {
+            nextPage(
+                context,
+                IOOGPageView(
+                    instrument: widget.project
+                        .getInstrumentByLabel("Phenx Audiogram Hearing Test")));
             // nextPage(
             //   context, IOOGPageView(instrument: instrument));
           },

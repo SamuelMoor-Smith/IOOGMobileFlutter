@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:namer_app/models/user-project.dart';
-import 'package:namer_app/services/REDCapAPI/ok.dart';
-import 'package:namer_app/services/login.dart';
-import 'package:namer_app/services/REDCapAPI/api_constants.dart';
-import '../selection/study_id.dart';
+import 'package:namer_app/models/project.dart';
+import 'package:namer_app/api/export/ok.dart';
+import 'package:namer_app/utils/logging.dart';
+import 'package:namer_app/utils/login.dart';
+import 'selection/study_id.dart';
 
 class LoginScreen extends StatelessWidget {
+  IOOGProject? project;
+
   final apiUrl = UserFormField(
     keyName: "apiUrl",
     displayName: "REDCap API url",
   );
 
-  final token = UserFormField(
-    keyName: "token",
+  final apiToken = UserFormField(
+    keyName: "apiToken",
     displayName: "REDCap API Access Token",
   );
 
@@ -21,10 +23,10 @@ class LoginScreen extends StatelessWidget {
     final user = await UserSecureStorage.getUsername(data.name);
     var success = user != null && data.password == user.password;
     if (success) {
-      APIConstants.apiUrl = user.apiUrl;
-      APIConstants.token = user.token;
+      project = IOOGProject(user.apiUrl, user.apiToken);
+      await getOKFromREDCAP(project); // TODO: this returns error i think
     }
-    await apiOK(); // TODO: this returns error i think
+
     return success == true ? null : "Something went wrong";
   }
 
@@ -33,13 +35,13 @@ class LoginScreen extends StatelessWidget {
       data.name,
       data.password,
       data.additionalSignupData!['apiUrl'],
-      data.additionalSignupData!['token'],
+      data.additionalSignupData!['apiToken'],
     );
 
     UserSecureStorage.addUser(user);
 
-    APIConstants.apiUrl = user.apiUrl;
-    APIConstants.token = user.token;
+    // APIConstants.apiUrl = user.apiUrl;
+    // APIConstants.apiToken = user.apiToken;
 
     return null;
   }
@@ -56,11 +58,15 @@ class LoginScreen extends StatelessWidget {
       onLogin: _onLogin,
       onSignup: _onSignup,
       onRecoverPassword: _onRecoverPassword,
-      additionalSignupFields: [apiUrl, token],
+      additionalSignupFields: [apiUrl, apiToken],
       onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => StudyIdPage(UserProject()),
-        ));
+        if (project != null) {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => StudyIdPage(project!),
+          ));
+        } else {
+          printError("Project is null");
+        }
       },
     );
   }
