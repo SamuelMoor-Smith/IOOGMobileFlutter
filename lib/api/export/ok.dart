@@ -1,7 +1,7 @@
 import 'package:namer_app/models/project.dart';
 import 'package:namer_app/utils/logging.dart';
 import 'package:http/http.dart' as http;
-import './common.dart';
+import '../common.dart';
 
 Map<String, String> okBody(IOOGProject project) {
   return Map.of({

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:namer_app/services/form_key_manager.dart';
+import 'package:namer_app/utils/form_key_manager.dart';
 
 import '../../models/choice.dart';
 import '../../models/field/field.dart';

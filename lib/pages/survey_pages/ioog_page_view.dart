@@ -4,7 +4,7 @@ import 'package:namer_app/components/loading.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page.dart';
 import '../../models/instrument.dart';
-import '../../services/REDCapAPI/services/fields_service.dart';
+import '../../api/old/services/fields_service.dart';
 
 class IOOGPageView extends StatefulWidget {
   final IOOGInstrument instrument;

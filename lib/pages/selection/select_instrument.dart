@@ -3,13 +3,13 @@ import 'package:namer_app/components/loading.dart';
 import 'package:namer_app/pages/selection/select_form.dart';
 import 'package:namer_app/models/instrument.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page_view.dart';
-import 'package:namer_app/services/REDCapAPI/api_constants.dart';
-import 'package:namer_app/utils.dart';
+import 'package:namer_app/api/REDCapAPI/api_constants.dart';
+import 'package:namer_app/utils/navigation.dart';
 
 import '../../components/app_bar.dart';
-import '../../models/user-project.dart';
-import '../../services/REDCapAPI/services/fields_service.dart';
-import '../../services/REDCapAPI/services/instrument_service.dart';
+import '../../models/project.dart';
+import '../../api/old/services/fields_service.dart';
+import '../../api/export/instruments.dart';
 
 class SelectInstrumentsPage extends StatefulWidget {
   IOOGProject project;

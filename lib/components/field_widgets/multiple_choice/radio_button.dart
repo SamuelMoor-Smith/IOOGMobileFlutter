@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choice.dart';
 import 'package:namer_app/models/choice.dart';
-import 'package:namer_app/services/form_key_manager.dart';
+import 'package:namer_app/utils/form_key_manager.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/text_styles.dart';
 

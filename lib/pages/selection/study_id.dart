@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/services/REDCapAPI/api_constants.dart';
+import 'package:namer_app/api/REDCapAPI/api_constants.dart';
 import 'package:namer_app/style/containers/form_container.dart';
-import 'package:namer_app/utils.dart';
+import 'package:namer_app/utils/navigation.dart';
 
-import '../../models/user-project.dart';
+import '../../models/project.dart';
 import './select_instrument.dart';
 
 class StudyIdPage extends StatelessWidget {

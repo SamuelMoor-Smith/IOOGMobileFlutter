@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/style/AppColors.dart';
-import 'package:namer_app/utils.dart';
+import 'package:namer_app/utils/navigation.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../models/field/field.dart';
-import '../../../services/form_key_manager.dart';
+import '../../../utils/form_key_manager.dart';
 
 class IOOGCommentsField extends IOOGTextWidget {
   IOOGCommentsField(

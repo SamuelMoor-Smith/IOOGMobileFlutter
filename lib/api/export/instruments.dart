@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:namer_app/models/project.dart';
-import '../models/instrument.dart';
-import '../utils/logging.dart';
-import './common.dart';
+import '../../models/instrument.dart';
+import '../../utils/logging.dart';
+import '../common.dart';
 
 Map<String, String> instrumentsBody(IOOGProject project) {
   return Map.of({

@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:namer_app/models/project.dart';
-import '../utils/logging.dart';
-import 'common.dart';
+import '../../utils/logging.dart';
+import '../common.dart';
 
 Object studyIdsBody(IOOGProject project) {
   return Map.of({

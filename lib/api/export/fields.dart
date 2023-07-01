@@ -5,12 +5,12 @@ import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/models/project.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:nb_utils/nb_utils.dart';
-import '../../../models/instrument.dart';
-import '../../../models/field/field.dart';
-import '../../utils/create_widgets.dart';
-import '../utils/logging.dart';
-import './REDCapAPI/services/fields_service.dart';
-import './common.dart';
+import '../../../../models/instrument.dart';
+import '../../../../models/field/field.dart';
+import '../../../utils/create_widgets.dart';
+import '../../utils/logging.dart';
+import '../old/services/fields_service.dart';
+import '../common.dart';
 
 Object fieldsBody(IOOGProject project, IOOGInstrument instrument) {
   return Map.of({

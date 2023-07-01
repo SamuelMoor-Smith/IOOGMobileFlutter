@@ -3,10 +3,10 @@ import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/title_list_tile.dart';
 
-import '../../../models/user-project.dart';
+import '../../../models/project.dart';
 import '../../../pages/survey_pages/ioog_page_view.dart';
 import '../../../style/text/text_styles.dart';
-import '../../../utils.dart';
+import '../../../utils/navigation.dart';
 
 // ignore: must_be_immutable
 class EnterAudiogram extends IOOGFieldWidget {

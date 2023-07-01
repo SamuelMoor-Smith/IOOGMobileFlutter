@@ -1,6 +1,6 @@
 import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
-import 'package:namer_app/pages/login/login.dart';
+import 'package:namer_app/pages/login.dart';
 
 void main() => runApp(const MyApp());
 
