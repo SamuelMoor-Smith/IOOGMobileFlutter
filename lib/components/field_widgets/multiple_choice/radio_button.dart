@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choice.dart';
 import 'package:namer_app/models/choice.dart';
-import 'package:namer_app/utils/form_key_manager.dart';
+import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/text_styles.dart';
 
@@ -14,7 +13,7 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
   IOOGRadioGroup({
     Key? key,
     required Field field,
-    required FormKeyManager formKeyManager,
+    required FormManager formKeyManager,
     required Set<Choice> choices,
   }) : super(
             key: key,
@@ -88,37 +87,31 @@ class _IOOGRadioGroup extends State<IOOGRadioGroup> {
   Widget build(BuildContext context) {
     return Offstage(
       offstage: !widget.shouldShow,
-      child: FormBuilderField(
-          name: widget.getFieldName(),
-          initialValue: '',
-          validator: widget.validator(),
-          builder: (FormFieldState<dynamic> state) {
-            return FieldContainer(
-                child: Column(children: [
-              TitleListTile(labelText: widget.getLabelText()),
-              ...widget
-                  .getChoices()
-                  .map((choice) => RadioListTile<Choice>(
-                      title: Text(
-                        choice.name,
-                        style: primaryTextStyle(),
-                      ),
-                      value: choice,
-                      groupValue: widget.getSelectedChoices().isEmpty
-                          ? null
-                          : widget
-                              .getSelectedChoices()
-                              .first, // Only ever 1 choice selected
-                      onChanged: (Choice? value) {
-                        setState(() {
-                          widget.selectChoice(value!);
-                          widget.updateForm();
-                        });
-                      },
-                      visualDensity: VisualDensity(vertical: -4)))
-                  .toList()
-            ]));
-          }),
+      child: FieldContainer(
+          child: Column(children: [
+        TitleListTile(labelText: widget.getLabelText()),
+        ...widget
+            .getChoices()
+            .map((choice) => RadioListTile<Choice>(
+                title: Text(
+                  choice.name,
+                  style: primaryTextStyle(),
+                ),
+                value: choice,
+                groupValue: widget.getSelectedChoices().isEmpty
+                    ? null
+                    : widget
+                        .getSelectedChoices()
+                        .first, // Only ever 1 choice selected
+                onChanged: (Choice? value) {
+                  setState(() {
+                    widget.selectChoice(value!);
+                    widget.updateForm();
+                  });
+                },
+                visualDensity: VisualDensity(vertical: -4)))
+            .toList()
+      ])),
     );
   }
 }

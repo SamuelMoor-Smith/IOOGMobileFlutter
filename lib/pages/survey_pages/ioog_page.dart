@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/bottom_nav_bar.dart';
 import 'package:namer_app/models/section.dart';
-import 'package:namer_app/utils/form_key_manager.dart';
+import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/utils/navigation.dart';
 
 import '../../components/app_bar.dart';
@@ -32,7 +31,7 @@ class IOOGPage extends StatefulWidget {
   @override
   _IOOGPageState createState() => _IOOGPageState();
 
-  FormKeyManager getFormKeyManager() {
+  FormManager getFormKeyManager() {
     return _instrument.getFormKeyManager();
   }
 

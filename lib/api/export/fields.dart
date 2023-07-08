@@ -14,7 +14,7 @@ import '../common.dart';
 
 Object fieldsBody(IOOGProject project, IOOGInstrument instrument) {
   return Map.of({
-    "apiToken": project.apiToken,
+    "token": project.token,
     "content": "metadata",
     "format": "json",
     "forms[0]": instrument.getName()
@@ -59,6 +59,7 @@ Future<List<IOOGSection>?> getFieldsForInstrumentFromREDCAP(
       // Add the last section to the instrument
       sections.add(section); // instrument.addSection(section);
 
+      printLog(sections.toString());
       return sections;
     }
   } catch (e) {

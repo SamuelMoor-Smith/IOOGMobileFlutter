@@ -3,7 +3,6 @@ import 'package:namer_app/components/loading.dart';
 import 'package:namer_app/pages/selection/select_form.dart';
 import 'package:namer_app/models/instrument.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page_view.dart';
-import 'package:namer_app/api/REDCapAPI/api_constants.dart';
 import 'package:namer_app/utils/navigation.dart';
 
 import '../../components/app_bar.dart';
@@ -33,7 +32,7 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
     setState(() {
       _isLoading = true;
     });
-    instruments = await widget.project.getInstrumentsForProject();
+    instruments = widget.project.getFillableInstruments();
     setState(() {
       _isLoading = false;
     });
@@ -43,7 +42,7 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: APIConstants.studyId!,
+        title: this.widget.project.getActiveStudyId(),
       ),
       body: _isLoading
           ? Loading()
@@ -61,7 +60,7 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
                     padding: EdgeInsets.symmetric(vertical: 0.0),
                     child: ElevatedButton(
                       onPressed: () async {
-                        if (instrument.getLabel() == "Basic Demography Form") {
+                        if (instrument.isDemographic()) {
                           nextPage(
                               context, IOOGPageView(instrument: instrument));
                         } else {

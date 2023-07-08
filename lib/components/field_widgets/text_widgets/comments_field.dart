@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:namer_app/utils/navigation.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../models/field/field.dart';
-import '../../../utils/form_key_manager.dart';
+import '../../../utils/form_manager.dart';
 
 class IOOGCommentsField extends IOOGTextWidget {
   IOOGCommentsField(
-      {Key? key, required Field field, required FormKeyManager formKeyManager})
+      {Key? key, required Field field, required FormManager formKeyManager})
       : super(key: key, field: field, formKeyManager: formKeyManager);
 
   @override
@@ -48,8 +47,7 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
       offstage: !widget.shouldShow,
       child: Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10),
-        child: FormBuilderTextField(
-          name: widget.getFieldName(),
+        child: TextFormField(
           validator: widget.validator(),
           controller: widget.textController,
           decoration: InputDecoration(

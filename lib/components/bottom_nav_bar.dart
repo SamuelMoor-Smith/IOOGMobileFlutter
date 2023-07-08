@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/utils/form_key_manager.dart';
+import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/utils/navigation.dart';
 import 'package:namer_app/utils/logging.dart';
 
@@ -27,7 +27,7 @@ int getNextPageNumber(
 }
 
 BottomNavigationBar createBottomNavigationBar(
-    BuildContext context, Widget forward, FormKeyManager formKeyManager,
+    BuildContext context, Widget forward, FormManager formKeyManager,
     [PageController? controller, int pageLength = 1]) {
   void _onItemTapped(int index) {
     int nextPageNumber;

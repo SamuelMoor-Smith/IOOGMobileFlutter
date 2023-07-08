@@ -5,7 +5,6 @@ import 'package:namer_app/utils/navigation.dart';
 import '../../components/app_bar.dart';
 import '../../components/loading.dart';
 import '../../models/instrument.dart';
-import '../../api/old/services/fields_service.dart';
 import '../survey_pages/ioog_page_view.dart';
 
 class SelectForm extends StatefulWidget {
@@ -19,6 +18,15 @@ class SelectForm extends StatefulWidget {
 
   @override
   _SelectFormState createState() => _SelectFormState();
+
+  void resetFieldsAndFormIndex(int? newIndex) {
+    // Check if its the same index (if so no unecessary work)
+    if (newIndex != instrument.getFormIndex()) {
+      // Reset the form
+      instrument.clearAllFields();
+      instrument.setFormIndex(newIndex);
+    }
+  }
 }
 
 class _SelectFormState extends State<SelectForm> {
@@ -34,9 +42,6 @@ class _SelectFormState extends State<SelectForm> {
     setState(() {
       _isLoading = true;
     });
-
-    // Fetch forms for instrument if not fetched already
-    await widget.instrument.fetchForms();
 
     setState(() {
       _isLoading = false;
@@ -73,10 +78,7 @@ class _SelectFormState extends State<SelectForm> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                widget.instrument
-                                    .getFormKeyManager()
-                                    .regenerateFormKeyAndNotifier();
-                                widget.instrument.clearAllFields();
+                                widget.resetFieldsAndFormIndex(null);
                                 nextPage(
                                     context,
                                     IOOGPageView(
@@ -128,7 +130,7 @@ class _SelectFormState extends State<SelectForm> {
                                       icon: Icon(Icons.edit),
                                       color: Theme.of(context).primaryColor,
                                       onPressed: () {
-                                        widget.instrument.setFormIndex(index);
+                                        widget.resetFieldsAndFormIndex(index);
                                         nextPage(
                                             context,
                                             IOOGPageView(

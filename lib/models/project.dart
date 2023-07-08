@@ -5,17 +5,14 @@ import 'instrument.dart';
 
 class IOOGProject {
   String apiUrl;
-  String apiToken;
+  String token;
 
   Set<String>? _studyIds;
   String? _activeStudyId;
 
   List<IOOGInstrument>? _instruments;
 
-  IOOGProject(this.apiUrl, this.apiToken) {
-    setStudyIds();
-    setInstruments();
-  }
+  IOOGProject(this.apiUrl, this.token);
 
   Future<void> setStudyIds() async {
     _studyIds ??= await getStudyIdsForProjectFromREDCAP(this);
@@ -42,26 +39,32 @@ class IOOGProject {
   }
 
   // Getters for all variables
-  // Future<List<IOOGInstrument>> getInstrumentsForProject() async {
-  //   await setInstruments();
-  //   return _instruments
-  //       .where((dynamic instrument) =>
-  //           (instrument is IOOGInstrument) &&
-  //           instrument.getLabel() != "Study ID" &&
-  //           instrument.getLabel() != "Phenx Audiogram Hearing Test")
-  //       .toList();
-  // }
+  List<IOOGInstrument> getFillableInstruments() {
+    if (_instruments == null) {
+      throw Exception("Instruments have not been set yet");
+    }
+    return _instruments!
+        .where((dynamic instrument) =>
+            (instrument is IOOGInstrument) &&
+            instrument.getLabel() != "Study ID" &&
+            instrument.getLabel() != "Phenx Audiogram Hearing Test")
+        .toList();
+  }
 
-  // IOOGInstrument getInstrumentByLabel(String label) {
-  //   IOOGInstrument? instrument;
-  //   for (IOOGInstrument i in _instruments) {
-  //     if (i.getLabel() == label) {
-  //       instrument = i;
-  //     }
-  //   }
-  //   if (instrument == null) {
-  //     throw ArgumentError('Instrument $label not found');
-  //   }
-  //   return instrument;
-  // }
+  IOOGInstrument getInstrumentByLabel(String label) {
+    IOOGInstrument? instrument;
+    if (_instruments == null) {
+      throw Exception("Instruments have not been set yet");
+    }
+
+    for (IOOGInstrument i in _instruments!) {
+      if (i.getLabel() == label) {
+        instrument = i;
+      }
+    }
+    if (instrument == null) {
+      throw ArgumentError('Instrument $label not found');
+    }
+    return instrument;
+  }
 }

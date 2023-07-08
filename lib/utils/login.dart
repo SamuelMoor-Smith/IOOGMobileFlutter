@@ -5,34 +5,34 @@ class User {
   String username;
   String password;
   String apiUrl;
-  String apiToken;
+  String token;
 
   User(
     this.username,
     this.password,
     this.apiUrl,
-    this.apiToken,
+    this.token,
   );
 
   User.fromJson(Map<String, dynamic> json)
       : username = json['username'],
         password = json['password'],
         apiUrl = json['apiUrl'],
-        apiToken = json['apiToken'];
+        token = json['token'];
 
   Map<String, dynamic> toJson() => {
         'username': username,
         'password': password,
         'apiUrl': apiUrl,
-        'apiToken': apiToken,
+        'token': token,
       };
 }
 
 class UserSecureStorage {
   static final _storage = FlutterSecureStorage();
 
-  static createUser(username, password, apiUrl, apiToken) {
-    return User(username, password, apiUrl, apiToken);
+  static createUser(username, password, apiUrl, token) {
+    return User(username, password, apiUrl, token);
   }
 
   static Future addUser(User user) async =>

@@ -5,7 +5,7 @@ import '../common.dart';
 
 Map<String, String> okBody(IOOGProject project) {
   return Map.of({
-    "apiToken": project.apiToken,
+    "token": project.token,
     "content": "version",
     "format": "json",
   });

@@ -14,8 +14,8 @@ class LoginScreen extends StatelessWidget {
     displayName: "REDCap API url",
   );
 
-  final apiToken = UserFormField(
-    keyName: "apiToken",
+  final token = UserFormField(
+    keyName: "token",
     displayName: "REDCap API Access Token",
   );
 
@@ -23,8 +23,18 @@ class LoginScreen extends StatelessWidget {
     final user = await UserSecureStorage.getUsername(data.name);
     var success = user != null && data.password == user.password;
     if (success) {
-      project = IOOGProject(user.apiUrl, user.apiToken);
-      await getOKFromREDCAP(project); // TODO: this returns error i think
+      project = IOOGProject(user.apiUrl, user.token);
+      if (project == null) {
+        throw Exception("Project is null");
+      }
+      // start the 3 async tasks in parallel
+      var futures = [
+        getOKFromREDCAP(project!),
+        project!.setStudyIds(),
+        project!.setInstruments(),
+      ];
+      // wait for all 3 tasks to complete
+      await Future.wait(futures);
     }
 
     return success == true ? null : "Something went wrong";
@@ -35,13 +45,13 @@ class LoginScreen extends StatelessWidget {
       data.name,
       data.password,
       data.additionalSignupData!['apiUrl'],
-      data.additionalSignupData!['apiToken'],
+      data.additionalSignupData!['token'],
     );
 
     UserSecureStorage.addUser(user);
 
     // APIConstants.apiUrl = user.apiUrl;
-    // APIConstants.apiToken = user.apiToken;
+    // APIConstants.token = user.token;
 
     return null;
   }
@@ -58,7 +68,7 @@ class LoginScreen extends StatelessWidget {
       onLogin: _onLogin,
       onSignup: _onSignup,
       onRecoverPassword: _onRecoverPassword,
-      additionalSignupFields: [apiUrl, apiToken],
+      additionalSignupFields: [apiUrl, token],
       onSubmitAnimationCompleted: () {
         if (project != null) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(

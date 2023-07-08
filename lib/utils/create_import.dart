@@ -1,8 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:namer_app/api/REDCapAPI/api_constants.dart';
 import 'package:namer_app/utils/events.dart';
-import 'package:namer_app/utils/navigation.dart';
 
 import '../../models/instrument.dart';
 
@@ -15,7 +12,7 @@ String createPayload(IOOGInstrument instrument) {
 
   return jsonEncode([
     {
-      'study_id': APIConstants.studyId!,
+      'study_id': instrument.getProject().getActiveStudyId()!,
       'redcap_event_name': getEventName(instrument),
       ...formStateCopy,
     },

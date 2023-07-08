@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/field/field.dart';
-import 'package:namer_app/utils/form_key_manager.dart';
+import 'package:namer_app/utils/form_manager.dart';
 
 import '../../../models/choice.dart';
 import '../field_widget.dart';
@@ -12,7 +12,7 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
   IOOGMultipleChoice(
       {Key? key,
       required Field field,
-      required FormKeyManager formKeyManager,
+      required FormManager formKeyManager,
       required this.choices})
       : super(key: key, field: field, formKeyManager: formKeyManager);
 

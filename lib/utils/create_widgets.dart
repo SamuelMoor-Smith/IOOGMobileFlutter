@@ -4,7 +4,7 @@ import 'package:namer_app/components/image_fields/cholesteatoma.dart';
 import 'package:namer_app/components/image_fields/diagram.dart';
 import 'package:namer_app/components/image_fields/mastoidectomy.dart';
 import 'package:namer_app/components/image_fields/ossicularchain.dart';
-import 'package:namer_app/utils/form_key_manager.dart';
+import 'package:namer_app/utils/form_manager.dart';
 
 import '../../components/field_widgets/multiple_choice/check_button.dart';
 import '../../components/field_widgets/multiple_choice/radio_button.dart';
@@ -14,7 +14,7 @@ import '../../models/field/field.dart';
 import '../../models/project.dart';
 
 IOOGFieldWidget? fieldWidget(
-    IOOGProject project, Field field, FormKeyManager formKeyManager) {
+    IOOGProject project, Field field, FormManager formKeyManager) {
   switch (field.getFieldName()) {
     // case 'reac':
     //   return AudiogramGroup(field: field, instrument: instrument, choices: field.createChoices(),);

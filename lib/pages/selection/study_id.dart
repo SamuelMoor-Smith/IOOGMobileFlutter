@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/api/REDCapAPI/api_constants.dart';
 import 'package:namer_app/style/containers/form_container.dart';
 import 'package:namer_app/utils/navigation.dart';
 
@@ -44,7 +43,7 @@ class StudyIdPage extends StatelessWidget {
                     20.0), // Add some space between the TextField and Button
             ElevatedButton(
               onPressed: () async {
-                APIConstants.studyId = studyIdController.text;
+                this.project.setActiveStudyId(studyIdController.text);
                 nextPage(context, SelectInstrumentsPage(project));
               },
               style: ElevatedButton.styleFrom(

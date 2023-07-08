@@ -7,7 +7,7 @@ import '../common.dart';
 
 Object importBody(IOOGProject project, data) {
   return Map.of({
-    'apiToken': project.apiToken,
+    'token': project.token,
     'content': 'record',
     'format': 'json',
     'type': 'flat',

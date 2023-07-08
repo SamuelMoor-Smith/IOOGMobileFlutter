@@ -8,7 +8,7 @@ import '../common.dart';
 
 Map<String, String> instrumentsBody(IOOGProject project) {
   return Map.of({
-    "apiToken": project.apiToken,
+    "token": project.token,
     "content": "instrument",
     "format": "json",
   });

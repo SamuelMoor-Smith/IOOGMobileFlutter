@@ -102,7 +102,7 @@ class SummaryPage extends StatelessWidget {
               //   context,
               //   MaterialPageRoute(builder: (context) => ImportDataPage()),
               // );
-              import(instrument);
+              importToREDCAP(instrument.getProject(), instrument);
             },
             child: Text('Proceed to Import'),
           ),

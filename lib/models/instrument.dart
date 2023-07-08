@@ -1,34 +1,37 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/api/export/fields.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:namer_app/models/project.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../api/export/forms.dart';
 import '../components/field_widgets/field_widget.dart';
-import '../api/old/services/fields_service.dart';
-import '../utils/form_key_manager.dart';
+import '../utils/form_manager.dart';
 import 'form.dart';
 
 class IOOGInstrument {
   String _name;
   String _label;
   IOOGProject _project;
-  // List<dynamic>? _activeRecord;
-  FormKeyManager _formKeyManager = FormKeyManager();
+  FormManager _formKeyManager = FormManager();
 
   List<IOOGSection>? _sections;
   List<IOOGForm>? _forms;
   int? _formIndex;
-  // Map<String, List<IOOGFieldWidget>> _fields = {"base": []};
 
   IOOGInstrument(this._project, this._name, this._label) {
     setSections();
   }
 
   Future<void> setSections() async {
-    _sections ??= await getFieldsForInstrumentFromREDCAP(_project, this);
+    await getFieldsForInstrumentFromREDCAP(_project, this).then((sections) {
+      if (sections != null) {
+        _sections = sections
+            .where((IOOGSection section) => section.getFields().isNotEmpty)
+            .toList();
+      }
+      printLog("initial form state set");
+      _formKeyManager.setInitialFormState(this);
+    });
   }
 
   Future<void> setForms() async {
@@ -36,7 +39,7 @@ class IOOGInstrument {
         _project, this, _project.getActiveStudyId());
   }
 
-  void setFormIndex(int formIndex) {
+  void setFormIndex(int? formIndex) {
     _formIndex = formIndex;
   }
 
@@ -46,6 +49,10 @@ class IOOGInstrument {
 
   bool isSectioned() {
     return (_sections != null) && (_sections!.length > 1);
+  }
+
+  bool isDemographic() {
+    return _label == "Basic Demography Form";
   }
 
   List<IOOGSection> getSections() {
@@ -66,9 +73,16 @@ class IOOGInstrument {
     return allFieldWidgets;
   }
 
-  // void addForm(date, side, record) {
-  //   _forms.add(IOOGForm(date, side, record));
-  // }
+  void fillFieldsFromForm(int? index) {
+    if (index == null) {
+      printLog('No form index provided');
+      return;
+    }
+
+    // Fill the form fields
+    getAllFieldWidgets().forEach(
+        (fieldWidget) => fieldWidget.fillField(_forms![index].getRecord()));
+  }
 
   void clearAllFields() {
     for (IOOGFieldWidget fieldWidget in getAllFieldWidgets()) {
@@ -77,12 +91,6 @@ class IOOGInstrument {
     }
   }
 
-  // Future<void> fetchForms() async {
-  //   if (_forms.isEmpty) {
-  //     await fillForms(this);
-  //   }
-  // }
-
   List<IOOGForm> getForms() {
     if (_forms == null) {
       throw Exception("Forms have not been set yet");
@@ -90,7 +98,7 @@ class IOOGInstrument {
     return _forms!;
   }
 
-  int? getRecordIndex() {
+  int? getFormIndex() {
     return _formIndex;
   }
 
@@ -106,11 +114,7 @@ class IOOGInstrument {
     return _project;
   }
 
-  GlobalKey<FormBuilderState> getFormKey() {
-    return _formKeyManager.getFormKey();
-  }
-
-  FormKeyManager getFormKeyManager() {
+  FormManager getFormKeyManager() {
     return _formKeyManager;
   }
 }

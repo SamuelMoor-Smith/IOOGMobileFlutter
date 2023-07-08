@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/loading.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page.dart';
 import '../../models/instrument.dart';
-import '../../api/old/services/fields_service.dart';
+import '../../utils/logging.dart';
 
 class IOOGPageView extends StatefulWidget {
   final IOOGInstrument instrument;
@@ -19,9 +18,9 @@ class IOOGPageView extends StatefulWidget {
   @override
   _IOOGPageViewState createState() => _IOOGPageViewState();
 
-  GlobalKey<FormBuilderState> getFormKey() {
-    return instrument.getFormKey();
-  }
+  // GlobalKey<FormBuilderState> getFormKey() {
+  //   return instrument.getFormKey();
+  // }
 
   void setPages(List<IOOGPage> pages) {
     for (IOOGSection section in instrument.getSections()) {
@@ -51,17 +50,23 @@ class _IOOGPageViewState extends State<IOOGPageView> {
     });
 
     // fetch the fields if they aren't there already
-    await widget.instrument.fetchFieldsForInstrument();
+    // await widget.instrument.fetchFieldsForInstrument();
     widget.setPages(pages);
 
-    if (widget.instrument.getRecordIndex() != null) {
-      await fillFieldsFromRecord(
-          widget.instrument,
-          widget.instrument
-              .getForms()[widget.instrument.getRecordIndex()!]
-              .getRecord());
+    // Check if its a demographics form
+    if (widget.instrument.isDemographic()) {
+      // If there is a form completed, fill the fields
+      if (widget.instrument.getForms().isNotEmpty) {
+        widget.instrument.fillFieldsFromForm(0);
+      }
     } else {
-      await fillFields(widget.instrument);
+      // Otherwise check if a form index was chosen
+      var formIndex = widget.instrument.getFormIndex();
+      printLog(formIndex.toString());
+      if (formIndex != null) {
+        // Fill the fields from the selected form
+        widget.instrument.fillFieldsFromForm(formIndex);
+      }
     }
 
     setState(() {
@@ -71,19 +76,16 @@ class _IOOGPageViewState extends State<IOOGPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
-        key: widget.getFormKey(),
-        onChanged: () {
-          widget.instrument.getFormKeyManager().saveForm();
-        },
-        autovalidateMode: AutovalidateMode.disabled,
-        child: _isLoading
-            ? Loading()
-            : PageView(
-                controller: widget.controller,
-                physics:
-                    NeverScrollableScrollPhysics(), // Disable swipe navigation
-                children: pages,
-              ));
+    return _isLoading
+        ? Loading()
+        : Form(
+            autovalidateMode: AutovalidateMode.disabled,
+            child: PageView(
+              controller: widget.controller,
+              physics:
+                  NeverScrollableScrollPhysics(), // Disable swipe navigation
+              children: pages,
+            ),
+          );
   }
 }

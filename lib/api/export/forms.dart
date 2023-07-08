@@ -14,7 +14,7 @@ import '../common.dart';
 Object recordBody(
     IOOGProject project, IOOGInstrument instrument, String studyId) {
   return Map.of({
-    "apiToken": project.apiToken,
+    "token": project.token,
     "content": "record",
     "format": "json",
     "type": "flat",

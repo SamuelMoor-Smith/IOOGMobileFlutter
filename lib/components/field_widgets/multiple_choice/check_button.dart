@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choice.dart';
-import 'package:namer_app/utils/form_key_manager.dart';
+import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/style/containers/border.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/text_styles.dart';
@@ -14,7 +13,7 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
   IOOGCheckGroup({
     Key? key,
     required Field field,
-    required FormKeyManager formKeyManager,
+    required FormManager formKeyManager,
     required Set<Choice> choices,
   }) : super(
             key: key,
@@ -87,43 +86,31 @@ class _IOOGCheckGroup extends State<IOOGCheckGroup> {
   Widget build(BuildContext context) {
     return Offstage(
       offstage: !widget.shouldShow,
-      child: FormBuilderField(
-          name:
-              "${widget.getFieldName()}---", // I dont want the name in the state notifier particularly. but it needs to be validated. maybe i dont have it in there. maybe i just have it in the form key state. and process accordingly.
-          validator: widget.validator(),
-          builder: (FormFieldState<dynamic> state) {
-            return FieldContainer(
-                child: Column(children: [
-              TitleListTile(labelText: widget.getLabelText()),
-              ...widget
-                  .getChoices()
-                  .map((choice) => FormBuilderField(
-                      name: "${widget.getFieldName()}___${choice.number}",
-                      initialValue: '0',
-                      validator: widget.validator(),
-                      builder: (FormFieldState<dynamic> state) {
-                        return CheckboxListTile(
-                            title: Text(
-                              choice.name,
-                              style: primaryTextStyle(),
-                            ),
-                            value: widget.getSelectedChoices().contains(choice),
-                            onChanged: (bool? value) {
-                              setState(() {
-                                if (value != null) {
-                                  value
-                                      ? widget.selectChoice(choice)
-                                      : widget.unselectChoice(choice);
-                                  widget.updateForm();
-                                }
-                              });
-                            },
-                            controlAffinity: ListTileControlAffinity.leading,
-                            visualDensity: VisualDensity(vertical: -4));
-                      }))
-                  .toList()
-            ]));
-          }),
+      child: FieldContainer(
+          child: Column(children: [
+        TitleListTile(labelText: widget.getLabelText()),
+        ...widget
+            .getChoices()
+            .map((choice) => CheckboxListTile(
+                title: Text(
+                  choice.name,
+                  style: primaryTextStyle(),
+                ),
+                value: widget.getSelectedChoices().contains(choice),
+                onChanged: (bool? value) {
+                  setState(() {
+                    if (value != null) {
+                      value
+                          ? widget.selectChoice(choice)
+                          : widget.unselectChoice(choice);
+                      widget.updateForm();
+                    }
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.leading,
+                visualDensity: VisualDensity(vertical: -4)))
+            .toList()
+      ])),
     );
   }
 }

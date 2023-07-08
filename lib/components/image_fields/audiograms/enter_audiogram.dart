@@ -56,6 +56,11 @@ class _EnterAudiogramState extends State<EnterAudiogram> {
                     instrument: widget.project
                         .getInstrumentByLabel("Phenx Audiogram Hearing Test")));
             // nextPage(
+            //     context,
+            //     IOOGPageView(
+            //         instrument: widget.project
+            //             .getInstrumentByLabel("Phenx Audiogram Hearing Test")));
+            // nextPage(
             //   context, IOOGPageView(instrument: instrument));
           },
           child: Text('Enter Audiogram'),

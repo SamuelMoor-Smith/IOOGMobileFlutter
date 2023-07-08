@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/field/field.dart';
-import 'package:namer_app/utils/form_key_manager.dart';
+import 'package:namer_app/utils/form_manager.dart';
 
 import '../field_widget.dart';
 
@@ -8,7 +8,7 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
   final textController = TextEditingController();
 
   IOOGTextWidget(
-      {Key? key, required Field field, required FormKeyManager formKeyManager})
+      {Key? key, required Field field, required FormManager formKeyManager})
       : super(key: key, field: field, formKeyManager: formKeyManager);
 
   @override
