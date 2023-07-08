@@ -12,19 +12,19 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
   IOOGMultipleChoice(
       {Key? key,
       required Field field,
-      required FormManager formKeyManager,
+      required FormManager formManager,
       required this.choices})
-      : super(key: key, field: field, formKeyManager: formKeyManager);
+      : super(key: key, field: field, formManager: formManager);
 
   @override
   bool isFilled() {
-    return choices.isNotEmpty;
-  }
-
-  @override
-  validated() {
     return selectedChoices.isNotEmpty;
   }
+
+  // @override
+  // validated() {
+  //   return selectedChoices.isNotEmpty;
+  // }
 
   Set<Choice> getSelectedChoices() {
     return selectedChoices;

@@ -14,7 +14,7 @@ import '../../models/field/field.dart';
 import '../../models/project.dart';
 
 IOOGFieldWidget? fieldWidget(
-    IOOGProject project, Field field, FormManager formKeyManager) {
+    IOOGProject project, Field field, FormManager formManager) {
   switch (field.getFieldName()) {
     // case 'reac':
     //   return AudiogramGroup(field: field, instrument: instrument, choices: field.createChoices(),);
@@ -22,30 +22,30 @@ IOOGFieldWidget? fieldWidget(
       return EnterAudiogram(
         project: project,
         field: field,
-        formKeyManager: formKeyManager,
+        formManager: formManager,
       );
     case 'classification':
       return Cholesteatoma(
         field: field,
-        formKeyManager: formKeyManager,
+        formManager: formManager,
         choices: field.createChoices(),
       );
     case 'extent_cholesteatoma':
       return Diagram(
         field: field,
-        formKeyManager: formKeyManager,
+        formManager: formManager,
         choices: field.createChoices(),
       );
     case 'm_mastoid':
       return Mastoidectomy(
         field: field,
-        formKeyManager: formKeyManager,
+        formManager: formManager,
         choices: field.createChoices(),
       );
     case 'o_ossiculoplasty':
       return OssicularChain(
         field: field,
-        formKeyManager: formKeyManager,
+        formManager: formManager,
         choices: field.createChoices(),
       );
   }
@@ -54,23 +54,23 @@ IOOGFieldWidget? fieldWidget(
     case 'text':
       return IOOGTextField(
         field: field,
-        formKeyManager: formKeyManager,
+        formManager: formManager,
       );
     case 'notes':
       return IOOGCommentsField(
         field: field,
-        formKeyManager: formKeyManager,
+        formManager: formManager,
       );
     case 'radio':
       return IOOGRadioGroup(
         field: field,
-        formKeyManager: formKeyManager,
+        formManager: formManager,
         choices: field.createChoices(),
       );
     case 'checkbox':
       return IOOGCheckGroup(
         field: field,
-        formKeyManager: formKeyManager,
+        formManager: formManager,
         choices: field.createChoices(),
       );
     default:

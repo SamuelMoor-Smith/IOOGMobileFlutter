@@ -13,21 +13,18 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
   IOOGRadioGroup({
     Key? key,
     required Field field,
-    required FormManager formKeyManager,
+    required FormManager formManager,
     required Set<Choice> choices,
   }) : super(
-            key: key,
-            choices: choices,
-            field: field,
-            formKeyManager: formKeyManager);
+            key: key, choices: choices, field: field, formManager: formManager);
 
   @override
   State<IOOGRadioGroup> createState() => _IOOGRadioGroup();
 
-  @override
-  validated() {
-    return selectedChoices.isNotEmpty;
-  }
+  // @override
+  // validated() {
+  //   return selectedChoices.isNotEmpty;
+  // }
 
   @override
   selectChoice(Choice choice) {
@@ -56,9 +53,9 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
   @override
   updateForm() {
     if (selectedChoices.isNotEmpty) {
-      formKeyManager.updateForm(getFieldName(), selectedChoices.first.number);
+      formManager.updateForm(getFieldName(), selectedChoices.first.number);
     } else {
-      formKeyManager.updateForm(getFieldName(), '');
+      formManager.updateForm(getFieldName(), '');
     }
   }
 }
@@ -70,14 +67,14 @@ class _IOOGRadioGroup extends State<IOOGRadioGroup> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.checkBranchingLogic(setState, mounted);
     });
-    widget.formKeyManager
+    widget.formManager
         .getFormStateNotifier()
         .addListener(() => widget.checkBranchingLogic(setState, mounted));
   }
 
   @override
   void dispose() {
-    widget.formKeyManager
+    widget.formManager
         .getFormStateNotifier()
         .removeListener(() => widget.checkBranchingLogic(setState, mounted));
     super.dispose();

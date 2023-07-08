@@ -31,8 +31,8 @@ class IOOGPage extends StatefulWidget {
   @override
   _IOOGPageState createState() => _IOOGPageState();
 
-  FormManager getFormKeyManager() {
-    return _instrument.getFormKeyManager();
+  FormManager getFormManager() {
+    return _instrument.getFormManager();
   }
 
   List<Widget> get fields {
@@ -47,7 +47,7 @@ class _IOOGPageState extends State<IOOGPage> {
 
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     //   printLog(
-    //       "The current state is ${widget.instrument.getFormKeyManager().getFormKey().currentState!.fields}");
+    //       "The current state is ${widget.instrument.getFormManager().getFormKey().currentState!.fields}");
     // });
   }
 
@@ -58,7 +58,7 @@ class _IOOGPageState extends State<IOOGPage> {
         // Delay until all widgets have been rendered
         List<IOOGFieldWidget> fieldWidgets =
             widget.fields.whereType<IOOGFieldWidget>().toList();
-        widget.getFormKeyManager().updateAllFormFields(fieldWidgets);
+        widget.getFormManager().updateAllFormFields(fieldWidgets);
       });
     }
 
@@ -81,8 +81,9 @@ class _IOOGPageState extends State<IOOGPage> {
       // ),
       bottomNavigationBar: createBottomNavigationBar(
         context,
+        widget._section,
         SummaryPage(fields: widget.fields, instrument: widget._instrument),
-        widget.getFormKeyManager(),
+        widget.getFormManager(),
         widget._controller,
         widget._pageLength,
       ),

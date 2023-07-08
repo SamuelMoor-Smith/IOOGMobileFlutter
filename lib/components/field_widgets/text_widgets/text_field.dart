@@ -7,8 +7,8 @@ import 'package:nb_utils/nb_utils.dart';
 
 class IOOGTextField extends IOOGTextWidget {
   IOOGTextField(
-      {Key? key, required Field field, required FormManager formKeyManager})
-      : super(key: key, field: field, formKeyManager: formKeyManager);
+      {Key? key, required Field field, required FormManager formManager})
+      : super(key: key, field: field, formManager: formManager);
 
   @override
   State<IOOGTextField> createState() => _IOOGTextField();
@@ -23,14 +23,14 @@ class _IOOGTextField extends State<IOOGTextField> {
       widget.checkBranchingLogic(setState, mounted);
     });
     widget.textController.addListener(_onTextChanged);
-    widget.formKeyManager
+    widget.formManager
         .getFormStateNotifier()
         .addListener(() => widget.checkBranchingLogic(setState, mounted));
   }
 
   @override
   void dispose() {
-    widget.formKeyManager
+    widget.formManager
         .getFormStateNotifier()
         .removeListener(() => widget.checkBranchingLogic(setState, mounted));
     super.dispose();
@@ -47,7 +47,6 @@ class _IOOGTextField extends State<IOOGTextField> {
       child: Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: TextFormField(
-          validator: widget.validator(),
           controller: widget.textController,
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(

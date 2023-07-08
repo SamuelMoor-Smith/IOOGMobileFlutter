@@ -4,7 +4,7 @@ import 'package:namer_app/utils/events.dart';
 import '../../models/instrument.dart';
 
 String createPayload(IOOGInstrument instrument) {
-  final formState = instrument.getFormKeyManager().getFormStateNotifier().value;
+  final formState = instrument.getFormManager().getFormStateNotifier().value;
 
   final formStateCopy = Map.of(formState);
   // Remove the check groups keys

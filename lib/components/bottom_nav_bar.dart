@@ -3,6 +3,8 @@ import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/utils/navigation.dart';
 import 'package:namer_app/utils/logging.dart';
 
+import '../models/section.dart';
+
 void animateToPage(PageController controller, int nextPage) {
   try {
     controller.animateToPage(
@@ -26,12 +28,13 @@ int getNextPageNumber(
   return -1;
 }
 
-BottomNavigationBar createBottomNavigationBar(
-    BuildContext context, Widget forward, FormManager formKeyManager,
+BottomNavigationBar createBottomNavigationBar(BuildContext context,
+    IOOGSection section, Widget forward, FormManager formManager,
     [PageController? controller, int pageLength = 1]) {
   void _onItemTapped(int index) {
     int nextPageNumber;
     if (index == 0) {
+      // Back Button was pressed
       nextPageNumber = getNextPageNumber(controller, pageLength, -1);
       if (nextPageNumber >= 0) {
         animateToPage(controller!, nextPageNumber);
@@ -39,13 +42,16 @@ BottomNavigationBar createBottomNavigationBar(
         Navigator.pop(context);
       }
     } else {
-      if (formKeyManager.formIsValid()) {
+      // Forward Button was pressed
+      if (formManager.sectionIsValid(section)) {
         nextPageNumber = getNextPageNumber(controller, pageLength, 1);
         if (nextPageNumber >= 0) {
           animateToPage(controller!, nextPageNumber);
         } else {
           nextPage(context, forward);
         }
+      } else {
+        printError("Form is not valid");
       }
     }
   }

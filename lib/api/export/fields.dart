@@ -39,10 +39,15 @@ Future<List<IOOGSection>?> getFieldsForInstrumentFromREDCAP(
       // Create new section that is simply the instrument label
       IOOGSection section = IOOGSection(instrument.getLabel());
 
+      // Process Audiograms differently
+      // if (instrument.getLabel() == "Phenx Audiogram Hearing Test") {
+      //   return getSectionsForAudiogram(fields, instrument);
+      // }
+
       for (Field field in fields) {
         // Create a field widget for the field
         IOOGFieldWidget? fieldWidgetInstance = fieldWidget(
-            instrument.getProject(), field, instrument.getFormKeyManager());
+            instrument.getProject(), field, instrument.getFormManager());
         if (fieldWidgetInstance != null) {
           if (!fieldWidgetInstance.getSectionHeader().isEmptyOrNull) {
             // If the field widget has a section header, create a new section
@@ -68,3 +73,8 @@ Future<List<IOOGSection>?> getFieldsForInstrumentFromREDCAP(
 
   return null;
 }
+
+// Future<List<IOOGSection>?> getSectionsForAudiogram(
+//     List<Field> fields, IOOGInstrument instrument) {
+//   List<IOOGSection> sections = [];
+// }

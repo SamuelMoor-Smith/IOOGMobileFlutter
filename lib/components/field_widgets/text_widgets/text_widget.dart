@@ -8,8 +8,8 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
   final textController = TextEditingController();
 
   IOOGTextWidget(
-      {Key? key, required Field field, required FormManager formKeyManager})
-      : super(key: key, field: field, formKeyManager: formKeyManager);
+      {Key? key, required Field field, required FormManager formManager})
+      : super(key: key, field: field, formManager: formManager);
 
   @override
   bool isFilled() {
@@ -39,6 +39,6 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
 
   @override
   updateForm() {
-    formKeyManager.updateForm(getFieldName(), getEnteredText());
+    formManager.updateForm(getFieldName(), getEnteredText());
   }
 }

@@ -9,8 +9,8 @@ import '../../../utils/form_manager.dart';
 
 class IOOGCommentsField extends IOOGTextWidget {
   IOOGCommentsField(
-      {Key? key, required Field field, required FormManager formKeyManager})
-      : super(key: key, field: field, formKeyManager: formKeyManager);
+      {Key? key, required Field field, required FormManager formManager})
+      : super(key: key, field: field, formManager: formManager);
 
   @override
   State<IOOGCommentsField> createState() => _IOOGCommentsField();
@@ -24,14 +24,14 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.checkBranchingLogic(setState, mounted);
     });
-    widget.formKeyManager
+    widget.formManager
         .getFormStateNotifier()
         .addListener(() => widget.checkBranchingLogic(setState, mounted));
   }
 
   @override
   void dispose() {
-    widget.formKeyManager
+    widget.formManager
         .getFormStateNotifier()
         .removeListener(() => widget.checkBranchingLogic(setState, mounted));
     super.dispose();
@@ -48,7 +48,6 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
       child: Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10),
         child: TextFormField(
-          validator: widget.validator(),
           controller: widget.textController,
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(

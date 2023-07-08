@@ -1,6 +1,5 @@
 import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:namer_app/models/field/field.dart';
 import 'package:namer_app/utils/form_manager.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -9,19 +8,19 @@ import '../../utils/logging.dart';
 
 abstract class IOOGFieldWidget extends StatefulWidget {
   final Field field;
-  final FormManager formKeyManager;
+  final FormManager formManager;
   bool shouldShow = true;
 
-  IOOGFieldWidget({Key? key, required this.field, required this.formKeyManager})
+  IOOGFieldWidget({Key? key, required this.field, required this.formManager})
       : super(key: key);
 
-  FormFieldValidator<String>? validator() {
+  String? isValid() {
+    printLog('${getFieldName()} being checked...');
     if (shouldShow && isRequired()) {
       if (isFilled()) {
         return null;
       } else {
-        return FormBuilderValidators.required(
-            errorText: 'This field is required.');
+        return '${getFieldLabel()} is required';
       }
     } else {
       return null;
@@ -72,7 +71,7 @@ abstract class IOOGFieldWidget extends StatefulWidget {
       try {
         if (mounted) {
           setState(() {
-            shouldShow = formKeyManager.shouldShow(expression);
+            shouldShow = formManager.shouldShow(expression);
           });
         }
       } catch (e) {

@@ -10,13 +10,13 @@ class Mastoidectomy extends IOOGRadioGroup {
   Mastoidectomy({
     Key? key,
     required Field field,
-    required FormManager formKeyManager,
+    required FormManager formManager,
     required Set<Choice> choices,
   }) : super(
           key: key,
           choices: choices,
           field: field,
-          formKeyManager: formKeyManager,
+          formManager: formManager,
         );
 
   @override

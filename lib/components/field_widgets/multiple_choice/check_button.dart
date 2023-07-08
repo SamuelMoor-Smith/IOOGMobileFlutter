@@ -13,13 +13,10 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
   IOOGCheckGroup({
     Key? key,
     required Field field,
-    required FormManager formKeyManager,
+    required FormManager formManager,
     required Set<Choice> choices,
   }) : super(
-            key: key,
-            choices: choices,
-            field: field,
-            formKeyManager: formKeyManager);
+            key: key, choices: choices, field: field, formManager: formManager);
 
   @override
   State<IOOGCheckGroup> createState() => _IOOGCheckGroup();
@@ -54,9 +51,9 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
     for (Choice choice in choices) {
       var formFieldName = "${getFieldName()}___${choice.number}";
       if (selectedChoices.contains(choice)) {
-        formKeyManager.updateForm(formFieldName, "1");
+        formManager.updateForm(formFieldName, "1");
       } else {
-        formKeyManager.updateForm(formFieldName, "0");
+        formManager.updateForm(formFieldName, "0");
       }
     }
   }
@@ -69,14 +66,14 @@ class _IOOGCheckGroup extends State<IOOGCheckGroup> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.checkBranchingLogic(setState, mounted);
     });
-    widget.formKeyManager
+    widget.formManager
         .getFormStateNotifier()
         .addListener(() => widget.checkBranchingLogic(setState, mounted));
   }
 
   @override
   void dispose() {
-    widget.formKeyManager
+    widget.formManager
         .getFormStateNotifier()
         .removeListener(() => widget.checkBranchingLogic(setState, mounted));
     super.dispose();

@@ -12,7 +12,7 @@ class IOOGInstrument {
   String _name;
   String _label;
   IOOGProject _project;
-  FormManager _formKeyManager = FormManager();
+  FormManager _FormManager = FormManager();
 
   List<IOOGSection>? _sections;
   List<IOOGForm>? _forms;
@@ -30,7 +30,7 @@ class IOOGInstrument {
             .toList();
       }
       printLog("initial form state set");
-      _formKeyManager.setInitialFormState(this);
+      _FormManager.setInitialFormState(this);
     });
   }
 
@@ -44,7 +44,7 @@ class IOOGInstrument {
   }
 
   void updateAllFormFields(List<IOOGFieldWidget> fieldWidgets) {
-    _formKeyManager.updateAllFormFields(fieldWidgets);
+    _FormManager.updateAllFormFields(fieldWidgets);
   }
 
   bool isSectioned() {
@@ -114,7 +114,7 @@ class IOOGInstrument {
     return _project;
   }
 
-  FormManager getFormKeyManager() {
-    return _formKeyManager;
+  FormManager getFormManager() {
+    return _FormManager;
   }
 }

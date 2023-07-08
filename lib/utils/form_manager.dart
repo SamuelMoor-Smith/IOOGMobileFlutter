@@ -7,6 +7,7 @@ import 'package:namer_app/utils/logging.dart';
 import '../components/field_widgets/field_widget.dart';
 import '../main.dart';
 import '../models/choice.dart';
+import '../models/section.dart';
 
 class FormManager {
   ValueNotifier<Map<String, String>> _formStateNotifier =
@@ -15,6 +16,7 @@ class FormManager {
   // Keys SHOULD NOT CHANGE
   void setInitialFormState(IOOGInstrument instrument) {
     for (IOOGFieldWidget fieldWidget in instrument.getAllFieldWidgets()) {
+      // For audiograms the fiels names include the ear
       // For check buttons the field name includes the choice
       if (fieldWidget is IOOGCheckGroup) {
         setInitialStateForCheckGroup(fieldWidget);
@@ -76,23 +78,17 @@ class FormManager {
     }
   }
 
-  bool formIsValid() {
-    // if (!currentStateExists()) {
-    //   return false;
-    // }
-    return true;
-
+  bool sectionIsValid(IOOGSection section) {
     // Check if form is valid
-    // bool isFormValid = _formKey.currentState!.validate();
-    // if (!isFormValid) {
-    //   _formKey.currentState!.fields.forEach((fieldName, field) {
-    //     if (!field.validate()) {
-    //       printError(
-    //           "Field $fieldName had validation error: ${field.validate()}");
-    //     }
-    //   });
-    // }
-    // return isFormValid;
+    printLog("Validation check");
+    bool isSectionValid = true;
+    for (IOOGFieldWidget fieldWidget in section.getFields()) {
+      if (fieldWidget.isValid() != null) {
+        printError(fieldWidget.isValid()!);
+        isSectionValid = false;
+      }
+    }
+    return isSectionValid;
   }
 
   // bool currentStateExists() {

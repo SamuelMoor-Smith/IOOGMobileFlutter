@@ -14,7 +14,7 @@ class EnterAudiogram extends IOOGFieldWidget {
 
   EnterAudiogram(
       {required super.field,
-      required super.formKeyManager,
+      required super.formManager,
       required this.project});
 
   @override
