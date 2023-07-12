@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/components/loading.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page.dart';
+import 'package:provider/provider.dart';
 import '../../models/instrument.dart';
 import '../../utils/logging.dart';
 
@@ -22,13 +23,14 @@ class IOOGPageView extends StatefulWidget {
   //   return instrument.getFormKey();
   // }
 
-  void setPages(List<IOOGPage> pages) {
-    for (IOOGSection section in instrument.getSections()) {
+  Future<void> setPages(List<IOOGPage> pages) async {
+    List<IOOGSection> sections = await instrument.getSections();
+    for (IOOGSection section in sections) {
       pages.add(IOOGPage(
         section: section,
         instrument: instrument,
         controller: controller,
-        pageLength: instrument.getSections().length,
+        pageLength: sections.length,
       ));
     }
   }
@@ -51,7 +53,9 @@ class _IOOGPageViewState extends State<IOOGPageView> {
 
     // fetch the fields if they aren't there already
     // await widget.instrument.fetchFieldsForInstrument();
-    widget.setPages(pages);
+    await widget.setPages(pages);
+
+    printLog(pages);
 
     // Check if its a demographics form
     if (widget.instrument.isDemographic()) {
@@ -62,7 +66,6 @@ class _IOOGPageViewState extends State<IOOGPageView> {
     } else {
       // Otherwise check if a form index was chosen
       var formIndex = widget.instrument.getFormIndex();
-      printLog(formIndex.toString());
       if (formIndex != null) {
         // Fill the fields from the selected form
         widget.instrument.fillFieldsFromForm(formIndex);
@@ -76,16 +79,19 @@ class _IOOGPageViewState extends State<IOOGPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoading
-        ? Loading()
-        : Form(
-            autovalidateMode: AutovalidateMode.disabled,
-            child: PageView(
+    return ChangeNotifierProvider.value(
+        value: widget.instrument,
+        child: Consumer<IOOGInstrument>(builder: (context, instrument, child) {
+          if (instrument.isLoading() != null || _isLoading) {
+            return Loading();
+          } else {
+            return PageView(
               controller: widget.controller,
               physics:
                   NeverScrollableScrollPhysics(), // Disable swipe navigation
               children: pages,
-            ),
-          );
+            );
+          }
+        }));
   }
 }

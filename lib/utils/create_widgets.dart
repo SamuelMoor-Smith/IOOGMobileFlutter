@@ -4,6 +4,8 @@ import 'package:namer_app/components/image_fields/cholesteatoma.dart';
 import 'package:namer_app/components/image_fields/diagram.dart';
 import 'package:namer_app/components/image_fields/mastoidectomy.dart';
 import 'package:namer_app/components/image_fields/ossicularchain.dart';
+import 'package:namer_app/components/image_fields/reasons.dart';
+import 'package:namer_app/components/image_fields/stages/stages.dart';
 import 'package:namer_app/utils/form_manager.dart';
 
 import '../../components/field_widgets/multiple_choice/check_button.dart';
@@ -12,12 +14,43 @@ import '../../components/field_widgets/text_widgets/text_field.dart';
 import '../../components/image_fields/audiograms/enter_audiogram.dart';
 import '../../models/field/field.dart';
 import '../../models/project.dart';
+import '../components/image_fields/stages/stage.dart';
+import 'logging.dart';
 
 IOOGFieldWidget? fieldWidget(
     IOOGProject project, Field field, FormManager formManager) {
   switch (field.getFieldName()) {
-    // case 'reac':
-    //   return AudiogramGroup(field: field, instrument: instrument, choices: field.createChoices(),);
+    case 'stage3':
+      return Stage(
+          field: field,
+          formManager: formManager,
+          choices: field.createChoices(),
+          isSelected: () =>
+              formManager
+                  .getFormStateNotifier()
+                  .value['stage_of_cholesteatoma'] ==
+              "3");
+    case 'stage4':
+      return Stage(
+          field: field,
+          formManager: formManager,
+          choices: field.createChoices(),
+          isSelected: () =>
+              formManager
+                  .getFormStateNotifier()
+                  .value['stage_of_cholesteatoma'] ==
+              "4");
+    case 'stage_of_cholesteatoma':
+      return Stages(
+          field: field,
+          formManager: formManager,
+          choices: field.createChoices());
+    case 'diagnosis':
+      return Reasons(
+        field: field,
+        formManager: formManager,
+        choices: field.createChoices(),
+      );
     case 'last_preop':
       return EnterAudiogram(
         project: project,
@@ -73,7 +106,23 @@ IOOGFieldWidget? fieldWidget(
         formManager: formManager,
         choices: field.createChoices(),
       );
+    case 'yesno':
+      return IOOGRadioGroup(
+        field: field,
+        formManager: formManager,
+        choices: field.createYesNoChoices(),
+      );
+    case 'dropdown':
+      printLog(field.toJson().toString());
+      return IOOGCheckGroup(
+        field: field,
+        formManager: formManager,
+        choices: field.createChoices(),
+      );
     default:
+      printLog("${field.toJson()}");
+      printLog("Field type ${field.getFieldType()} not supported");
+      printLog("Field name ${field.getFieldName()}");
       return null;
   }
 }

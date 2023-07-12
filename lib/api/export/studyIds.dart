@@ -15,7 +15,7 @@ Object studyIdsBody(IOOGProject project) {
   });
 }
 
-Future<Set<String>?> getStudyIdsForProjectFromREDCAP(
+Future<List<String>?> getStudyIdsForProjectFromREDCAP(
     IOOGProject project) async {
   try {
     var url = Uri.parse(project.apiUrl);
@@ -28,7 +28,7 @@ Future<Set<String>?> getStudyIdsForProjectFromREDCAP(
       for (var item in record) {
         uniqueStudyIds.add(item['study_id']);
       }
-      return uniqueStudyIds;
+      return uniqueStudyIds.toList();
     }
   } catch (e) {
     printError(e.toString());

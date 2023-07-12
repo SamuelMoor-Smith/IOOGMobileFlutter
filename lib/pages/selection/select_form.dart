@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/form.dart';
+import 'package:namer_app/utils/logging.dart';
 import 'package:namer_app/utils/navigation.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/app_bar.dart';
 import '../../components/loading.dart';
@@ -13,7 +15,12 @@ class SelectForm extends StatefulWidget {
   SelectForm({required this.instrument});
 
   List<IOOGForm> getForms() {
-    return instrument.getForms();
+    if (instrument.isLoading() == null) {
+      return instrument.getForms();
+    } else {
+      printError('forms are still loading');
+      return [];
+    }
   }
 
   @override
@@ -52,9 +59,13 @@ class _SelectFormState extends State<SelectForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: "Edit or Create Form"),
-      body: _isLoading
-          ? Loading()
-          : Padding(
+      body: ChangeNotifierProvider.value(
+        value: widget.instrument,
+        child: Consumer<IOOGInstrument>(builder: (context, instrument, child) {
+          if (instrument.isLoading() != null) {
+            return Loading();
+          } else {
+            return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
@@ -149,7 +160,10 @@ class _SelectFormState extends State<SelectForm> {
                   SizedBox(height: 16),
                 ],
               ),
-            ),
+            );
+          }
+        }),
+      ),
     );
   }
 }

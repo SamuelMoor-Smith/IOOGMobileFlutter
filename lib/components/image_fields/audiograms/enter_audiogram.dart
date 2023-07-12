@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/title_list_tile.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../../../models/project.dart';
 import '../../../pages/survey_pages/ioog_page_view.dart';

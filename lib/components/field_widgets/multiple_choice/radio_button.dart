@@ -4,6 +4,7 @@ import 'package:namer_app/models/choice.dart';
 import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/text_styles.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../../../models/field/field.dart';
 import '../../../style/containers/border.dart';
@@ -66,6 +67,8 @@ class _IOOGRadioGroup extends State<IOOGRadioGroup> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.checkBranchingLogic(setState, mounted);
+      // Set the default choice (if any)
+      widget.setDefaultChoice();
     });
     widget.formManager
         .getFormStateNotifier()
@@ -86,7 +89,9 @@ class _IOOGRadioGroup extends State<IOOGRadioGroup> {
       offstage: !widget.shouldShow,
       child: FieldContainer(
           child: Column(children: [
-        TitleListTile(labelText: widget.getLabelText()),
+        TitleListTile(
+            labelText: widget.getLabelText(),
+            fieldNote: widget.field.field_note),
         ...widget
             .getChoices()
             .map((choice) => RadioListTile<Choice>(

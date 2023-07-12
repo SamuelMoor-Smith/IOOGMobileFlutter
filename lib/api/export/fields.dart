@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:namer_app/components/field_widgets/field_widget.dart';
+import 'package:namer_app/components/image_fields/audiograms/audiogram.dart';
+import 'package:namer_app/components/image_fields/audiograms/types.dart';
 import 'package:namer_app/models/project.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -40,9 +42,9 @@ Future<List<IOOGSection>?> getFieldsForInstrumentFromREDCAP(
       IOOGSection section = IOOGSection(instrument.getLabel());
 
       // Process Audiograms differently
-      // if (instrument.getLabel() == "Phenx Audiogram Hearing Test") {
-      //   return getSectionsForAudiogram(fields, instrument);
-      // }
+      if (instrument.getLabel() == "Phenx Audiogram Hearing Test") {
+        return getSectionsForAudiogram(instrument);
+      }
 
       for (Field field in fields) {
         // Create a field widget for the field
@@ -74,7 +76,46 @@ Future<List<IOOGSection>?> getFieldsForInstrumentFromREDCAP(
   return null;
 }
 
-// Future<List<IOOGSection>?> getSectionsForAudiogram(
-//     List<Field> fields, IOOGInstrument instrument) {
-//   List<IOOGSection> sections = [];
-// }
+List<IOOGSection> getSectionsForAudiogram(IOOGInstrument instrument) {
+  //, List<Field> fields) {
+  Field emptyFieldForAudiograms = Field.createEmptyFieldForAudiograms();
+  IOOGSection reac = IOOGSection("REAC");
+  IOOGSection rebc = IOOGSection("REBC");
+  IOOGSection leac = IOOGSection("LEAC");
+  IOOGSection lebc = IOOGSection("LEBC");
+  List<IOOGSection> sections = [reac, rebc, leac, lebc];
+  for (IOOGSection section in sections) {
+    switch (section.getLabel()) {
+      case 'REAC':
+        section.addFieldWidget(Audiogram(
+            type: AudiogramType.reac,
+            field: emptyFieldForAudiograms,
+            formManager: instrument.getFormManager()));
+        break;
+      case 'REBC':
+        section.addFieldWidget(Audiogram(
+            type: AudiogramType.rebc,
+            field: emptyFieldForAudiograms,
+            formManager: instrument.getFormManager()));
+        break;
+      case 'LEAC':
+        section.addFieldWidget(Audiogram(
+            type: AudiogramType.leac,
+            field: emptyFieldForAudiograms,
+            formManager: instrument.getFormManager()));
+        break;
+      case 'LEBC':
+        section.addFieldWidget(Audiogram(
+            type: AudiogramType.lebc,
+            field: emptyFieldForAudiograms,
+            formManager: instrument.getFormManager()));
+        break;
+    }
+  }
+  for (IOOGSection section in sections) {
+    for (IOOGFieldWidget fieldWidget in section.getFields()) {
+      printLog(fieldWidget.toString());
+    }
+  }
+  return sections;
+}

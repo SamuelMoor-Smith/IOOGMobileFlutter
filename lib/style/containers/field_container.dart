@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/style/containers/border.dart';
 
-class FieldContainer extends StatelessWidget {
+class FieldContainer extends StatefulWidget {
   final Widget child;
-  // final EdgeInsetsGeometry margin;
-  // final BoxDecoration decoration;
+  final bool isSelected;
 
   FieldContainer({
     required this.child,
-    // this.margin = const EdgeInsets.symmetric(vertical: 10.0),
-    // this.decoration = const BoxDecoration(
-    //   border: Border.all(color: Colors.grey),
-    //   borderRadius: BorderRadius.circular(10.0),
-    // ),
+    this.isSelected = false,
   });
 
+  @override
+  _FieldContainerState createState() => _FieldContainerState();
+}
+
+class _FieldContainerState extends State<FieldContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
-      decoration: bordered,
-      child: child,
+      decoration: BoxDecoration(
+        border:
+            Border.all(color: widget.isSelected ? Colors.green : Colors.grey),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: widget.child,
     );
   }
 }

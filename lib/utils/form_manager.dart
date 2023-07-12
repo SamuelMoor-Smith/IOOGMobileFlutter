@@ -14,8 +14,9 @@ class FormManager {
       ValueNotifier<Map<String, String>>({});
 
   // Keys SHOULD NOT CHANGE
-  void setInitialFormState(IOOGInstrument instrument) {
-    for (IOOGFieldWidget fieldWidget in instrument.getAllFieldWidgets()) {
+  void setInitialFormState(IOOGInstrument instrument) async {
+    List<IOOGFieldWidget> fieldWidgets = await instrument.getAllFieldWidgets();
+    for (IOOGFieldWidget fieldWidget in fieldWidgets) {
       // For audiograms the fiels names include the ear
       // For check buttons the field name includes the choice
       if (fieldWidget is IOOGCheckGroup) {
@@ -65,8 +66,10 @@ class FormManager {
       return;
     }
 
-    // Change the value
-    _formStateNotifier.value[formFieldName] = newValue ?? "";
+    // Clone the current map, change the value, and assign the new map to the ValueNotifier
+    var updatedMap = Map<String, String>.from(_formStateNotifier.value);
+    updatedMap[formFieldName] = newValue ?? "";
+    _formStateNotifier.value = updatedMap;
   }
 
   void updateAllFormFields(List<IOOGFieldWidget> fieldWidgets) {

@@ -19,22 +19,28 @@ class LoginScreen extends StatelessWidget {
     displayName: "REDCap API Access Token",
   );
 
+  Future<bool?> initializeProject(String apiUrl, String token) async {
+    project = IOOGProject(apiUrl, token);
+    if (project == null) {
+      throw Exception("Project is null");
+    }
+    // start the 3 async tasks in parallel
+    var futures = [
+      getOKFromREDCAP(project!),
+      project!.setStudyIds(),
+      project!.setInstruments(),
+    ];
+    // wait for all 3 tasks to complete
+    await Future.wait(futures);
+    return true;
+  }
+
   Future<String?>? _onLogin(LoginData data) async {
     final user = await UserSecureStorage.getUsername(data.name);
     var success = user != null && data.password == user.password;
     if (success) {
-      project = IOOGProject(user.apiUrl, user.token);
-      if (project == null) {
-        throw Exception("Project is null");
-      }
-      // start the 3 async tasks in parallel
-      var futures = [
-        getOKFromREDCAP(project!),
-        project!.setStudyIds(),
-        project!.setInstruments(),
-      ];
-      // wait for all 3 tasks to complete
-      await Future.wait(futures);
+      bool? projectInitialized =
+          await initializeProject(user.apiUrl, user.token);
     }
 
     return success == true ? null : "Something went wrong";
@@ -49,6 +55,7 @@ class LoginScreen extends StatelessWidget {
     );
 
     UserSecureStorage.addUser(user);
+    initializeProject(user.apiUrl, user.token);
 
     // APIConstants.apiUrl = user.apiUrl;
     // APIConstants.token = user.token;
@@ -69,13 +76,18 @@ class LoginScreen extends StatelessWidget {
       onSignup: _onSignup,
       onRecoverPassword: _onRecoverPassword,
       additionalSignupFields: [apiUrl, token],
-      onSubmitAnimationCompleted: () {
+      onSubmitAnimationCompleted: () async {
         if (project != null) {
           Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (context) => StudyIdPage(project!),
           ));
         } else {
           printError("Project is null");
+          printLog("creating new project");
+          await initializeProject(apiUrl.toString(), token.toString());
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => StudyIdPage(project!),
+          ));
         }
       },
     );

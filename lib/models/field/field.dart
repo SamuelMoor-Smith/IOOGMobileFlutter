@@ -14,7 +14,6 @@ part 'field.g.dart';
 /// JSON serialization logic to be generated.
 @JsonSerializable()
 class Field {
-
   late String field_name;
   late String form_name;
   late String section_header;
@@ -34,24 +33,25 @@ class Field {
   late String matrix_ranking;
   late String field_annotation;
 
-  Field(this.field_name,
-        this.form_name,
-        this.section_header,
-        this.field_type,
-        this.field_label,
-        this.select_choices_or_calculations,
-        this.field_note,
-        this.text_validation_type_or_show_slider_number,
-        this.text_validation_min,
-        this.text_validation_max,
-        this.identifier,
-        this.branching_logic,
-        this.required_field,
-        this.custom_alignment,
-        this.question_number,
-        this.matrix_group_name,
-        this.matrix_ranking,
-        this.field_annotation,
+  Field(
+    this.field_name,
+    this.form_name,
+    this.section_header,
+    this.field_type,
+    this.field_label,
+    this.select_choices_or_calculations,
+    this.field_note,
+    this.text_validation_type_or_show_slider_number,
+    this.text_validation_min,
+    this.text_validation_max,
+    this.identifier,
+    this.branching_logic,
+    this.required_field,
+    this.custom_alignment,
+    this.question_number,
+    this.matrix_group_name,
+    this.matrix_ranking,
+    this.field_annotation,
   );
 
   /// A necessary factory constructor for creating a new User instance
@@ -85,7 +85,16 @@ class Field {
   // Fixing Data Functions
 
   Set<Choice> createChoices() {
-    return Set<Choice>.from(select_choices_or_calculations.split(" | ").map((choiceString) => Choice.fromString(choiceString)));
+    return Set<Choice>.from(select_choices_or_calculations
+        .split(" | ")
+        .map((choiceString) => Choice.fromString(choiceString)));
+  }
+
+  Set<Choice> createYesNoChoices() {
+    Set<Choice> choices = Set<Choice>();
+    choices.add(Choice("1", "Yes"));
+    choices.add(Choice("0", "No"));
+    return choices;
   }
 
   // bool shouldShow() {
@@ -114,13 +123,26 @@ class Field {
 
   String getLabelText() {
     if (isRequired()) {
-      return '${getFieldLabel()}*:';
+      return '${getFieldLabel().trim()}*:';
     } else {
-      return '${getFieldLabel()}:';
+      return '${getFieldLabel().trim()}:';
     }
   }
 
   String getParsedBranchingLogic() {
-    return BranchingLogicParser().parseBranchingLogic(branching_logic).toString();
+    return BranchingLogicParser()
+        .parseBranchingLogic(branching_logic)
+        .toString();
+  }
+
+  static Field createEmptyFieldForAudiograms() {
+    return Field(
+        "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "");
+  }
+
+  static Field createFieldWithLabelAndNote(
+      String fieldLabel, String fieldNote) {
+    return Field("", "", "", "", fieldLabel, "", fieldNote, "", "", "", "", "",
+        "", "", "", "", "", "");
   }
 }

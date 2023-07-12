@@ -45,4 +45,20 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
       }
     }
   }
+
+  setDefaultChoice() {
+    if (field.field_annotation.contains('@DEFAULT=')) {
+      // Extract the default value from the annotation
+      String defaultValue =
+          field.field_annotation.split('=')[1].replaceAll('"', '');
+
+      // Find the choice that corresponds to the default value
+      Choice defaultChoice =
+          choices.firstWhere((choice) => choice.number == defaultValue);
+
+      // Select the default choice
+      selectChoice(defaultChoice);
+      updateForm();
+    }
+  }
 }

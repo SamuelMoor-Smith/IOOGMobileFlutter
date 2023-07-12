@@ -65,6 +65,8 @@ class _IOOGCheckGroup extends State<IOOGCheckGroup> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.checkBranchingLogic(setState, mounted);
+      // Set the default choice (if any)
+      widget.setDefaultChoice();
     });
     widget.formManager
         .getFormStateNotifier()
@@ -85,7 +87,9 @@ class _IOOGCheckGroup extends State<IOOGCheckGroup> {
       offstage: !widget.shouldShow,
       child: FieldContainer(
           child: Column(children: [
-        TitleListTile(labelText: widget.getLabelText()),
+        TitleListTile(
+            labelText: widget.getLabelText(),
+            fieldNote: widget.field.field_note),
         ...widget
             .getChoices()
             .map((choice) => CheckboxListTile(

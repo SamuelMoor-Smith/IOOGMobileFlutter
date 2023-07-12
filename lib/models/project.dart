@@ -1,25 +1,40 @@
+import 'package:flutter/material.dart';
 import 'package:namer_app/api/export/studyIds.dart';
 
 import '../api/export/instruments.dart';
 import 'instrument.dart';
 
-class IOOGProject {
+class IOOGProject extends ChangeNotifier {
   String apiUrl;
   String token;
 
-  Set<String>? _studyIds;
+  List<String>? _studyIds;
   String? _activeStudyId;
 
   List<IOOGInstrument>? _instruments;
+  bool _studyIdsGrabbed = false;
+  bool _instrumentsGrabbed = false;
 
   IOOGProject(this.apiUrl, this.token);
 
   Future<void> setStudyIds() async {
     _studyIds ??= await getStudyIdsForProjectFromREDCAP(this);
+    _studyIdsGrabbed = true;
+    notifyListeners();
   }
 
   Future<void> setInstruments() async {
     _instruments ??= await getInstrumentsForProjectFromREDCAP(this);
+    _instrumentsGrabbed = true;
+    notifyListeners();
+  }
+
+  bool isLoadingStudyIds() {
+    return !_studyIdsGrabbed;
+  }
+
+  bool isLoading() {
+    return !_instrumentsGrabbed;
   }
 
   void setActiveStudyId(String studyId) {
@@ -49,6 +64,13 @@ class IOOGProject {
             instrument.getLabel() != "Study ID" &&
             instrument.getLabel() != "Phenx Audiogram Hearing Test")
         .toList();
+  }
+
+  List<String> getStudyIds() {
+    if (_studyIds == null) {
+      throw Exception("Study IDs have not been set yet");
+    }
+    return _studyIds!;
   }
 
   IOOGInstrument getInstrumentByLabel(String label) {

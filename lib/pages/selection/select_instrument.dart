@@ -3,7 +3,9 @@ import 'package:namer_app/components/loading.dart';
 import 'package:namer_app/pages/selection/select_form.dart';
 import 'package:namer_app/models/instrument.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page_view.dart';
+import 'package:namer_app/utils/logging.dart';
 import 'package:namer_app/utils/navigation.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/app_bar.dart';
 import '../../models/project.dart';
@@ -42,11 +44,15 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: this.widget.project.getActiveStudyId(),
+        title: widget.project.getActiveStudyId(),
       ),
-      body: _isLoading
-          ? Loading()
-          : Column(
+      body: ChangeNotifierProvider.value(
+        value: widget.project,
+        child: Consumer<IOOGProject>(builder: (context, instrument, child) {
+          if (widget.project.isLoading()) {
+            return Loading();
+          } else {
+            return Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: List<Widget>.generate(instruments.length, (int index) {
@@ -80,7 +86,10 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
                   ),
                 );
               }),
-            ),
+            );
+          }
+        }),
+      ),
     );
   }
 }
