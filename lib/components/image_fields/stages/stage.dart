@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/check_button.dart';
+import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choice.dart';
 import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/utils/logging.dart';
 
@@ -10,7 +12,7 @@ import 'package:namer_app/models/choice.dart';
 import '../../../../models/field/field.dart';
 
 class Stage extends IOOGCheckGroup {
-  final Function() isSelected;
+  final bool Function() isSelected;
 
   Stage({
     Key? key,
@@ -26,10 +28,10 @@ class Stage extends IOOGCheckGroup {
         );
 
   @override
-  State<Stage> createState() => _StageState();
+  IOOGCheckGroupState<Stage> createState() => _StageState();
 }
 
-class _StageState extends State<Stage> {
+class _StageState extends IOOGCheckGroupState<Stage> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
@@ -38,7 +40,7 @@ class _StageState extends State<Stage> {
           (BuildContext context, Map<String, dynamic> value, Widget? child) {
         printLog(widget.formManager.getFormStateNotifier().value.toString());
         return FieldContainer(
-          isSelected: widget.isSelected(),
+          isSelected: (widget as Stage).isSelected(),
           child: Column(children: [
             TitleListTile(
                 labelText: widget.getLabelText(),

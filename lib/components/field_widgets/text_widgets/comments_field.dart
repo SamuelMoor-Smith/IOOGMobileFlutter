@@ -5,6 +5,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../models/field/field.dart';
 import '../../../utils/form_manager.dart';
+import '../field_widget.dart';
 
 class IOOGCommentsField extends IOOGTextWidget {
   IOOGCommentsField(
@@ -12,34 +13,11 @@ class IOOGCommentsField extends IOOGTextWidget {
       : super(key: key, field: field, formManager: formManager);
 
   @override
-  State<IOOGCommentsField> createState() => _IOOGCommentsField();
+  IOOGTextWidgetState<IOOGCommentsField> createState() =>
+      _IOOGCommentsFieldState();
 }
 
-class _IOOGCommentsField extends State<IOOGCommentsField> {
-  @override
-  void initState() {
-    super.initState();
-    widget.textController.addListener(_onTextChanged);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.checkBranchingLogic(setState, mounted);
-    });
-    widget.formManager
-        .getFormStateNotifier()
-        .addListener(() => widget.checkBranchingLogic(setState, mounted));
-  }
-
-  @override
-  void dispose() {
-    widget.formManager
-        .getFormStateNotifier()
-        .removeListener(() => widget.checkBranchingLogic(setState, mounted));
-    super.dispose();
-  }
-
-  void _onTextChanged() {
-    widget.updateForm();
-  }
-
+class _IOOGCommentsFieldState extends IOOGTextWidgetState<IOOGCommentsField> {
   @override
   Widget build(BuildContext context) {
     return Offstage(
@@ -71,5 +49,10 @@ class _IOOGCommentsField extends State<IOOGCommentsField> {
         ),
       ),
     );
+  }
+
+  @override
+  List<Widget> buildFieldWidgets() {
+    return [];
   }
 }

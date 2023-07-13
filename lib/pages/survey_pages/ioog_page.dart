@@ -12,16 +12,16 @@ class IOOGPage extends StatefulWidget {
   final IOOGSection _section;
   final IOOGInstrument _instrument;
   final PageController _controller;
-  final int _pageLength;
+  final List<IOOGPage> _pages;
 
   const IOOGPage({
     Key? key,
     required IOOGSection section,
     required IOOGInstrument instrument,
     required PageController controller,
-    required int pageLength,
+    required List<IOOGPage> pages,
   })  : _controller = controller,
-        _pageLength = pageLength,
+        _pages = pages,
         _instrument = instrument,
         _section = section,
         super(key: key);
@@ -35,6 +35,12 @@ class IOOGPage extends StatefulWidget {
 
   List<Widget> get fields {
     return _section.getFields();
+  }
+
+  bool isVisible() {
+    return _section.getFields().any((field) {
+      return field.shouldShow;
+    });
   }
 }
 
@@ -83,7 +89,7 @@ class _IOOGPageState extends State<IOOGPage> {
         SummaryPage(fields: widget.fields, instrument: widget._instrument),
         widget.getFormManager(),
         widget._controller,
-        widget._pageLength,
+        widget._pages,
       ),
     );
   }

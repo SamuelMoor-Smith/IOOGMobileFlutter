@@ -30,7 +30,7 @@ class IOOGPageView extends StatefulWidget {
         section: section,
         instrument: instrument,
         controller: controller,
-        pageLength: sections.length,
+        pages: pages,
       ));
     }
   }

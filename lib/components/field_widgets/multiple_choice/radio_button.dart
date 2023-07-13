@@ -7,6 +7,7 @@ import 'package:namer_app/style/text/text_styles.dart';
 
 import '../../../models/field/field.dart';
 import '../../../style/text/title_list_tile.dart';
+import '../field_widget.dart';
 
 class IOOGRadioGroup extends IOOGMultipleChoice {
   IOOGRadioGroup({
@@ -16,9 +17,6 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
     required Set<Choice> choices,
   }) : super(
             key: key, choices: choices, field: field, formManager: formManager);
-
-  @override
-  State<IOOGRadioGroup> createState() => _IOOGRadioGroup();
 
   // @override
   // validated() {
@@ -57,61 +55,36 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
       formManager.updateForm(getFieldName(), '');
     }
   }
+
+  @override
+  IOOGMultipleChoiceState<IOOGRadioGroup> createState() =>
+      IOOGRadioGroupState();
 }
 
-class _IOOGRadioGroup extends State<IOOGRadioGroup> {
+class IOOGRadioGroupState<T extends IOOGRadioGroup>
+    extends IOOGMultipleChoiceState<IOOGRadioGroup> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.checkBranchingLogic(setState, mounted);
-      // Set the default choice (if any)
-      widget.setDefaultChoice();
-    });
-    widget.formManager
-        .getFormStateNotifier()
-        .addListener(() => widget.checkBranchingLogic(setState, mounted));
-  }
-
-  @override
-  void dispose() {
-    widget.formManager
-        .getFormStateNotifier()
-        .removeListener(() => widget.checkBranchingLogic(setState, mounted));
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Offstage(
-      offstage: !widget.shouldShow,
-      child: FieldContainer(
-          child: Column(children: [
-        TitleListTile(
-            labelText: widget.getLabelText(),
-            fieldNote: widget.field.field_note),
-        ...widget
-            .getChoices()
-            .map((choice) => RadioListTile<Choice>(
-                title: Text(
-                  choice.name,
-                  style: primaryTextStyle(),
-                ),
-                value: choice,
-                groupValue: widget.getSelectedChoices().isEmpty
-                    ? null
-                    : widget
-                        .getSelectedChoices()
-                        .first, // Only ever 1 choice selected
-                onChanged: (Choice? value) {
-                  setState(() {
-                    widget.selectChoice(value!);
-                    widget.updateForm();
-                  });
-                },
-                visualDensity: VisualDensity(vertical: -4)))
-            .toList()
-      ])),
-    );
+  List<Widget> buildFieldWidgets() {
+    return widget
+        .getChoices()
+        .map((choice) => RadioListTile<Choice>(
+            title: Text(
+              choice.name,
+              style: primaryTextStyle(),
+            ),
+            value: choice,
+            groupValue: widget.getSelectedChoices().isEmpty
+                ? null
+                : widget
+                    .getSelectedChoices()
+                    .first, // Only ever 1 choice selected
+            onChanged: (Choice? value) {
+              setState(() {
+                widget.selectChoice(value!);
+                widget.updateForm();
+              });
+            },
+            visualDensity: VisualDensity(vertical: -4)))
+        .toList();
   }
 }

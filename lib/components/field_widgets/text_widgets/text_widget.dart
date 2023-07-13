@@ -41,4 +41,20 @@ abstract class IOOGTextWidget extends IOOGFieldWidget {
   updateForm() {
     formManager.updateForm(getFieldName(), getEnteredText());
   }
+
+  @override
+  IOOGFieldWidgetState<IOOGFieldWidget> createState();
+}
+
+abstract class IOOGTextWidgetState<T extends IOOGTextWidget>
+    extends IOOGFieldWidgetState<IOOGTextWidget> {
+  @override
+  void initState() {
+    super.initState();
+    widget.textController.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    widget.updateForm();
+  }
 }

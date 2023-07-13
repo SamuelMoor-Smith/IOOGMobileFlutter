@@ -62,4 +62,19 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
       updateForm();
     }
   }
+
+  @override
+  IOOGFieldWidgetState<IOOGFieldWidget> createState();
+}
+
+abstract class IOOGMultipleChoiceState<T extends IOOGMultipleChoice>
+    extends IOOGFieldWidgetState<IOOGMultipleChoice> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Set the default choice (if any)
+      widget.setDefaultChoice();
+    });
+  }
 }

@@ -30,9 +30,6 @@ class Audiogram extends IOOGFieldWidget {
     buttons = createButtons();
   }
 
-  @override
-  State<Audiogram> createState() => _AudiogramState();
-
   List<AudiogramButton> createButtons() {
     for (int i = 0; i < 7; i++) {
       for (int j = 0; j < 21; j++) {
@@ -107,9 +104,12 @@ class Audiogram extends IOOGFieldWidget {
   void clearField() {
     return;
   }
+
+  @override
+  IOOGFieldWidgetState<Audiogram> createState() => _AudiogramState();
 }
 
-class _AudiogramState extends State<Audiogram> {
+class _AudiogramState extends IOOGFieldWidgetState<Audiogram> {
   @override
   Widget build(BuildContext context) {
     return Padding(

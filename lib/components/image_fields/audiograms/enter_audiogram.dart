@@ -18,9 +18,6 @@ class EnterAudiogram extends IOOGFieldWidget {
       required this.project});
 
   @override
-  _EnterAudiogramState createState() => _EnterAudiogramState();
-
-  @override
   void clearField() {
     return;
   }
@@ -39,9 +36,12 @@ class EnterAudiogram extends IOOGFieldWidget {
   void updateForm() {
     return;
   }
+
+  @override
+  IOOGFieldWidgetState<EnterAudiogram> createState() => _EnterAudiogramState();
 }
 
-class _EnterAudiogramState extends State<EnterAudiogram> {
+class _EnterAudiogramState extends IOOGFieldWidgetState<EnterAudiogram> {
   @override
   Widget build(BuildContext context) {
     return FieldContainer(

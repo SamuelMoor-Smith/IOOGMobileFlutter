@@ -5,16 +5,18 @@ import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../field_widget.dart';
+
 class IOOGTextField extends IOOGTextWidget {
   IOOGTextField(
       {Key? key, required Field field, required FormManager formManager})
       : super(key: key, field: field, formManager: formManager);
 
   @override
-  State<IOOGTextField> createState() => _IOOGTextField();
+  IOOGTextWidgetState<IOOGTextField> createState() => _IOOGTextFieldState();
 }
 
-class _IOOGTextField extends State<IOOGTextField> {
+class _IOOGTextFieldState extends IOOGTextWidgetState<IOOGTextField> {
   @override
   void initState() {
     super.initState();
@@ -68,5 +70,10 @@ class _IOOGTextField extends State<IOOGTextField> {
         ),
       ),
     );
+  }
+
+  @override
+  List<Widget> buildFieldWidgets() {
+    return [];
   }
 }

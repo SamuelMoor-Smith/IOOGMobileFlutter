@@ -4,6 +4,7 @@ import 'package:namer_app/utils/navigation.dart';
 import 'package:namer_app/utils/logging.dart';
 
 import '../models/section.dart';
+import '../pages/survey_pages/ioog_page.dart';
 
 void animateToPage(PageController controller, int nextPage) {
   try {
@@ -18,11 +19,16 @@ void animateToPage(PageController controller, int nextPage) {
 }
 
 int getNextPageNumber(
-    PageController? controller, int pageLength, int difference) {
+    PageController? controller, List<IOOGPage>? pages, int difference) {
   if (controller != null && controller.hasClients) {
-    final nextPageNumber = controller.page!.round() + difference;
-    if (nextPageNumber >= 0 && nextPageNumber < pageLength) {
-      return nextPageNumber;
+    int currentPageIndex = controller.page!.round();
+    int nextPageNumber = currentPageIndex + difference;
+    while (
+        pages != null && nextPageNumber >= 0 && nextPageNumber < pages.length) {
+      if (pages[nextPageNumber].isVisible()) {
+        return nextPageNumber;
+      }
+      nextPageNumber += difference;
     }
   }
   return -1;
@@ -30,12 +36,12 @@ int getNextPageNumber(
 
 BottomNavigationBar createBottomNavigationBar(BuildContext context,
     IOOGSection section, Widget forward, FormManager formManager,
-    [PageController? controller, int pageLength = 1]) {
-  void _onItemTapped(int index) {
+    [PageController? controller, List<IOOGPage>? pages]) {
+  void onItemTapped(int index) {
     int nextPageNumber;
     if (index == 0) {
       // Back Button was pressed
-      nextPageNumber = getNextPageNumber(controller, pageLength, -1);
+      nextPageNumber = getNextPageNumber(controller, pages, -1);
       if (nextPageNumber >= 0) {
         animateToPage(controller!, nextPageNumber);
       } else {
@@ -44,7 +50,7 @@ BottomNavigationBar createBottomNavigationBar(BuildContext context,
     } else {
       // Forward Button was pressed
       if (formManager.sectionIsValid(section)) {
-        nextPageNumber = getNextPageNumber(controller, pageLength, 1);
+        nextPageNumber = getNextPageNumber(controller, pages, 1);
         if (nextPageNumber >= 0) {
           animateToPage(controller!, nextPageNumber);
         } else {
@@ -69,6 +75,6 @@ BottomNavigationBar createBottomNavigationBar(BuildContext context,
         backgroundColor: Colors.blue,
       ),
     ],
-    onTap: _onItemTapped,
+    onTap: onItemTapped,
   );
 }

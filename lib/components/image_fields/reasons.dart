@@ -5,6 +5,7 @@ import 'package:namer_app/utils/form_manager.dart';
 
 import 'package:namer_app/models/choice.dart';
 import '../../../models/field/field.dart';
+import '../field_widgets/field_widget.dart';
 
 class Reasons extends IOOGCheckGroup {
   Reasons({
@@ -20,15 +21,13 @@ class Reasons extends IOOGCheckGroup {
         );
 
   @override
-  State<Reasons> createState() => _ReasonsState();
+  IOOGCheckGroupState<Reasons> createState() => _ReasonsState();
 }
 
-class _ReasonsState extends State<Reasons> {
+class _ReasonsState extends IOOGCheckGroupState<Reasons> {
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: widget.choices.map((choice) => _buildChoice(choice)).toList(),
-    );
+  List<Widget> buildFieldWidgets() {
+    return widget.choices.map((choice) => _buildChoice(choice)).toList();
   }
 
   Widget _buildChoice(Choice choice) {

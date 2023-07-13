@@ -6,6 +6,8 @@ import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/models/choice.dart';
 import 'package:namer_app/utils/logging.dart';
 import '../../../../models/field/field.dart';
+import '../../field_widgets/field_widget.dart';
+import '../../field_widgets/multiple_choice/check_button.dart';
 
 const stage0 = {
   "fieldLabel": "Stage 0",
@@ -24,7 +26,7 @@ const stage2 = {
 };
 
 class Stages extends IOOGRadioGroup {
-  bool _isUpdating = false;
+  bool isUpdating = false;
 
   Stages({
     Key? key,
@@ -37,9 +39,6 @@ class Stages extends IOOGRadioGroup {
           field: field,
           formManager: formManager,
         );
-
-  @override
-  State<Stages> createState() => _StageState();
 
   // Define function to check whether or not stage 2 cholesteatoma
 
@@ -67,11 +66,11 @@ class Stages extends IOOGRadioGroup {
 
   @override
   updateForm() {
-    _isUpdating = true;
+    isUpdating = true;
     // Check if stage 0 (No cholesteatoma)
     if (formManager.getFormStateNotifier().value['cholesteatoma'] == "0") {
       formManager.updateForm('stage_of_cholesteatoma', "0");
-      _isUpdating = false;
+      isUpdating = false;
       return;
     }
 
@@ -79,7 +78,7 @@ class Stages extends IOOGRadioGroup {
     for (int i = 1; i < 7; i++) {
       if (formManager.getFormStateNotifier().value['stage4___$i'] == "1") {
         formManager.updateForm('stage_of_cholesteatoma', "4");
-        _isUpdating = false;
+        isUpdating = false;
         return;
       }
     }
@@ -89,7 +88,7 @@ class Stages extends IOOGRadioGroup {
     for (int i = 1; i < 7; i++) {
       if (formManager.getFormStateNotifier().value['stage3___$i'] == "1") {
         formManager.updateForm('stage_of_cholesteatoma', "3");
-        _isUpdating = false;
+        isUpdating = false;
         return;
       }
     }
@@ -97,23 +96,26 @@ class Stages extends IOOGRadioGroup {
     // Check if stage 2
     if (checkStam()) {
       formManager.updateForm('stage_of_cholesteatoma', "2");
-      _isUpdating = false;
+      isUpdating = false;
       return;
     }
 
     // Default: update to stage 1
     formManager.updateForm('stage_of_cholesteatoma', "1");
-    _isUpdating = false;
+    isUpdating = false;
   }
+
+  @override
+  IOOGRadioGroupState<Stages> createState() => _StagesState();
 }
 
-class _StageState extends State<Stages> {
+class _StagesState extends IOOGRadioGroupState<Stages> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.formManager.getFormStateNotifier().addListener(() {
-        if (!widget._isUpdating) {
+        if (!(widget as Stages).isUpdating) {
           widget.updateForm();
         }
       });
