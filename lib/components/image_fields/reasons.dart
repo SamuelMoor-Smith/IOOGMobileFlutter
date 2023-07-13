@@ -3,9 +3,6 @@ import 'package:namer_app/components/field_widgets/multiple_choice/check_button.
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/utils/form_manager.dart';
 
-import '../field_widgets/multiple_choice/radio_button.dart';
-import '../image_buttons/oval.dart';
-import '../image_buttons/rectangle.dart';
 import 'package:namer_app/models/choice.dart';
 import '../../../models/field/field.dart';
 

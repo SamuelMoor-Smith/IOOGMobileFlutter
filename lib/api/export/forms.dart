@@ -1,12 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/models/project.dart';
-import 'package:namer_app/models/section.dart';
-import 'package:nb_utils/nb_utils.dart';
 import '../../../../models/instrument.dart';
-import '../../../../models/field/field.dart';
 import '../../models/form.dart';
 import '../../utils/logging.dart';
 import '../common.dart';

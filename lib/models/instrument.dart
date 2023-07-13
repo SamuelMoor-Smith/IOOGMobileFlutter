@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/api/export/fields.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:namer_app/models/project.dart';
-import 'package:namer_app/utils/create_widgets.dart';
 import 'package:namer_app/utils/logging.dart';
 
 import '../api/export/forms.dart';

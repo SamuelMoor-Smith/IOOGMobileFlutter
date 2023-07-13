@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/title_list_tile.dart';
-import 'package:namer_app/utils/logging.dart';
 
 import '../../../models/project.dart';
 import '../../../pages/survey_pages/ioog_page_view.dart';
@@ -64,13 +63,13 @@ class _EnterAudiogramState extends State<EnterAudiogram> {
             // nextPage(
             //   context, IOOGPageView(instrument: instrument));
           },
-          child: Text('Enter Audiogram'),
           style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
+            backgroundColor: Colors.blue,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),
+          child: Text('Enter Audiogram'),
         ),
         Text(
           'Note: last pre-op audiogram was 2023-04-23.',

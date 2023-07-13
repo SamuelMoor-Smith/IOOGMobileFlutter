@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/utils/logging.dart';
 
 import '../../models/choice.dart';
 import '../field_widgets/multiple_choice/check_button.dart';
@@ -28,12 +27,12 @@ abstract class ImageButton extends StatefulWidget {
   }
 
   void onItemTapped() {
-    bool _isSelected = group.selectedChoices.contains(choice);
+    bool isSelected = group.selectedChoices.contains(choice);
     if (group is IOOGRadioGroup) {
       group.selectChoice(choice);
     } else if (group is IOOGCheckGroup) {
-      _isSelected = !_isSelected;
-      _isSelected ? group.selectChoice(choice) : group.unselectChoice(choice);
+      isSelected = !isSelected;
+      isSelected ? group.selectChoice(choice) : group.unselectChoice(choice);
     }
     // Flip the bool to trigger listeners
     group.selectedChoicesNotifier.value = !group.selectedChoicesNotifier.value;

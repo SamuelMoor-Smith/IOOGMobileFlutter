@@ -4,7 +4,6 @@ import 'package:namer_app/models/choice.dart';
 import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/text_styles.dart';
-import 'package:namer_app/utils/logging.dart';
 
 import '../../../models/field/field.dart';
 import '../../../style/text/title_list_tile.dart';

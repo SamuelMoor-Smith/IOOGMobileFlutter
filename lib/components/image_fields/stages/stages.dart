@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/components/field_widgets/multiple_choice/check_button.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/radio_button.dart';
 import 'package:namer_app/components/image_fields/stages/stage.dart';
 import 'package:namer_app/utils/form_manager.dart';
@@ -112,7 +111,7 @@ class _StageState extends State<Stages> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.formManager.getFormStateNotifier().addListener(() {
         if (!widget._isUpdating) {
           widget.updateForm();

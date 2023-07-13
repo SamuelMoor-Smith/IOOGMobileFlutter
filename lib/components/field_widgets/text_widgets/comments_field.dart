@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/style/AppColors.dart';
-import 'package:namer_app/utils/navigation.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../models/field/field.dart';

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/components/field_widgets/multiple_choice/radio_button.dart';
-import 'package:namer_app/models/choice.dart';
 import '../field_widgets/multiple_choice/multiple_choice.dart';
 import 'image_button.dart';
 

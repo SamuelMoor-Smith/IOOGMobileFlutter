@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/components/bottom_nav_bar.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:namer_app/utils/form_manager.dart';
-import 'package:namer_app/utils/navigation.dart';
 
 import '../../components/app_bar.dart';
 import '../../components/field_widgets/field_widget.dart';
 import '../../models/instrument.dart';
-import '../../style/containers/form_container.dart';
 import '../summary.dart';
 
 class IOOGPage extends StatefulWidget {

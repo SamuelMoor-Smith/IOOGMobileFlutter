@@ -12,7 +12,7 @@ String createPayload(IOOGInstrument instrument) {
 
   return jsonEncode([
     {
-      'study_id': instrument.getProject().getActiveStudyId()!,
+      'study_id': instrument.getProject().getActiveStudyId(),
       'redcap_event_name': getEventName(instrument),
       ...formStateCopy,
     },

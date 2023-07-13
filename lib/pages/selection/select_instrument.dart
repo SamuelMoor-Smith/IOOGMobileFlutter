@@ -3,14 +3,11 @@ import 'package:namer_app/components/loading.dart';
 import 'package:namer_app/pages/selection/select_form.dart';
 import 'package:namer_app/models/instrument.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page_view.dart';
-import 'package:namer_app/utils/logging.dart';
 import 'package:namer_app/utils/navigation.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/app_bar.dart';
 import '../../models/project.dart';
-import '../../api/old/services/fields_service.dart';
-import '../../api/export/instruments.dart';
 
 class SelectInstrumentsPage extends StatefulWidget {
   IOOGProject project;

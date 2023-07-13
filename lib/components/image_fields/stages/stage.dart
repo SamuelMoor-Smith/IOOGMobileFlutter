@@ -6,9 +6,6 @@ import 'package:namer_app/utils/logging.dart';
 import '../../../style/containers/field_container.dart';
 import '../../../style/text/text_styles.dart';
 import '../../../style/text/title_list_tile.dart';
-import '../../field_widgets/multiple_choice/radio_button.dart';
-import '../../image_buttons/oval.dart';
-import '../../image_buttons/rectangle.dart';
 import 'package:namer_app/models/choice.dart';
 import '../../../../models/field/field.dart';
 

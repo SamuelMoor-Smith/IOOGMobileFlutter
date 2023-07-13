@@ -91,7 +91,7 @@ class Field {
   }
 
   Set<Choice> createYesNoChoices() {
-    Set<Choice> choices = Set<Choice>();
+    Set<Choice> choices = <Choice>{};
     choices.add(Choice("1", "Yes"));
     choices.add(Choice("0", "No"));
     return choices;

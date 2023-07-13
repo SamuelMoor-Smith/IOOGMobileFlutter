@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:searchable_listview/searchable_listview.dart';
-import 'package:namer_app/style/containers/form_container.dart';
 import 'package:namer_app/utils/navigation.dart';
 
 import '../../models/project.dart';

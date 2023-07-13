@@ -85,10 +85,12 @@ class Audiogram extends IOOGFieldWidget {
     return buttons;
   }
 
+  @override
   bool isFilled() {
     return true;
   }
 
+  @override
   void updateForm() {
     return;
     // for (AudiogramButton button in buttons) {
@@ -96,10 +98,12 @@ class Audiogram extends IOOGFieldWidget {
     // }
   }
 
+  @override
   void fillField(dynamic rawRecord) {
     return;
   }
 
+  @override
   void clearField() {
     return;
   }

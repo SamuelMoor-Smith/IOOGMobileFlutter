@@ -11,7 +11,6 @@ import '../../../../models/instrument.dart';
 import '../../../../models/field/field.dart';
 import '../../../utils/create_widgets.dart';
 import '../../utils/logging.dart';
-import '../old/services/fields_service.dart';
 import '../common.dart';
 
 Object fieldsBody(IOOGProject project, IOOGInstrument instrument) {

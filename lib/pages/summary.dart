@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choice.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
-import 'package:namer_app/pages/selection/study_id.dart';
 import 'package:namer_app/api/import/import.dart';
 
 import '../components/app_bar.dart';
-import '../components/bottom_nav_bar.dart';
 import '../models/instrument.dart';
 
 String getTitle(fieldWidget) {
@@ -66,7 +64,7 @@ class SummaryPage extends StatelessWidget {
                   Widget? field = entry.value;
 
                   return TableRow(
-                      decoration: new BoxDecoration(
+                      decoration: BoxDecoration(
                         color: idx % 2 == 1
                             ? Colors.transparent
                             : Colors.blue[50]!,
@@ -75,7 +73,7 @@ class SummaryPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            '${getTitle(field)}',
+                            getTitle(field),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -92,7 +90,7 @@ class SummaryPage extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: Container(
+      bottomSheet: SizedBox(
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
