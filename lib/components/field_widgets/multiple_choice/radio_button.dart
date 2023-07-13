@@ -7,7 +7,6 @@ import 'package:namer_app/style/text/text_styles.dart';
 import 'package:namer_app/utils/logging.dart';
 
 import '../../../models/field/field.dart';
-import '../../../style/containers/border.dart';
 import '../../../style/text/title_list_tile.dart';
 
 class IOOGRadioGroup extends IOOGMultipleChoice {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choice.dart';
 import 'package:namer_app/utils/form_manager.dart';
-import 'package:namer_app/style/containers/border.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/text_styles.dart';
 import 'package:namer_app/style/text/title_list_tile.dart';

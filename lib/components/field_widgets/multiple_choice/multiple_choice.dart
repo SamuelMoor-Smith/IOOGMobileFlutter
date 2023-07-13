@@ -8,6 +8,7 @@ import '../field_widget.dart';
 abstract class IOOGMultipleChoice extends IOOGFieldWidget {
   final Set<Choice> choices;
   Set<Choice> selectedChoices = {};
+  final ValueNotifier<bool> selectedChoicesNotifier = ValueNotifier(false);
 
   IOOGMultipleChoice(
       {Key? key,

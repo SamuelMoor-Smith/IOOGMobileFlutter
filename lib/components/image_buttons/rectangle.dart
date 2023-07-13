@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../models/choice.dart';
 import '../field_widgets/multiple_choice/multiple_choice.dart';
 import 'image_button.dart';
 
 class Rectangle extends ImageButton {
-
   Rectangle({
     required IOOGMultipleChoice group,
     required String name,
@@ -26,23 +26,33 @@ class Rectangle extends ImageButton {
 class _RectangleState extends State<Rectangle> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: widget.left,
-      top: widget.top,
-      child: SizedBox(
-        width: widget.width,
-        height: widget.height,
-        child: GestureDetector(
-          onTap: () {
-            widget.onItemTapped(setState);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              border: widget.border(),
+    return ValueListenableBuilder<bool>(
+      valueListenable: widget.group.selectedChoicesNotifier,
+      builder: (context, _, child) {
+        return Positioned(
+          left: widget.left,
+          top: widget.top,
+          child: SizedBox(
+            width: widget.width,
+            height: widget.height,
+            child: GestureDetector(
+              onTap: () {
+                widget.onItemTapped();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: widget.group.selectedChoices.contains(widget.choice)
+                        ? Colors.green
+                        : Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

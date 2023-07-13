@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/components/field_widgets/multiple_choice/radio_button.dart';
+import 'package:namer_app/models/choice.dart';
 import '../field_widgets/multiple_choice/multiple_choice.dart';
 import 'image_button.dart';
 
@@ -25,26 +27,36 @@ class Oval extends ImageButton {
 class _OvalState extends State<Oval> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: widget.left,
-      top: widget.top,
-      child: SizedBox(
-        width: widget.width,
-        height: widget.height,
-        child: GestureDetector(
-          onTap: () {
-            widget.onItemTapped(setState);
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.elliptical(widget.width / 2, widget.height / 2),
+    return ValueListenableBuilder<bool>(
+        valueListenable: widget.group.selectedChoicesNotifier,
+        builder: (context, _, child) {
+          return Positioned(
+            left: widget.left,
+            top: widget.top,
+            child: SizedBox(
+              width: widget.width,
+              height: widget.height,
+              child: GestureDetector(
+                onTap: () {
+                  widget.onItemTapped();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.elliptical(widget.width / 2, widget.height / 2),
+                    ),
+                    border: Border.all(
+                      color:
+                          widget.group.selectedChoices.contains(widget.choice)
+                              ? Colors.green
+                              : Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                ),
               ),
-              border: widget.border(),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+        });
   }
 }
