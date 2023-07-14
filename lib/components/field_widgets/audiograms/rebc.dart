@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/components/field_widgets/audiograms/audiogram_button_group.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import 'audiogram_button.dart';
 
 class REBCButton extends AudiogramButton {
   REBCButton({
     Key? key,
-    required String field,
+    required AudiogramButtonGroup group,
     required String value,
     required double left,
     required double top,
@@ -13,7 +15,7 @@ class REBCButton extends AudiogramButton {
     required double height,
   }) : super(
           key: key,
-          field: field,
+          group: group,
           value: value,
           left: left,
           top: top,
@@ -22,36 +24,19 @@ class REBCButton extends AudiogramButton {
         );
 
   @override
-  State<REBCButton> createState() => _REBCButtonState();
+  AudiogramButtonState<REBCButton> createState() => _REBCButtonState();
 }
 
-class _REBCButtonState extends State<REBCButton> {
-  bool _isSelected = false;
-
+class _REBCButtonState extends AudiogramButtonState<REBCButton> {
   @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      left: widget.left,
-      top: widget.top,
-      child: SizedBox(
-        width: widget.width,
-        height: widget.height,
-        child: GestureDetector(
-          onTap: () {
-            setState(() {
-              _isSelected = !_isSelected;
-            });
-          },
-          child: ColorFiltered(
-            colorFilter: _isSelected
-                ? ColorFilter.mode(Colors.black, BlendMode.srcIn)
-                : ColorFilter.mode(Colors.grey, BlendMode.srcIn),
-            child: Image.asset(
-              'assets/images/audiograms/rebc.png',
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
+  Widget buttonIcon() {
+    return ColorFiltered(
+      colorFilter: widget.group.audiogramValue.value == widget.value
+          ? ColorFilter.mode(Colors.black, BlendMode.srcIn)
+          : ColorFilter.mode(Colors.grey, BlendMode.srcIn),
+      child: Image.asset(
+        'assets/images/audiograms/rebc.png',
+        fit: BoxFit.contain,
       ),
     );
   }

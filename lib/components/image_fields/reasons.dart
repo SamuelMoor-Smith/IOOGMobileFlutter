@@ -26,8 +26,10 @@ class Reasons extends IOOGCheckGroup {
 
 class _ReasonsState extends IOOGCheckGroupState<Reasons> {
   @override
-  List<Widget> buildFieldWidgets() {
-    return widget.choices.map((choice) => _buildChoice(choice)).toList();
+  Widget build(BuildContext context) {
+    return Column(
+      children: widget.choices.map((choice) => _buildChoice(choice)).toList(),
+    );
   }
 
   Widget _buildChoice(Choice choice) {
