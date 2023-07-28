@@ -69,24 +69,36 @@ class IOOGCheckGroupState<T extends IOOGCheckGroup>
   List<Widget> buildFieldWidgets() {
     return widget
         .getChoices()
-        .map((choice) => CheckboxListTile(
-            title: Text(
-              choice.name,
-              style: primaryTextStyle(),
-            ),
-            value: widget.getSelectedChoices().contains(choice),
-            onChanged: (bool? value) {
-              setState(() {
-                if (value != null) {
-                  value
-                      ? widget.selectChoice(choice)
-                      : widget.unselectChoice(choice);
+        .map((choice) => ListTile(
+              leading: Checkbox(
+                value: widget.getSelectedChoices().contains(choice),
+                onChanged: (bool? value) {
+                  setState(() {
+                    if (value != null) {
+                      value
+                          ? widget.selectChoice(choice)
+                          : widget.unselectChoice(choice);
+                      widget.updateForm();
+                    }
+                  });
+                },
+              ),
+              title: Text(
+                choice.name,
+                style: primaryTextStyle(),
+              ),
+              visualDensity: VisualDensity(vertical: -4),
+              onTap: () {
+                setState(() {
+                  if (widget.getSelectedChoices().contains(choice)) {
+                    widget.unselectChoice(choice);
+                  } else {
+                    widget.selectChoice(choice);
+                  }
                   widget.updateForm();
-                }
-              });
-            },
-            controlAffinity: ListTileControlAffinity.leading,
-            visualDensity: VisualDensity(vertical: -4)))
+                });
+              },
+            ))
         .toList();
   }
 }

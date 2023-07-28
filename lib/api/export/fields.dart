@@ -10,6 +10,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../../models/instrument.dart';
 import '../../../../models/field/field.dart';
 import '../../../utils/create_widgets.dart';
+import '../../components/field_widgets/text_widgets/date_field.dart';
 import '../../utils/logging.dart';
 import '../common.dart';
 
@@ -83,6 +84,11 @@ List<IOOGSection> getSectionsForAudiogram(IOOGInstrument instrument) {
   IOOGSection leac = IOOGSection("LEAC");
   IOOGSection lebc = IOOGSection("LEBC");
   List<IOOGSection> sections = [reac, rebc, leac, lebc];
+  reac.addFieldWidget(IOOGDateField(
+    field: Field.createFieldWithLabelAndName(
+        "Date of Audiogram", 'date_of_audiogram'),
+    formManager: instrument.getFormManager(),
+  ));
   for (IOOGSection section in sections) {
     switch (section.getLabel()) {
       case 'REAC':
@@ -93,13 +99,13 @@ List<IOOGSection> getSectionsForAudiogram(IOOGInstrument instrument) {
         break;
       case 'REBC':
         section.addFieldWidget(Audiogram(
-            type: AudiogramType.rebc,
+            type: AudiogramType.leac,
             field: emptyFieldForAudiograms,
             formManager: instrument.getFormManager()));
         break;
       case 'LEAC':
         section.addFieldWidget(Audiogram(
-            type: AudiogramType.leac,
+            type: AudiogramType.rebc,
             field: emptyFieldForAudiograms,
             formManager: instrument.getFormManager()));
         break;

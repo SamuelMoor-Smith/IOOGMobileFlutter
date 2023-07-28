@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/models/field/field.dart';
 import 'package:namer_app/utils/form_manager.dart';
 
+import '../../../utils/logging.dart';
 import '../field_widget.dart';
 
 abstract class IOOGTextWidget extends IOOGFieldWidget {

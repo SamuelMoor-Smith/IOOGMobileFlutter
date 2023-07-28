@@ -10,7 +10,12 @@ class AudiogramButtonGroup extends ChangeNotifier {
   AudiogramButtonGroup(this.field, this.formManager);
 
   void setValue(String newValue) {
+    // Cancel selection if clicked selected value
+    if (audiogramValue.value == newValue) {
+      newValue = '';
+    }
     audiogramValue.value = newValue;
-    // formManager.updateForm(field, value);
+    formManager.updateForm(field, audiogramValue.value);
+    printLog(formManager.getFormStateNotifier().value.toString());
   }
 }

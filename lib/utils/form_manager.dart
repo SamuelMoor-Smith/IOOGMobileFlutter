@@ -1,6 +1,8 @@
 import 'package:expressions/expressions.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/components/field_widgets/audiograms/audiogram_button_group.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/check_button.dart';
+import 'package:namer_app/components/image_fields/audiograms/audiogram.dart';
 import 'package:namer_app/models/instrument.dart';
 import 'package:namer_app/utils/logging.dart';
 
@@ -18,8 +20,11 @@ class FormManager {
     List<IOOGFieldWidget> fieldWidgets = await instrument.getAllFieldWidgets();
     for (IOOGFieldWidget fieldWidget in fieldWidgets) {
       // For audiograms the fiels names include the ear
+      if (fieldWidget is Audiogram) {
+        setInitialStateForAudiogram(fieldWidget);
+      }
       // For check buttons the field name includes the choice
-      if (fieldWidget is IOOGCheckGroup) {
+      else if (fieldWidget is IOOGCheckGroup) {
         setInitialStateForCheckGroup(fieldWidget);
       } else {
         // Otherwise it is just the name
@@ -32,6 +37,12 @@ class FormManager {
     for (Choice choice in fieldWidget.getChoices()) {
       var formFieldName = "${fieldWidget.getFieldName()}___${choice.number}";
       _formStateNotifier.value[formFieldName] = "";
+    }
+  }
+
+  void setInitialStateForAudiogram(Audiogram fieldWidget) {
+    for (AudiogramButtonGroup group in fieldWidget.getGroups()) {
+      _formStateNotifier.value[group.field] = "";
     }
   }
 

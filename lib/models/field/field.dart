@@ -145,4 +145,10 @@ class Field {
     return Field("", "", "", "", fieldLabel, "", fieldNote, "", "", "", "", "",
         "", "", "", "", "", "");
   }
+
+  static Field createFieldWithLabelAndName(
+      String fieldLabel, String fieldName) {
+    return Field(fieldName, "", "", "", fieldLabel, "", "", "", "", "", "", "",
+        "", "", "", "", "", "");
+  }
 }

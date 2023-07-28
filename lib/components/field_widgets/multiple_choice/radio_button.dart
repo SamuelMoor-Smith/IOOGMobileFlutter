@@ -4,6 +4,7 @@ import 'package:namer_app/models/choice.dart';
 import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/text_styles.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../../../models/field/field.dart';
 import '../../../style/text/title_list_tile.dart';
@@ -67,24 +68,41 @@ class IOOGRadioGroupState<T extends IOOGRadioGroup>
   List<Widget> buildFieldWidgets() {
     return widget
         .getChoices()
-        .map((choice) => RadioListTile<Choice>(
-            title: Text(
-              choice.name,
-              style: primaryTextStyle(),
-            ),
-            value: choice,
-            groupValue: widget.getSelectedChoices().isEmpty
-                ? null
-                : widget
-                    .getSelectedChoices()
-                    .first, // Only ever 1 choice selected
-            onChanged: (Choice? value) {
-              setState(() {
-                widget.selectChoice(value!);
-                widget.updateForm();
-              });
-            },
-            visualDensity: VisualDensity(vertical: -4)))
+        .map((choice) => ListTile(
+              leading: Radio<Choice>(
+                value: choice,
+                groupValue: widget.getSelectedChoices().isEmpty
+                    ? null
+                    : widget.getSelectedChoices().first,
+                onChanged: (Choice? value) {
+                  setState(() {
+                    if (widget.getSelectedChoices().contains(value)) {
+                      widget.unselectChoice(value!);
+                    } else {
+                      widget.selectChoice(value!);
+                    }
+                    printLog(widget.getSelectedChoices().toString());
+                    widget.updateForm();
+                  });
+                },
+              ),
+              title: Text(
+                choice.name,
+                style: primaryTextStyle(),
+              ),
+              visualDensity: VisualDensity(vertical: -4),
+              onTap: () {
+                setState(() {
+                  if (widget.getSelectedChoices().contains(choice)) {
+                    widget.unselectChoice(choice);
+                  } else {
+                    widget.selectChoice(choice);
+                  }
+                  printLog(widget.getSelectedChoices().toString());
+                  widget.updateForm();
+                });
+              },
+            ))
         .toList();
   }
 }

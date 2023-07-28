@@ -1,11 +1,13 @@
 import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/comments_field.dart';
+import 'package:namer_app/components/field_widgets/text_widgets/date_field.dart';
 import 'package:namer_app/components/image_fields/cholesteatoma.dart';
 import 'package:namer_app/components/image_fields/diagram.dart';
 import 'package:namer_app/components/image_fields/mastoidectomy.dart';
 import 'package:namer_app/components/image_fields/ossicularchain.dart';
 import 'package:namer_app/components/image_fields/reasons.dart';
 import 'package:namer_app/components/image_fields/stages/stages.dart';
+import 'package:namer_app/models/instrument.dart';
 import 'package:namer_app/utils/form_manager.dart';
 
 import '../../components/field_widgets/multiple_choice/check_button.dart';
@@ -56,6 +58,14 @@ IOOGFieldWidget? fieldWidget(
         project: project,
         field: field,
         formManager: formManager,
+        type: 'PREOP',
+      );
+    case 'postop_audiogram':
+      return EnterAudiogram(
+        project: project,
+        field: field,
+        formManager: formManager,
+        type: 'POSTOP',
       );
     case 'classification':
       return Cholesteatoma(
@@ -85,6 +95,12 @@ IOOGFieldWidget? fieldWidget(
 
   switch (field.getFieldType()) {
     case 'text':
+      if (field.getFieldName().contains('date')) {
+        return IOOGDateField(
+          field: field,
+          formManager: formManager,
+        );
+      }
       return IOOGTextField(
         field: field,
         formManager: formManager,

@@ -15,13 +15,14 @@ import '../../../utils/form_manager.dart';
 import '../../field_widgets/audiograms/rebc.dart';
 
 class Audiogram extends IOOGFieldWidget {
-  final double TOP_INIT = 100;
-  final double LEFT_INIT = 44.8;
-  final double TOP_DIFF = 44.7 / 2;
-  final double LEFT_DIFF = 31;
+  final double TOP_INIT = 132;
+  final double LEFT_INIT = 44.8 * 1.32;
+  final double TOP_DIFF = 44.7 / 2 * 1.32;
+  final double LEFT_DIFF = 31 * 1.32;
 
   final AudiogramType type;
   List<AudiogramButton> buttons = [];
+  List<AudiogramButtonGroup> groups = [];
 
   Audiogram({
     Key? key,
@@ -32,10 +33,15 @@ class Audiogram extends IOOGFieldWidget {
     buttons = createButtons();
   }
 
+  String getGroupString(int i) {
+    return '${type.toString().split(".")[1]}${i + 1}';
+  }
+
   List<AudiogramButton> createButtons() {
     for (int i = 0; i < 7; i++) {
       AudiogramButtonGroup group =
-          AudiogramButtonGroup('${type.toString()}$i', formManager);
+          AudiogramButtonGroup(getGroupString(i), formManager);
+      groups.add(group);
       for (int j = 0; j < 21; j++) {
         String value = (j * 5).toString();
         double left = LEFT_INIT + i * LEFT_DIFF;
@@ -46,8 +52,8 @@ class Audiogram extends IOOGFieldWidget {
             value: value,
             left: left,
             top: top,
-            width: 10,
-            height: 10);
+            width: 13.2,
+            height: 13.2);
 
         buttons.add(button);
       }
@@ -107,6 +113,7 @@ class Audiogram extends IOOGFieldWidget {
 
   @override
   void updateForm() {
+    // formManager.updateForm(field, '');
     return;
     // for (AudiogramButton button in buttons) {
     //   // button.updateForm();
@@ -123,6 +130,10 @@ class Audiogram extends IOOGFieldWidget {
     return;
   }
 
+  List<AudiogramButtonGroup> getGroups() {
+    return groups;
+  }
+
   @override
   IOOGFieldWidgetState<Audiogram> createState() => _AudiogramState();
 }
@@ -130,21 +141,22 @@ class Audiogram extends IOOGFieldWidget {
 class _AudiogramState extends IOOGFieldWidgetState<Audiogram> {
   @override
   Widget build(BuildContext context) {
-    return FieldContainer(
-        child: Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Center(
-        child: Stack(
-          children: [
-            Image(
-              image: AssetImage('assets/images/audiogram_small.png'),
-              width: 250,
-              height: 575,
-            ),
-            ...widget.buttons,
-          ],
-        ),
+    return Center(
+      child: Stack(
+        children: [
+          Image(
+            image: AssetImage('assets/images/audiogram.png'),
+            width: 330,
+            height: 759,
+          ),
+          ...widget.buttons,
+        ],
       ),
-    ));
+    );
   }
 }
+
+// FieldContainer(
+//         child: Padding(
+//       padding: EdgeInsets.all(16.0),
+//       child: 

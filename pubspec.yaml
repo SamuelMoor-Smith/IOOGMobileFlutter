@@ -31,6 +31,7 @@ dependencies:
   search_page: ^2.3.0
   dropdown_search: ^5.0.6
   searchable_listview: ^2.4.0
+  intl: ^0.18.0
 
 flutter_native_splash:
   image: assets/sam_is_now_forever_in_my_debt.png

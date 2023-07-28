@@ -35,7 +35,7 @@ class _IOOGCommentsFieldState extends IOOGTextWidgetState<IOOGCommentsField> {
               borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(width: 1, color: iconColorPrimary),
             ),
-            labelText: widget.getLabelText(),
+            labelText: widget.getFieldLabel(),
             hintText: "write....",
             hintStyle: TextStyle(color: textSecondaryColor),
             labelStyle: TextStyle(color: textSecondaryColor),

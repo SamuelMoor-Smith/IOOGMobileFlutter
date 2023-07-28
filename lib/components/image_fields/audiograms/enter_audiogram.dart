@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/field_widget.dart';
+import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
+import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/models/section.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/title_list_tile.dart';
+import 'package:namer_app/utils/form_manager.dart';
 
 import '../../../models/project.dart';
 import '../../../pages/survey_pages/ioog_page_view.dart';
@@ -11,11 +15,13 @@ import '../../../utils/navigation.dart';
 // ignore: must_be_immutable
 class EnterAudiogram extends IOOGFieldWidget {
   IOOGProject project;
+  String type;
 
   EnterAudiogram(
       {required super.field,
       required super.formManager,
-      required this.project});
+      required this.project,
+      required this.type});
 
   @override
   void clearField() {
@@ -49,7 +55,12 @@ class _EnterAudiogramState extends IOOGFieldWidgetState<EnterAudiogram> {
       children: [
         TitleListTile(labelText: 'Enter new audiogram here:'),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
+            await fillAudiogramByInstrument(
+              audiogram: widget.project
+                  .getInstrumentByLabel("Phenx Audiogram Hearing Test"),
+              formManager: widget.formManager,
+            );
             nextPage(
                 context,
                 IOOGPageView(
@@ -71,11 +82,28 @@ class _EnterAudiogramState extends IOOGFieldWidgetState<EnterAudiogram> {
           ),
           child: Text('Enter Audiogram'),
         ),
-        Text(
-          'Note: last pre-op audiogram was 2023-04-23.',
-          style: secondaryTextStyle(),
-        ),
+        widget.type == "PREOP"
+            ? Text(
+                'Note: last pre-op audiogram was 2023-04-23.',
+                style: secondaryTextStyle(),
+              )
+            : Container(),
       ],
     ));
   }
+}
+
+fillAudiogramByInstrument(
+    {required IOOGInstrument audiogram,
+    required FormManager formManager}) async {
+  List<IOOGSection> sections = await audiogram.getSections();
+  IOOGSection reac = sections[0];
+  String dataKey = formManager
+      .getFormStateNotifier()
+      .value
+      .keys
+      .firstWhere((element) => element.startsWith("date"));
+
+  (reac.getFields()[0] as IOOGTextWidget) // The date of audiogram field
+      .setEnteredText(formManager.getFormStateNotifier().value[dataKey]!);
 }

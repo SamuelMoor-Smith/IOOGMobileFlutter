@@ -18,31 +18,6 @@ class IOOGTextField extends IOOGTextWidget {
 
 class _IOOGTextFieldState extends IOOGTextWidgetState<IOOGTextField> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // widget.updateForm();
-      widget.checkBranchingLogic(setState, mounted);
-    });
-    widget.textController.addListener(_onTextChanged);
-    widget.formManager
-        .getFormStateNotifier()
-        .addListener(() => widget.checkBranchingLogic(setState, mounted));
-  }
-
-  @override
-  void dispose() {
-    widget.formManager
-        .getFormStateNotifier()
-        .removeListener(() => widget.checkBranchingLogic(setState, mounted));
-    super.dispose();
-  }
-
-  void _onTextChanged() {
-    widget.updateForm();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Offstage(
       offstage: !widget.shouldShow,
@@ -59,7 +34,7 @@ class _IOOGTextFieldState extends IOOGTextWidgetState<IOOGTextField> {
               borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(width: 1, color: iconColorPrimary),
             ),
-            labelText: widget.getLabelText(),
+            labelText: widget.getFieldLabel(),
             labelStyle: TextStyle(color: textSecondaryColor),
             alignLabelWithHint: false,
             filled: true,

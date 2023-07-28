@@ -34,7 +34,7 @@ class IOOGPage extends StatefulWidget {
   }
 
   List<Widget> get fields {
-    return _section.getFields();
+    return _section.getFormattedFieldWidgets();
   }
 
   bool isVisible() {
@@ -70,7 +70,7 @@ class _IOOGPageState extends State<IOOGPage> {
       appBar: CustomAppBar(title: widget._section.getLabel()),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: widget.fields.whereType<IOOGFieldWidget>().toList(),
+        children: widget.fields.whereType<Widget>().toList(),
       ),
       // body: FormContainer(
       //   child: SingleChildScrollView(

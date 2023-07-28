@@ -5,9 +5,17 @@ class IOOGForm {
 
   IOOGForm(this._date, this._side, this._record);
 
+  String getSideString() {
+    if (_side == "1") {
+      return "Right Ear";
+    } else {
+      return "Left Ear";
+    }
+  }
+
   @override
   String toString() {
-    return '$_date - $_side';
+    return '$_date - ${getSideString()}';
   }
 
   dynamic getRecord() {
