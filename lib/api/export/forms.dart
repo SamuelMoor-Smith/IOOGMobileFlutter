@@ -14,36 +14,19 @@ Object recordBody(
     "content": "record",
     "format": "json",
     "type": "flat",
-    "forms[0]": instrument.getName(),
+    // "forms[0]": instrument.getName(),
     "records[0]": studyId,
   });
 }
 
 IOOGForm? processRecordForInstrument(
     dynamic record, IOOGInstrument instrument) {
-  switch (instrument.getName()) {
-    case "basic_demography_form":
-      if (record["basic_demography_form_complete"] == "2") {
-        return IOOGForm('', '', record);
-      }
-      break;
-    case "preop_data":
-      if (record["preop_data_complete"] == "2") {
-        return IOOGForm(record['date_preop'], record['side_preop'], record);
-      }
-      break;
-    case "postop_data":
-      if (record["postop_data_complete"] == "2") {
-        return IOOGForm(record['date_postop'], record['side_postop'], record);
-      }
-      break;
-    case "surgical_information":
-      if (record["surgical_information_complete"] == "2") {
-        return IOOGForm(record['date_surgery'], record['side_surgery'], record);
-      }
-      break;
+  if (record[instrument.getCompleteKey()] == "2") {
+    return IOOGForm(
+        instrument.getDateKey() != null ? record[instrument.getDateKey()] : '',
+        instrument.getSideKey() != null ? record[instrument.getSideKey()] : '',
+        record);
   }
-  return null;
 }
 
 Future<List<IOOGForm>?> getFormsForStudyIdAndInstrumentFromREDCAP(

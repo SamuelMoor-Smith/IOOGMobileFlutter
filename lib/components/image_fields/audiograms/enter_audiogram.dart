@@ -56,10 +56,11 @@ class _EnterAudiogramState extends IOOGFieldWidgetState<EnterAudiogram> {
         TitleListTile(labelText: 'Enter new audiogram here:'),
         ElevatedButton(
           onPressed: () async {
-            await fillAudiogramByInstrument(
+            await fillAudiogramByForm(
               audiogram: widget.project
                   .getInstrumentByLabel("Phenx Audiogram Hearing Test"),
               formManager: widget.formManager,
+              type: widget.type,
             );
             nextPage(
                 context,
@@ -93,9 +94,10 @@ class _EnterAudiogramState extends IOOGFieldWidgetState<EnterAudiogram> {
   }
 }
 
-fillAudiogramByInstrument(
+fillAudiogramByForm(
     {required IOOGInstrument audiogram,
-    required FormManager formManager}) async {
+    required FormManager formManager,
+    required String type}) async {
   List<IOOGSection> sections = await audiogram.getSections();
   IOOGSection reac = sections[0];
   String dataKey = formManager
@@ -106,4 +108,16 @@ fillAudiogramByInstrument(
 
   (reac.getFields()[0] as IOOGTextWidget) // The date of audiogram field
       .setEnteredText(formManager.getFormStateNotifier().value[dataKey]!);
+
+  if (type == "PREOP") {
+    audiogram
+        .getFormManager()
+        .getFormStateNotifier()
+        .value['redcap_event_name'] = "preop_status_arm_1";
+  } else {
+    audiogram
+        .getFormManager()
+        .getFormStateNotifier()
+        .value['redcap_event_name'] = "postop_status_arm_1";
+  }
 }

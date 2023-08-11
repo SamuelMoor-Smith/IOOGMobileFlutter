@@ -1,6 +1,8 @@
+import 'package:intl/intl.dart';
 import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/comments_field.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/date_field.dart';
+import 'package:namer_app/components/field_widgets/text_widgets/dropdown.dart';
 import 'package:namer_app/components/image_fields/cholesteatoma.dart';
 import 'package:namer_app/components/image_fields/diagram.dart';
 import 'package:namer_app/components/image_fields/mastoidectomy.dart';
@@ -91,15 +93,15 @@ IOOGFieldWidget? fieldWidget(
         formManager: formManager,
         choices: field.createChoices(),
       );
+    case 'audiogram_surgery_date':
+      return IOOGDropdown(
+          field: field, formManager: formManager, project: project);
   }
 
   switch (field.getFieldType()) {
     case 'text':
       if (field.getFieldName().contains('date')) {
-        return IOOGDateField(
-          field: field,
-          formManager: formManager,
-        );
+        return createDateWidget(field, formManager);
       }
       return IOOGTextField(
         field: field,
@@ -140,5 +142,18 @@ IOOGFieldWidget? fieldWidget(
       printLog("Field type ${field.getFieldType()} not supported");
       printLog("Field name ${field.getFieldName()}");
       return null;
+  }
+}
+
+IOOGDateField createDateWidget(Field field, FormManager formManager) {
+  if (field.getFieldName().contains('preop') ||
+      field.getFieldName().contains('audiogram')) {
+    return IOOGDateField(field: field, formManager: formManager);
+  } else {
+    return IOOGDateField(
+      field: field,
+      formManager: formManager,
+      defaultDate: DateTime.now(),
+    );
   }
 }

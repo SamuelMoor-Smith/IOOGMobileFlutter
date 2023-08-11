@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:namer_app/components/field_widgets/field_widget.dart';
+import 'package:namer_app/components/field_widgets/multiple_choice/radio_button.dart';
 import 'package:namer_app/components/image_fields/audiograms/audiogram.dart';
 import 'package:namer_app/components/image_fields/audiograms/types.dart';
 import 'package:namer_app/models/project.dart';
@@ -42,8 +43,8 @@ Future<List<IOOGSection>?> getFieldsForInstrumentFromREDCAP(
       IOOGSection section = IOOGSection(instrument.getLabel());
 
       // Process Audiograms differently
-      if (instrument.getLabel() == "Phenx Audiogram Hearing Test") {
-        return getSectionsForAudiogram(instrument);
+      if (instrument.isAudiogram()) {
+        return getSectionsForAudiogram(instrument, fields);
       }
 
       for (Field field in fields) {
@@ -76,19 +77,33 @@ Future<List<IOOGSection>?> getFieldsForInstrumentFromREDCAP(
   return null;
 }
 
-List<IOOGSection> getSectionsForAudiogram(IOOGInstrument instrument) {
+void addAudiogramInfo(
+    IOOGInstrument instrument, IOOGSection section, List<Field> fields) {
+  for (Field field in fields) {
+    if (!field.field_name.contains("reac") &&
+        !field.field_name.contains("leac") &&
+        !field.field_name.contains("rebc") &&
+        !field.field_name.contains("lebc")) {
+      IOOGFieldWidget? fieldWidgetInstance = fieldWidget(
+          instrument.getProject(), field, instrument.getFormManager());
+      if (fieldWidgetInstance != null) {
+        section.addFieldWidget(fieldWidgetInstance);
+      }
+    }
+  }
+}
+
+List<IOOGSection> getSectionsForAudiogram(
+    IOOGInstrument instrument, List<Field> fields) {
   //, List<Field> fields) {
   Field emptyFieldForAudiograms = Field.createEmptyFieldForAudiograms();
+  IOOGSection info = IOOGSection("Audiogram Info");
   IOOGSection reac = IOOGSection("REAC");
   IOOGSection rebc = IOOGSection("REBC");
   IOOGSection leac = IOOGSection("LEAC");
   IOOGSection lebc = IOOGSection("LEBC");
-  List<IOOGSection> sections = [reac, rebc, leac, lebc];
-  reac.addFieldWidget(IOOGDateField(
-    field: Field.createFieldWithLabelAndName(
-        "Date of Audiogram", 'date_of_audiogram'),
-    formManager: instrument.getFormManager(),
-  ));
+  List<IOOGSection> sections = [info, reac, rebc, leac, lebc];
+  addAudiogramInfo(instrument, info, fields);
   for (IOOGSection section in sections) {
     switch (section.getLabel()) {
       case 'REAC':

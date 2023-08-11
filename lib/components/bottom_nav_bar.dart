@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/api/import/import.dart';
+import 'package:namer_app/models/instrument.dart';
 import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/utils/navigation.dart';
 import 'package:namer_app/utils/logging.dart';
@@ -34,9 +36,14 @@ int getNextPageNumber(
   return -1;
 }
 
-BottomNavigationBar createBottomNavigationBar(BuildContext context,
-    IOOGSection section, Widget forward, FormManager formManager,
-    [PageController? controller, List<IOOGPage>? pages]) {
+BottomNavigationBar createBottomNavigationBar(
+    BuildContext context,
+    IOOGSection section,
+    IOOGInstrument instrument,
+    Widget forward,
+    FormManager formManager,
+    [PageController? controller,
+    List<IOOGPage>? pages]) {
   void onItemTapped(int index) {
     int nextPageNumber;
     if (index == 0) {
@@ -54,7 +61,12 @@ BottomNavigationBar createBottomNavigationBar(BuildContext context,
         if (nextPageNumber >= 0) {
           animateToPage(controller!, nextPageNumber);
         } else {
-          nextPage(context, forward);
+          if (instrument.isAudiogram()) {
+            importToREDCAP(instrument.getProject(), instrument);
+            Navigator.pop(context);
+          } else {
+            nextPage(context, forward);
+          }
         }
       } else {
         printError("Form is not valid");

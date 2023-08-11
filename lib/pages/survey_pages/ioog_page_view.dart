@@ -60,8 +60,10 @@ class _IOOGPageViewState extends State<IOOGPageView> {
     // Check if its a demographics form
     if (widget.instrument.isDemographic()) {
       // If there is a form completed, fill the fields
-      if (widget.instrument.getForms().isNotEmpty) {
-        widget.instrument.fillFieldsFromForm(0);
+      if (widget.instrument.isLoading() == null) {
+        if (widget.instrument.getForms().isNotEmpty) {
+          widget.instrument.fillFieldsFromForm(0);
+        }
       }
     } else {
       // Otherwise check if a form index was chosen

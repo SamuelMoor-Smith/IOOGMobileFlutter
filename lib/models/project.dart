@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/api/export/studyIds.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../api/export/instruments.dart';
 import 'instrument.dart';
@@ -42,6 +43,7 @@ class IOOGProject extends ChangeNotifier {
 
     // Set records for each instrument
     for (IOOGInstrument instrument in _instruments!) {
+      printLog(instrument.getLabel());
       instrument.setForms();
     }
   }
@@ -62,7 +64,8 @@ class IOOGProject extends ChangeNotifier {
         .where((dynamic instrument) =>
             (instrument is IOOGInstrument) &&
             instrument.getLabel() != "Study ID" &&
-            instrument.getLabel() != "Phenx Audiogram Hearing Test")
+            instrument.getLabel() != "Phenx Audiogram Hearing Test" &&
+            instrument.getLabel() != "Post-op imaging")
         .toList();
   }
 

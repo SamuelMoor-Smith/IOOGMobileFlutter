@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/multiple_choice.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/api/import/import.dart';
+import 'package:namer_app/pages/import.dart';
+import 'package:namer_app/utils/navigation.dart';
 
 import '../components/app_bar.dart';
 import '../models/instrument.dart';
@@ -96,11 +98,9 @@ class SummaryPage extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: ElevatedButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => ImportDataPage()),
+              nextPage(context, Import(instrument: instrument));
               // );
-              importToREDCAP(instrument.getProject(), instrument);
+              // importToREDCAP(instrument.getProject(), instrument);
             },
             child: Text('Proceed to Import'),
           ),

@@ -64,6 +64,39 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
 
 class IOOGRadioGroupState<T extends IOOGRadioGroup>
     extends IOOGMultipleChoiceState<IOOGRadioGroup> {
+  void updateChoice() {
+    if (mounted) {
+      setState(() {
+        if (widget.formManager
+            .getFormStateNotifier()
+            .value
+            .containsKey(widget.field.field_name)) {
+          var newNum = widget.formManager
+              .getFormStateNotifier()
+              .value[widget.field.field_name];
+          printLog(newNum);
+          if (newNum != null && newNum != "") {
+            if (widget.getSelectedChoices().isEmpty ||
+                widget.getSelectedChoices().first.number != newNum) {
+              printLog(newNum);
+              widget.fillChoiceByNum(newNum);
+            }
+          }
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.field.field_name == "audiogram_timing") {
+      widget.formManager
+          .getFormStateNotifier()
+          .addListener(() => updateChoice());
+    }
+  }
+
   @override
   List<Widget> buildFieldWidgets() {
     return widget

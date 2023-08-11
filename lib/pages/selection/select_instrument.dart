@@ -64,6 +64,7 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (instrument.isDemographic()) {
+                          instrument.resetFieldsAndFormIndex(null);
                           nextPage(
                               context, IOOGPageView(instrument: instrument));
                         } else {

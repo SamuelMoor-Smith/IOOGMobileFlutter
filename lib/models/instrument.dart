@@ -66,6 +66,10 @@ class IOOGInstrument extends ChangeNotifier {
     return _label == "Basic Demography Form";
   }
 
+  bool isAudiogram() {
+    return _label == "Phenx Audiogram Hearing Test";
+  }
+
   Future<List<IOOGSection>> getSections() async {
     if (_sections == null) {
       printLog("Sections have not been set yet");
@@ -103,9 +107,19 @@ class IOOGInstrument extends ChangeNotifier {
     }
   }
 
+  void resetFieldsAndFormIndex(int? newIndex) {
+    // Check if its the same index (if so no unecessary work)
+    if (newIndex == null || newIndex != getFormIndex()) {
+      // Reset the form
+      clearAllFields();
+      setFormIndex(newIndex);
+    }
+  }
+
   List<IOOGForm> getForms() {
     if (_forms == null) {
-      throw Exception("Forms have not been set yet");
+      printLog("Forms have not been set yet");
+      return [];
     }
     return _forms!;
   }
@@ -140,5 +154,56 @@ class IOOGInstrument extends ChangeNotifier {
     }
 
     return null;
+  }
+
+  String getCompleteKey() {
+    switch (getName()) {
+      case "basic_demography_form":
+        return "basic_demography_form_complete";
+      case "preop_data":
+        return "preop_data_complete";
+      case "postop_data":
+        return "postop_data_complete";
+      case "surgical_information":
+        return "surgical_information_complete";
+      case "phenx_audiogram_hearing_test":
+        return "phenx_audiogram_hearing_test_complete";
+      default:
+        return "";
+    }
+  }
+
+  String? getDateKey() {
+    switch (getName()) {
+      case "basic_demography_form":
+        return null;
+      case "preop_data":
+        return "date_preop";
+      case "postop_data":
+        return "date_postop";
+      case "surgical_information":
+        return "date_surgery";
+      case "phenx_audiogram_hearing_test":
+        return "date_of_audiogram";
+      default:
+        return null;
+    }
+  }
+
+  String? getSideKey() {
+    switch (getName()) {
+      case "basic_demography_form":
+        return null;
+      case "preop_data":
+        return "side_preop";
+      case "postop_data":
+        return "side_postop";
+      case "surgical_information":
+        return "side_surgery";
+      case "phenx_audiogram_hearing_test":
+        return null;
+      default:
+        return null;
+    }
   }
 }

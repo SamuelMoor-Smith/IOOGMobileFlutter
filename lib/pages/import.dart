@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/pages/end_page.dart';
+import 'package:namer_app/utils/navigation.dart';
 
-class MyPage extends StatelessWidget {
-  const MyPage({Key? key}) : super(key: key);
+import '../api/import/import.dart';
+
+class Import extends StatelessWidget {
+  final IOOGInstrument instrument;
+  const Import({Key? key, required this.instrument}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +18,10 @@ class MyPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Add your button press logic here
+            importToREDCAP(instrument.getProject(), instrument);
+            nextPage(context, EndPage(project: instrument.getProject()));
           },
-          child: Text('Press me!'),
+          child: Text('Import'),
         ),
       ),
     );

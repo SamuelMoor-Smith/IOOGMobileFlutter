@@ -25,19 +25,47 @@ class SelectForm extends StatefulWidget {
 
   @override
   _SelectFormState createState() => _SelectFormState();
-
-  void resetFieldsAndFormIndex(int? newIndex) {
-    // Check if its the same index (if so no unecessary work)
-    if (newIndex != instrument.getFormIndex()) {
-      // Reset the form
-      instrument.clearAllFields();
-      instrument.setFormIndex(newIndex);
-    }
-  }
 }
 
 class _SelectFormState extends State<SelectForm> {
   bool _isLoading = false;
+
+  Card buttonCard(String text, onClick) {
+    return Card(
+      elevation: 5.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              text,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: onClick,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  textStyle: TextStyle(fontSize: 18),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(text),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -69,48 +97,11 @@ class _SelectFormState extends State<SelectForm> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  Card(
-                    elevation: 5.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Create New Entry",
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 10),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                widget.resetFieldsAndFormIndex(null);
-                                nextPage(
-                                    context,
-                                    IOOGPageView(
-                                        instrument: widget.instrument));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context).primaryColor,
-                                textStyle: TextStyle(fontSize: 18),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 15),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              child: Text("Create New Form"),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  buttonCard("Create New Entry", () {
+                    widget.instrument.resetFieldsAndFormIndex(null);
+                    nextPage(
+                        context, IOOGPageView(instrument: widget.instrument));
+                  }),
                   SizedBox(height: 16),
                   Flexible(
                     child: Card(
@@ -141,7 +132,8 @@ class _SelectFormState extends State<SelectForm> {
                                       icon: Icon(Icons.edit),
                                       color: Theme.of(context).primaryColor,
                                       onPressed: () {
-                                        widget.resetFieldsAndFormIndex(index);
+                                        widget.instrument
+                                            .resetFieldsAndFormIndex(index);
                                         nextPage(
                                             context,
                                             IOOGPageView(
@@ -158,6 +150,17 @@ class _SelectFormState extends State<SelectForm> {
                     ),
                   ),
                   SizedBox(height: 16),
+                  if (widget.instrument.getLabel() == "Post-op data")
+                    buttonCard("Add Post-op imaging", () {
+                      nextPage(
+                          context,
+                          IOOGPageView(
+                              instrument: widget.instrument
+                                  .getProject()
+                                  .getInstrumentByLabel("Post-op imaging")));
+                    }),
+                  if (widget.instrument.getLabel() == "Post-op data")
+                    SizedBox(height: 16),
                 ],
               ),
             );

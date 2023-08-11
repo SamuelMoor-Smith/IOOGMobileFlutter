@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/left_right_group.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../components/field_widgets/field_widget.dart';
 
@@ -31,7 +32,7 @@ class IOOGSection {
         nextFieldName = nextFieldName.replaceAll("right", "");
       }
 
-      if (fieldName == nextFieldName) {
+      if (fieldName != '' && fieldName == nextFieldName) {
         if (_fields[i].field.field_name.contains('right')) {
           formattedFieldWidgets
               .add(LeftRightGroup(right: _fields[i], left: _fields[i + 1]));
