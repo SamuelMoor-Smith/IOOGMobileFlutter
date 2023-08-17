@@ -8,6 +8,8 @@ String getEventName(IOOGInstrument instrument) {
       return "preop_status_arm_1";
     case "postop_data":
       return "postop_status_arm_1";
+    case "postop_imaging":
+      return "postop_status_arm_1";
     case "surgical_information":
       return "operation_arm_1";
     default:

@@ -30,6 +30,20 @@ Map<String, String> createRepeatData(IOOGInstrument instrument) {
   return repeatData;
 }
 
+String createStudyIdPayload(IOOGInstrument instrument) {
+  final formState = instrument.getFormManager().getFormStateNotifier().value;
+
+  return jsonEncode([
+    {
+      'study_id': instrument.getProject().getActiveStudyId(),
+      'redcap_event_name': formState.containsKey('redcap_event_name')
+          ? formState['redcap_event_name']
+          : getEventName(instrument),
+      'study_id_complete': '2',
+    },
+  ]);
+}
+
 String createPayload(IOOGInstrument instrument) {
   final formState = instrument.getFormManager().getFormStateNotifier().value;
 
@@ -38,6 +52,9 @@ String createPayload(IOOGInstrument instrument) {
   formStateCopy.removeWhere((key, value) => key.endsWith('---'));
 
   Map<String, String> repeatData = createRepeatData(instrument);
+
+  printLog(repeatData);
+  printLog(formStateCopy);
 
   return jsonEncode([
     {

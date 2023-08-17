@@ -19,3 +19,11 @@ void showImportToast() {
 void showImportErrorToast() {
   createToast("Error occurred during import", Colors.red);
 }
+
+void showInvalidFormToast(String field) {
+  createToast('Field $field is required', Colors.red);
+}
+
+void createAudiogamTimingToast() {
+  createToast("Audiogram Timing Updated", Colors.blue);
+}

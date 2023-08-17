@@ -3,6 +3,7 @@ import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart
 import 'package:namer_app/components/import_toast.dart';
 import 'package:namer_app/models/form.dart';
 import 'package:namer_app/models/project.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../../../models/field/field.dart';
 import '../../../utils/form_manager.dart';
@@ -41,13 +42,14 @@ class _IOOGDropdownState extends IOOGTextWidgetState<IOOGDropdown> {
               .value['date_of_audiogram'];
           widget.formManager.updateForm('audiogram_timing',
               getAudiogramTiming(audiogramDate, surgeryDate));
-          createToast("Audiogram Timing Updated", Colors.blue);
+          createAudiogamTimingToast();
         },
         items: (widget as IOOGDropdown)
             .project
             .getInstrumentByLabel('Surgical Information')
             .getForms()
             .map<DropdownMenuItem<String>>((IOOGForm value) {
+          printLog(value.toString());
           return DropdownMenuItem<String>(
             value: value.toString(),
             child: Text(value.toString()),

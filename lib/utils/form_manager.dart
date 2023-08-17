@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/components/field_widgets/audiograms/audiogram_button_group.dart';
 import 'package:namer_app/components/field_widgets/multiple_choice/check_button.dart';
 import 'package:namer_app/components/image_fields/audiograms/audiogram.dart';
+import 'package:namer_app/components/import_toast.dart';
 import 'package:namer_app/models/instrument.dart';
 import 'package:namer_app/utils/logging.dart';
 
@@ -99,7 +100,9 @@ class FormManager {
     for (IOOGFieldWidget fieldWidget in section.getFields()) {
       if (fieldWidget.isValid() != null) {
         printError(fieldWidget.isValid()!);
+        showInvalidFormToast(fieldWidget.field.field_label);
         isSectionValid = false;
+        return isSectionValid;
       }
     }
     return isSectionValid;

@@ -68,9 +68,13 @@ class _IOOGPageState extends State<IOOGPage> {
 
     return Scaffold(
       appBar: CustomAppBar(title: widget._section.getLabel()),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: widget.fields.whereType<Widget>().toList(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0), // This is the padding
+          child: Column(
+            children: widget.fields.whereType<Widget>().toList(),
+          ),
+        ),
       ),
       // body: FormContainer(
       //   child: SingleChildScrollView(

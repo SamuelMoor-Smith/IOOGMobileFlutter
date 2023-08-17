@@ -62,7 +62,16 @@ BottomNavigationBar createBottomNavigationBar(
           animateToPage(controller!, nextPageNumber);
         } else {
           if (instrument.isAudiogram()) {
-            importToREDCAP(instrument.getProject(), instrument);
+            importToREDCAP(instrument.getProject(), instrument)
+                .then((value) => {
+                      if (value)
+                        {
+                          Navigator.of(context).pop(instrument
+                              .getFormManager()
+                              .getFormStateNotifier()
+                              .value['date_of_audiogram'])
+                        }
+                    });
             Navigator.pop(context);
           } else {
             nextPage(context, forward);

@@ -68,6 +68,7 @@ abstract class IOOGFieldWidget extends StatefulWidget {
   void clearField();
 
   void checkBranchingLogic(setState, mounted) {
+    printLog(field.getFieldName());
     String branchingLogic = field.getParsedBranchingLogic();
     if (!branchingLogic.isEmptyOrNull) {
       var expression = Expression.parse(branchingLogic);
@@ -94,6 +95,7 @@ abstract class IOOGFieldWidgetState<T extends IOOGFieldWidget>
   @override
   void initState() {
     super.initState();
+    widget.checkBranchingLogic(setState, mounted);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.checkBranchingLogic(setState, mounted);
     });

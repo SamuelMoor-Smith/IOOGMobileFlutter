@@ -25,17 +25,26 @@ Future<bool> importToREDCAP(
   try {
     var url = Uri.parse(project.apiUrl);
 
+    var studyIdData = createStudyIdPayload(instrument);
     var data = createPayload(instrument);
 
-    var response = await http.post(url,
-        body: importBody(project, data), headers: headers());
+    // Create the futures for the two requests
+    var studyIdRequest = http.post(url,
+        body: importBody(project, studyIdData), headers: headers());
 
-    if (response.statusCode == 200) {
-      printLog(response.body);
+    var dataRequest =
+        http.post(url, body: importBody(project, data), headers: headers());
+
+    // Wait for both requests to complete
+    var responses = await Future.wait([studyIdRequest, dataRequest]);
+
+    // Check the status code of the second request (you can also check the first one if needed)
+    if (responses[1].statusCode == 200) {
+      printLog(responses[1].body);
       showImportToast();
       return true;
     } else {
-      printLog(response.body);
+      printLog(responses[1].body);
       showImportErrorToast();
       return false;
     }

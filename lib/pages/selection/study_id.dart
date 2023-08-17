@@ -3,6 +3,7 @@ import 'package:searchable_listview/searchable_listview.dart';
 import 'package:namer_app/utils/navigation.dart';
 
 import '../../models/project.dart';
+import '../login.dart';
 import './select_instrument.dart';
 
 class StudyIdPage extends StatelessWidget {
@@ -10,11 +11,23 @@ class StudyIdPage extends StatelessWidget {
 
   StudyIdPage(this.project);
 
+  void logout(BuildContext context) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => LoginScreen(),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Select Study Id'),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () => logout(context),
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),

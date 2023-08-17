@@ -21,4 +21,8 @@ class IOOGForm {
   dynamic getRecord() {
     return _record;
   }
+
+  DateTime getDate() {
+    return DateTime.parse(_date);
+  }
 }

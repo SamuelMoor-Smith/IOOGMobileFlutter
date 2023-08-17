@@ -16,6 +16,7 @@ import '../../../utils/navigation.dart';
 class EnterAudiogram extends IOOGFieldWidget {
   IOOGProject project;
   String type;
+  String lastPreopAudiogramDate = "";
 
   EnterAudiogram(
       {required super.field,
@@ -25,12 +26,17 @@ class EnterAudiogram extends IOOGFieldWidget {
 
   @override
   void clearField() {
-    return;
+    lastPreopAudiogramDate = "";
+    updateForm();
   }
 
   @override
   void fillField(rawRecord) {
-    return;
+    var fieldName = getFieldName();
+    if (rawRecord.containsKey(fieldName) && rawRecord[fieldName]! != "") {
+      lastPreopAudiogramDate = rawRecord[fieldName]!;
+      updateForm();
+    } else {}
   }
 
   @override
@@ -39,8 +45,8 @@ class EnterAudiogram extends IOOGFieldWidget {
   }
 
   @override
-  void updateForm() {
-    return;
+  updateForm() {
+    formManager.updateForm(getFieldName(), lastPreopAudiogramDate);
   }
 
   @override
@@ -67,13 +73,13 @@ class _EnterAudiogramState extends IOOGFieldWidgetState<EnterAudiogram> {
                 IOOGPageView(
                     instrument: widget.project
                         .getInstrumentByLabel("Phenx Audiogram Hearing Test")));
-            // nextPage(
-            //     context,
-            //     IOOGPageView(
-            //         instrument: widget.project
-            //             .getInstrumentByLabel("Phenx Audiogram Hearing Test")));
-            // nextPage(
-            //   context, IOOGPageView(instrument: instrument));
+            // widget.lastPreopAudiogramDate = await Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //       builder: (context) => IOOGPageView(
+            //           instrument: widget.project.getInstrumentByLabel(
+            //               "Phenx Audiogram Hearing Test"))),
+            // );
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
@@ -85,7 +91,7 @@ class _EnterAudiogramState extends IOOGFieldWidgetState<EnterAudiogram> {
         ),
         widget.type == "PREOP"
             ? Text(
-                'Note: last pre-op audiogram was 2023-04-23.',
+                'Note: last pre-op audiogram was ${widget.lastPreopAudiogramDate != "" ? widget.lastPreopAudiogramDate : 'not filled'}.',
                 style: secondaryTextStyle(),
               )
             : Container(),

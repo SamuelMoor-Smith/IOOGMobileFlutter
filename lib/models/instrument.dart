@@ -70,6 +70,29 @@ class IOOGInstrument extends ChangeNotifier {
     return _label == "Phenx Audiogram Hearing Test";
   }
 
+  String getLastPreopForAudiogram(String dateString) {
+    DateTime date = DateTime.parse(dateString);
+    if (isAudiogram() && _forms != null && _forms!.isNotEmpty) {
+      try {
+        // Assume that form.getDate() returns a DateTime object.
+        // If it returns a String, you would need to parse it using DateTime.parse().
+        DateTime latestPreopDate = _forms!
+            .map((form) => form
+                .getDate()) // Replace form.getDate() with DateTime.parse(form.getDate()) if needed
+            .where((formDate) =>
+                formDate.isBefore(date) || formDate.isAtSameMomentAs(date))
+            .reduce((maxDate, currDate) =>
+                currDate.isAfter(maxDate) ? currDate : maxDate);
+        return latestPreopDate.toString();
+      } catch (e) {
+        // Handle exceptions that may be thrown during mapping, filtering or reducing
+        printError('Error in getLastPreopForAudiogram: $e');
+        return "";
+      }
+    }
+    return "";
+  }
+
   Future<List<IOOGSection>> getSections() async {
     if (_sections == null) {
       printLog("Sections have not been set yet");
@@ -164,6 +187,8 @@ class IOOGInstrument extends ChangeNotifier {
         return "preop_data_complete";
       case "postop_data":
         return "postop_data_complete";
+      case "postop_imaging":
+        return "postop_imaging_complete";
       case "surgical_information":
         return "surgical_information_complete";
       case "phenx_audiogram_hearing_test":
