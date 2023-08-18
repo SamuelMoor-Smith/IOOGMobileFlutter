@@ -48,11 +48,6 @@ class _IOOGPageState extends State<IOOGPage> {
   @override
   void initState() {
     super.initState();
-
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   printLog(
-    //       "The current state is ${widget.instrument.getFormManager().getFormKey().currentState!.fields}");
-    // });
   }
 
   @override
@@ -91,7 +86,7 @@ class _IOOGPageState extends State<IOOGPage> {
         context,
         widget._section,
         widget._instrument,
-        SummaryPage(fields: widget.fields, instrument: widget._instrument),
+        SummaryPage(instrument: widget._instrument),
         widget.getFormManager(),
         widget._controller,
         widget._pages,

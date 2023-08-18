@@ -40,7 +40,7 @@ Future<bool> importToREDCAP(
 
     // Check the status code of the second request (you can also check the first one if needed)
     if (responses[1].statusCode == 200) {
-      printLog(responses[1].body);
+      instrument.setForms();
       showImportToast();
       return true;
     } else {

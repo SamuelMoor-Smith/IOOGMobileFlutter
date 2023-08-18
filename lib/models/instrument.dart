@@ -34,7 +34,6 @@ class IOOGInstrument extends ChangeNotifier {
             .where((IOOGSection section) => section.getFields().isNotEmpty)
             .toList();
       }
-      printLog("initial form state set");
       _formManager.setInitialFormState(this);
       _sectionsGrabbed = true;
       notifyListeners();
@@ -70,7 +69,7 @@ class IOOGInstrument extends ChangeNotifier {
     return _label == "Phenx Audiogram Hearing Test";
   }
 
-  String getLastPreopForAudiogram(String dateString) {
+  String getLastPreopAudiogram(String dateString) {
     DateTime date = DateTime.parse(dateString);
     if (isAudiogram() && _forms != null && _forms!.isNotEmpty) {
       try {
@@ -83,7 +82,7 @@ class IOOGInstrument extends ChangeNotifier {
                 formDate.isBefore(date) || formDate.isAtSameMomentAs(date))
             .reduce((maxDate, currDate) =>
                 currDate.isAfter(maxDate) ? currDate : maxDate);
-        return latestPreopDate.toString();
+        return latestPreopDate.toString().substring(0, 10);
       } catch (e) {
         // Handle exceptions that may be thrown during mapping, filtering or reducing
         printError('Error in getLastPreopForAudiogram: $e');

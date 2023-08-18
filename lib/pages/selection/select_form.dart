@@ -157,7 +157,7 @@ class _SelectFormState extends State<SelectForm> {
                           IOOGPageView(
                               instrument: widget.instrument
                                   .getProject()
-                                  .getInstrumentByLabel("Post-op imaging")));
+                                  .getImagingInstrument()));
                     }),
                   if (widget.instrument.getLabel() == "Post-op data")
                     SizedBox(height: 16),

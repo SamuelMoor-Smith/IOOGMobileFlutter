@@ -67,7 +67,6 @@ Future<List<IOOGSection>?> getFieldsForInstrumentFromREDCAP(
       // Add the last section to the instrument
       sections.add(section); // instrument.addSection(section);
 
-      printLog(sections.toString());
       return sections;
     }
   } catch (e) {
@@ -132,10 +131,6 @@ List<IOOGSection> getSectionsForAudiogram(
         break;
     }
   }
-  for (IOOGSection section in sections) {
-    for (IOOGFieldWidget fieldWidget in section.getFields()) {
-      printLog(fieldWidget.toString());
-    }
-  }
+
   return sections;
 }

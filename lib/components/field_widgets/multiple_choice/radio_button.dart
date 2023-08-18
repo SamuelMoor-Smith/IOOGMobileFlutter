@@ -74,11 +74,9 @@ class IOOGRadioGroupState<T extends IOOGRadioGroup>
           var newNum = widget.formManager
               .getFormStateNotifier()
               .value[widget.field.field_name];
-          printLog(newNum);
           if (newNum != null && newNum != "") {
             if (widget.getSelectedChoices().isEmpty ||
                 widget.getSelectedChoices().first.number != newNum) {
-              printLog(newNum);
               widget.fillChoiceByNum(newNum);
             }
           }
@@ -114,7 +112,6 @@ class IOOGRadioGroupState<T extends IOOGRadioGroup>
                     } else {
                       widget.selectChoice(value!);
                     }
-                    printLog(widget.getSelectedChoices().toString());
                     widget.updateForm();
                   });
                 },
@@ -131,7 +128,6 @@ class IOOGRadioGroupState<T extends IOOGRadioGroup>
                   } else {
                     widget.selectChoice(choice);
                   }
-                  printLog(widget.getSelectedChoices().toString());
                   widget.updateForm();
                 });
               },

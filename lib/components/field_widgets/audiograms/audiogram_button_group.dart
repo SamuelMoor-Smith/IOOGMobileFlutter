@@ -16,6 +16,5 @@ class AudiogramButtonGroup extends ChangeNotifier {
     }
     audiogramValue.value = newValue;
     formManager.updateForm(field, audiogramValue.value);
-    printLog(formManager.getFormStateNotifier().value.toString());
   }
 }

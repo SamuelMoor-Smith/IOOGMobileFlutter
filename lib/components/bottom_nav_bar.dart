@@ -71,8 +71,9 @@ BottomNavigationBar createBottomNavigationBar(
                               .getFormStateNotifier()
                               .value['date_of_audiogram'])
                         }
+                      else
+                        {Navigator.pop(context)}
                     });
-            Navigator.pop(context);
           } else {
             nextPage(context, forward);
           }

@@ -6,11 +6,13 @@ import 'package:namer_app/models/section.dart';
 import 'package:namer_app/style/containers/field_container.dart';
 import 'package:namer_app/style/text/title_list_tile.dart';
 import 'package:namer_app/utils/form_manager.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../../../models/project.dart';
 import '../../../pages/survey_pages/ioog_page_view.dart';
 import '../../../style/text/text_styles.dart';
 import '../../../utils/navigation.dart';
+import '../../import_toast.dart';
 
 // ignore: must_be_immutable
 class EnterAudiogram extends IOOGFieldWidget {
@@ -36,7 +38,7 @@ class EnterAudiogram extends IOOGFieldWidget {
     if (rawRecord.containsKey(fieldName) && rawRecord[fieldName]! != "") {
       lastPreopAudiogramDate = rawRecord[fieldName]!;
       updateForm();
-    } else {}
+    }
   }
 
   @override
@@ -54,6 +56,27 @@ class EnterAudiogram extends IOOGFieldWidget {
 }
 
 class _EnterAudiogramState extends IOOGFieldWidgetState<EnterAudiogram> {
+  void updateChoice() {
+    if (mounted) {
+      setState(() {
+        if (widget.formManager
+            .getFormStateNotifier()
+            .value
+            .containsKey(widget.field.field_name)) {
+          widget.lastPreopAudiogramDate = widget.formManager
+              .getFormStateNotifier()
+              .value[widget.field.field_name]!;
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.formManager.getFormStateNotifier().addListener(() => updateChoice());
+  }
+
   @override
   Widget build(BuildContext context) {
     return FieldContainer(
@@ -63,23 +86,30 @@ class _EnterAudiogramState extends IOOGFieldWidgetState<EnterAudiogram> {
         ElevatedButton(
           onPressed: () async {
             await fillAudiogramByForm(
-              audiogram: widget.project
-                  .getInstrumentByLabel("Phenx Audiogram Hearing Test"),
+              audiogram: widget.project.getAudiogramInstrument(),
               formManager: widget.formManager,
               type: widget.type,
             );
-            nextPage(
-                context,
-                IOOGPageView(
-                    instrument: widget.project
-                        .getInstrumentByLabel("Phenx Audiogram Hearing Test")));
-            // widget.lastPreopAudiogramDate = await Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //       builder: (context) => IOOGPageView(
-            //           instrument: widget.project.getInstrumentByLabel(
-            //               "Phenx Audiogram Hearing Test"))),
-            // );
+            // nextPage(
+            //     context,
+            //     IOOGPageView(
+            //         instrument: widget.project
+            //             .getInstrumentByLabel("Phenx Audiogram Hearing Test")));
+            var result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => IOOGPageView(
+                  instrument: widget.project.getAudiogramInstrument(),
+                ),
+              ),
+            );
+
+            if (result != null) {
+              setState(() {
+                widget.lastPreopAudiogramDate = result;
+                createLastPreopDateToast();
+              });
+            }
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,

@@ -18,7 +18,6 @@ abstract class IOOGFieldWidget extends StatefulWidget {
       : super(key: key);
 
   String? isValid() {
-    printLog('${getFieldName()} being checked...');
     if (shouldShow && isRequired()) {
       if (isFilled()) {
         return null;
@@ -68,7 +67,6 @@ abstract class IOOGFieldWidget extends StatefulWidget {
   void clearField();
 
   void checkBranchingLogic(setState, mounted) {
-    printLog(field.getFieldName());
     String branchingLogic = field.getParsedBranchingLogic();
     if (!branchingLogic.isEmptyOrNull) {
       var expression = Expression.parse(branchingLogic);

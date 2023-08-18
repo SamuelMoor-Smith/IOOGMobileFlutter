@@ -7,6 +7,7 @@ import 'package:namer_app/utils/navigation.dart';
 
 import '../components/app_bar.dart';
 import '../models/instrument.dart';
+import '../models/section.dart';
 
 String getTitle(fieldWidget) {
   return fieldWidget.getField().field_label ?? '';
@@ -26,12 +27,10 @@ String getInput(fieldWidget) {
 }
 
 class SummaryPage extends StatelessWidget {
-  final List<Widget?> fields;
   final IOOGInstrument instrument;
 
   const SummaryPage({
     Key? key,
-    required this.fields,
     required this.instrument,
   }) : super(key: key);
 
@@ -43,50 +42,93 @@ class SummaryPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // make the text bigger
+              // Instrument Title
               Padding(
                 padding: const EdgeInsets.all(30.0),
                 child: Text(instrument.getLabel(),
                     style:
                         TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
               ),
-              Table(
-                columnWidths: {
-                  0: FlexColumnWidth(1),
-                  1: FlexColumnWidth(1),
-                },
-                children: fields
-                    .where((field) => getInput(field).isNotEmpty)
-                    .toList()
-                    .asMap()
-                    .entries
-                    .map((entry) {
-                  int idx = entry.key;
-                  Widget? field = entry.value;
 
-                  return TableRow(
-                      decoration: BoxDecoration(
-                        color: idx % 2 == 1
-                            ? Colors.transparent
-                            : Colors.blue[50]!,
-                      ),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            getTitle(field),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+              // Sections and their fields
+              FutureBuilder<List<IOOGSection>>(
+                future: instrument.getSections(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    // List of Sections
+                    List<IOOGSection> sections = snapshot.data ?? [];
+
+                    return Column(
+                      children: sections.map((section) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Section Title
+                            if (sections.length > 1) ...[
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Text(section.getLabel(),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ],
+
+                            // Fields for this section
+                            Table(
+                              columnWidths: {
+                                0: FlexColumnWidth(1),
+                                1: FlexColumnWidth(1),
+                              },
+                              children: section
+                                  .getFields()
+                                  .where((field) => getInput(field).isNotEmpty)
+                                  .toList()
+                                  .asMap()
+                                  .entries
+                                  .map((entry) {
+                                int idx = entry.key;
+                                Widget? field = entry.value;
+
+                                return TableRow(
+                                    decoration: BoxDecoration(
+                                      color: idx % 2 == 1
+                                          ? Colors.transparent
+                                          : Colors.blue[50]!,
+                                    ),
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          getTitle(field),
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(getInput(field)),
+                                      ),
+                                    ]);
+                              }).toList(),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(getInput(field)),
-                        ),
-                      ]);
-                }).toList(),
+                          ],
+                        );
+                      }).toList(),
+                    );
+                  }
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 80.0), // Adjust the bottom padding
               ),
             ],
           ),
@@ -99,16 +141,11 @@ class SummaryPage extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               nextPage(context, Import(instrument: instrument));
-              // );
-              // importToREDCAP(instrument.getProject(), instrument);
             },
             child: Text('Proceed to Import'),
           ),
         ),
       ),
-      // bottomNavigationBar: createBottomNavigationBar(
-      //   context,
-      //   SummaryPage(fields: fields, instrument: instrument)),
     );
   }
 }

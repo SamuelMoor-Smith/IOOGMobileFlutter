@@ -27,3 +27,7 @@ void showInvalidFormToast(String field) {
 void createAudiogamTimingToast() {
   createToast("Audiogram Timing Updated", Colors.blue);
 }
+
+void createLastPreopDateToast() {
+  createToast("Last Preop Date Updated", Colors.blue);
+}

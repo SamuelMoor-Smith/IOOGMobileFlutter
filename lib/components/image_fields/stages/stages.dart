@@ -83,7 +83,6 @@ class Stages extends IOOGRadioGroup {
       }
     }
 
-    printLog("here");
     // Check if stage 3
     for (int i = 1; i < 7; i++) {
       if (formManager.getFormStateNotifier().value['stage3___$i'] == "1") {

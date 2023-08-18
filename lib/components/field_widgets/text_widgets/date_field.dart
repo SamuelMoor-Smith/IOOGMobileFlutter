@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:namer_app/components/field_widgets/text_widgets/text_widget.dart';
 import 'package:namer_app/models/field/field.dart';
+import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/models/project.dart';
 import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/style/AppColors.dart';
+import 'package:namer_app/utils/logging.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+import '../../import_toast.dart';
 import '../field_widget.dart';
 
 class IOOGDateField extends IOOGTextWidget {
   final DateTime? defaultDate;
+  final IOOGProject project;
 
   IOOGDateField(
       {Key? key,
+      required this.project,
       required Field field,
       required FormManager formManager,
       this.defaultDate})
@@ -20,6 +26,19 @@ class IOOGDateField extends IOOGTextWidget {
 
   @override
   IOOGTextWidgetState<IOOGDateField> createState() => _IOOGDateFieldState();
+
+  @override
+  fillField(dynamic rawRecord) {
+    var fieldName = getFieldName();
+    if (rawRecord.containsKey(fieldName)) {
+      setEnteredText(rawRecord[fieldName]!);
+    }
+    if (field.field_name == "date_preop") {
+      formManager.updateForm('last_preop',
+          getLastPreop(project.getAudiogramInstrument(), textController.text));
+      createLastPreopDateToast();
+    }
+  }
 }
 
 class _IOOGDateFieldState extends IOOGTextWidgetState<IOOGDateField> {
@@ -45,10 +64,7 @@ class _IOOGDateFieldState extends IOOGTextWidgetState<IOOGDateField> {
         initialDate: initialDate,
         firstDate: DateTime(1900, 1),
         lastDate: DateTime(2100));
-    if (picked != null)
-      setState(() {
-        widget.textController.text = dateFormat.format(picked);
-      });
+    if (picked != null) setDate(picked);
   }
 
   @override
@@ -95,5 +111,17 @@ class _IOOGDateFieldState extends IOOGTextWidgetState<IOOGDateField> {
     setState(() {
       widget.textController.text = dateFormat.format(date);
     });
+    if (widget.field.field_name == "date_preop") {
+      widget.formManager.updateForm(
+          'last_preop',
+          getLastPreop(
+              (widget as IOOGDateField).project.getAudiogramInstrument(),
+              widget.textController.text));
+      createLastPreopDateToast();
+    }
   }
+}
+
+String? getLastPreop(IOOGInstrument audiogramInstrument, String preopDate) {
+  return audiogramInstrument.getLastPreopAudiogram(preopDate);
 }

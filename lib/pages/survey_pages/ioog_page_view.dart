@@ -55,8 +55,6 @@ class _IOOGPageViewState extends State<IOOGPageView> {
     // await widget.instrument.fetchFieldsForInstrument();
     await widget.setPages(pages);
 
-    printLog(pages);
-
     // Check if its a demographics form
     if (widget.instrument.isDemographic()) {
       // If there is a form completed, fill the fields

@@ -6,7 +6,6 @@ import '../../models/instrument.dart';
 
 Map<String, String> createRepeatData(IOOGInstrument instrument) {
   Map<String, String> repeatData = {};
-  printLog(instrument.getForms().toString());
   if (!instrument.isDemographic()) {
     repeatData['redcap_repeat_instrument'] = instrument.getName();
     if (instrument.getFormIndex() != null) {
@@ -17,7 +16,6 @@ Map<String, String> createRepeatData(IOOGInstrument instrument) {
           selectedRecord['redcap_repeat_instance'].toString();
     } else if (instrument.getForms().isNotEmpty) {
       // Just add one to the last repeat instance
-      printLog(instrument.getForms().last.getRecord().toString());
       repeatData['redcap_repeat_instance'] =
           (instrument.getForms().last.getRecord()['redcap_repeat_instance'] + 1)
               .toString();
@@ -26,7 +24,6 @@ Map<String, String> createRepeatData(IOOGInstrument instrument) {
       repeatData['redcap_repeat_instance'] = "1";
     }
   }
-  printLog(repeatData.toString());
   return repeatData;
 }
 
@@ -49,12 +46,9 @@ String createPayload(IOOGInstrument instrument) {
 
   final formStateCopy = Map.of(formState);
   // Remove the check groups keys
-  formStateCopy.removeWhere((key, value) => key.endsWith('---'));
+  formStateCopy.removeWhere((key, value) => key.endsWith('---') || key == "");
 
   Map<String, String> repeatData = createRepeatData(instrument);
-
-  printLog(repeatData);
-  printLog(formStateCopy);
 
   return jsonEncode([
     {

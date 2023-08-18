@@ -43,7 +43,6 @@ class IOOGProject extends ChangeNotifier {
 
     // Set records for each instrument
     for (IOOGInstrument instrument in _instruments!) {
-      printLog(instrument.getLabel());
       instrument.setForms();
     }
   }
@@ -76,7 +75,19 @@ class IOOGProject extends ChangeNotifier {
     return _studyIds!;
   }
 
-  IOOGInstrument getInstrumentByLabel(String label) {
+  IOOGInstrument getAudiogramInstrument() {
+    return _getInstrumentByLabel("Phenx Audiogram Hearing Test");
+  }
+
+  IOOGInstrument getSurgeryInstrument() {
+    return _getInstrumentByLabel("Surgical Information");
+  }
+
+  IOOGInstrument getImagingInstrument() {
+    return _getInstrumentByLabel("Post-op imaging");
+  }
+
+  IOOGInstrument _getInstrumentByLabel(String label) {
     IOOGInstrument? instrument;
     if (_instruments == null) {
       throw Exception("Instruments have not been set yet");

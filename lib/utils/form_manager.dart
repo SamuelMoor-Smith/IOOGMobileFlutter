@@ -95,7 +95,6 @@ class FormManager {
 
   bool sectionIsValid(IOOGSection section) {
     // Check if form is valid
-    printLog("Validation check");
     bool isSectionValid = true;
     for (IOOGFieldWidget fieldWidget in section.getFields()) {
       if (fieldWidget.isValid() != null) {

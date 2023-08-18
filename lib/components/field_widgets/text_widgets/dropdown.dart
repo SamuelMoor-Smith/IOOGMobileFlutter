@@ -45,22 +45,30 @@ class _IOOGDropdownState extends IOOGTextWidgetState<IOOGDropdown> {
           createAudiogamTimingToast();
         },
         items: (widget as IOOGDropdown)
-            .project
-            .getInstrumentByLabel('Surgical Information')
-            .getForms()
-            .map<DropdownMenuItem<String>>((IOOGForm value) {
-          printLog(value.toString());
-          return DropdownMenuItem<String>(
-            value: value.toString(),
-            child: Text(value.toString()),
-          );
-        }).toList(),
+                .project
+                .getSurgeryInstrument()
+                .getForms()
+                .map<DropdownMenuItem<String>>((IOOGForm value) {
+              return DropdownMenuItem<String>(
+                value: value.toString().substring(0, 10),
+                child: Text(value.toString().substring(0, 10)),
+              );
+            }).toList() +
+            [
+              DropdownMenuItem<String>(
+                value: "",
+                child: Text(""),
+              )
+            ],
       )
     ];
   }
 
   String? getAudiogramTiming(String? audiogramDate, String? surgeryDate) {
-    if (audiogramDate != null && surgeryDate != null) {
+    if (audiogramDate != null &&
+        surgeryDate != null &&
+        surgeryDate.isNotEmpty &&
+        audiogramDate.isNotEmpty) {
       DateTime audiogram = DateTime.parse(audiogramDate.substring(0, 10));
       DateTime surgery = DateTime.parse(surgeryDate.substring(0, 10));
       Duration difference = audiogram.difference(surgery);

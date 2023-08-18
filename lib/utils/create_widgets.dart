@@ -65,7 +65,7 @@ IOOGFieldWidget? fieldWidget(
     case 'postop_audiogram':
       return EnterAudiogram(
         project: project,
-        field: field,
+        field: Field.createEmptyFieldForAudiograms(),
         formManager: formManager,
         type: 'POSTOP',
       );
@@ -101,7 +101,7 @@ IOOGFieldWidget? fieldWidget(
   switch (field.getFieldType()) {
     case 'text':
       if (field.getFieldName().contains('date')) {
-        return createDateWidget(field, formManager);
+        return createDateWidget(project, field, formManager);
       }
       return IOOGTextField(
         field: field,
@@ -131,7 +131,6 @@ IOOGFieldWidget? fieldWidget(
         choices: field.createYesNoChoices(),
       );
     case 'dropdown':
-      printLog(field.toJson().toString());
       return IOOGCheckGroup(
         field: field,
         formManager: formManager,
@@ -145,12 +144,15 @@ IOOGFieldWidget? fieldWidget(
   }
 }
 
-IOOGDateField createDateWidget(Field field, FormManager formManager) {
+IOOGDateField createDateWidget(
+    IOOGProject project, Field field, FormManager formManager) {
   if (field.getFieldName().contains('preop') ||
       field.getFieldName().contains('audiogram')) {
-    return IOOGDateField(field: field, formManager: formManager);
+    return IOOGDateField(
+        project: project, field: field, formManager: formManager);
   } else {
     return IOOGDateField(
+      project: project,
       field: field,
       formManager: formManager,
       defaultDate: DateTime.now(),

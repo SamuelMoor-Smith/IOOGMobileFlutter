@@ -38,7 +38,6 @@ class _StageState extends IOOGCheckGroupState<Stage> {
       valueListenable: widget.formManager.getFormStateNotifier(),
       builder:
           (BuildContext context, Map<String, dynamic> value, Widget? child) {
-        printLog(widget.formManager.getFormStateNotifier().value.toString());
         return FieldContainer(
           isSelected: (widget as Stage).isSelected(),
           child: Column(children: [
