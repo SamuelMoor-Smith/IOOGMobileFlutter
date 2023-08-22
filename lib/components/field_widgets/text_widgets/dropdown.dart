@@ -23,20 +23,76 @@ class IOOGDropdown extends IOOGTextWidget {
 }
 
 class _IOOGDropdownState extends IOOGTextWidgetState<IOOGDropdown> {
+  List<DropdownMenuItem<String>> generateDropdownItems() {
+    // Recognized values from your project
+    List<DropdownMenuItem<String>> items = [
+          DropdownMenuItem<String>(
+            value: "",
+            child: Text(""),
+          )
+        ] +
+        (widget as IOOGDropdown)
+            .project
+            .getSurgeryInstrument()
+            .getForms()
+            .map<DropdownMenuItem<String>>((IOOGForm value) {
+          return DropdownMenuItem<String>(
+            value: value.toString().substring(0, 10),
+            child: Text(value.toString().substring(0, 10)),
+          );
+        }).toList();
+
+    // Check if the current textController value is a recognized value
+    if (!items.any((item) => item.value == widget.textController.text) &&
+        widget.textController.text.isNotEmpty) {
+      // If not, add it as an additional dropdown item
+      items.add(DropdownMenuItem<String>(
+        value: widget.textController.text,
+        child: Text(widget.textController.text),
+      ));
+    }
+
+    // Add the "Custom Date" option
+    items.addAll([
+      DropdownMenuItem<String>(
+        value: "custom_date",
+        child: Text("Custom Date"),
+      ),
+    ]);
+
+    return items;
+  }
+
   @override
   List<Widget> buildFieldWidgets() {
     return [
       DropdownButton<String>(
         value: widget.textController.text,
         hint: Text(widget.field.getFieldLabel()),
-        onChanged: (String? newValue) {
-          setState(() {
-            widget.textController.text = newValue!;
-          });
+        onChanged: (String? newValue) async {
+          if (newValue == "custom_date") {
+            DateTime? selectedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(1940), // Adjust as needed
+              lastDate: DateTime(2100), // Adjust as needed
+            );
+
+            if (selectedDate != null) {
+              setState(() {
+                widget.textController.text =
+                    selectedDate.toIso8601String().substring(0, 10);
+              });
+            }
+          } else {
+            setState(() {
+              widget.textController.text = newValue!;
+            });
+          }
           widget.updateForm();
 
           // Update audiogram timing
-          String? surgeryDate = newValue;
+          String? surgeryDate = widget.textController.text;
           String? audiogramDate = widget.formManager
               .getFormStateNotifier()
               .value['date_of_audiogram'];
@@ -44,22 +100,7 @@ class _IOOGDropdownState extends IOOGTextWidgetState<IOOGDropdown> {
               getAudiogramTiming(audiogramDate, surgeryDate));
           createAudiogamTimingToast();
         },
-        items: (widget as IOOGDropdown)
-                .project
-                .getSurgeryInstrument()
-                .getForms()
-                .map<DropdownMenuItem<String>>((IOOGForm value) {
-              return DropdownMenuItem<String>(
-                value: value.toString().substring(0, 10),
-                child: Text(value.toString().substring(0, 10)),
-              );
-            }).toList() +
-            [
-              DropdownMenuItem<String>(
-                value: "",
-                child: Text(""),
-              )
-            ],
+        items: generateDropdownItems(),
       )
     ];
   }
@@ -70,6 +111,7 @@ class _IOOGDropdownState extends IOOGTextWidgetState<IOOGDropdown> {
         surgeryDate.isNotEmpty &&
         audiogramDate.isNotEmpty) {
       DateTime audiogram = DateTime.parse(audiogramDate.substring(0, 10));
+      printLog(surgeryDate);
       DateTime surgery = DateTime.parse(surgeryDate.substring(0, 10));
       Duration difference = audiogram.difference(surgery);
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/components/loading.dart';
 import 'package:namer_app/pages/selection/select_form.dart';
 import 'package:namer_app/models/instrument.dart';
+import 'package:namer_app/pages/selection/study_id.dart';
 import 'package:namer_app/pages/survey_pages/ioog_page_view.dart';
 import 'package:namer_app/utils/navigation.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +43,8 @@ class _SelectInstrumentsPageState extends State<SelectInstrumentsPage> {
     return Scaffold(
       appBar: CustomAppBar(
         title: widget.project.getActiveStudyId(),
+        onBackButtonPressed: () =>
+            nextPage(context, StudyIdPage(widget.project)),
       ),
       body: ChangeNotifierProvider.value(
         value: widget.project,

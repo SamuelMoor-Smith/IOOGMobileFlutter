@@ -3,7 +3,6 @@ import 'package:namer_app/components/bottom_nav_bar.dart';
 import 'package:namer_app/models/section.dart';
 import 'package:namer_app/utils/form_manager.dart';
 
-import '../../components/app_bar.dart';
 import '../../components/field_widgets/field_widget.dart';
 import '../../models/instrument.dart';
 import '../summary.dart';
@@ -37,9 +36,9 @@ class IOOGPage extends StatefulWidget {
     return _section.getFormattedFieldWidgets();
   }
 
-  bool isVisible() {
+  bool shouldShowPage() {
     return _section.getFields().any((field) {
-      return field.shouldShow;
+      return field.checkBranchingLogicForPageLoad();
     });
   }
 }
@@ -62,7 +61,11 @@ class _IOOGPageState extends State<IOOGPage> {
     }
 
     return Scaffold(
-      appBar: CustomAppBar(title: widget._section.getLabel()),
+      appBar: AppBar(
+        title: Text(widget._section.getLabel()),
+        leading: null,
+        automaticallyImplyLeading: false,
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0), // This is the padding

@@ -27,8 +27,14 @@ class Reasons extends IOOGCheckGroup {
 class _ReasonsState extends IOOGCheckGroupState<Reasons> {
   @override
   Widget build(BuildContext context) {
+    Widget fieldNote = Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Text("*${widget.field.field_note}"),
+    );
+
     return Column(
-      children: widget.choices.map((choice) => _buildChoice(choice)).toList(),
+      children: widget.choices.map((choice) => _buildChoice(choice)).toList() +
+          [fieldNote],
     );
   }
 

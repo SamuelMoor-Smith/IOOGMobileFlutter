@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/form.dart';
+import 'package:namer_app/pages/selection/select_instrument.dart';
 import 'package:namer_app/utils/logging.dart';
 import 'package:namer_app/utils/navigation.dart';
 import 'package:provider/provider.dart';
@@ -86,7 +87,10 @@ class _SelectFormState extends State<SelectForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Edit or Create Form"),
+      appBar: CustomAppBar(
+          title: "Edit or Create Form",
+          onBackButtonPressed: () => nextPage(
+              context, SelectInstrumentsPage(widget.instrument.getProject()))),
       body: ChangeNotifierProvider.value(
         value: widget.instrument,
         child: Consumer<IOOGInstrument>(builder: (context, instrument, child) {

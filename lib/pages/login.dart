@@ -4,6 +4,7 @@ import 'package:namer_app/models/project.dart';
 import 'package:namer_app/api/export/ok.dart';
 import 'package:namer_app/utils/logging.dart';
 import 'package:namer_app/utils/login.dart';
+import '../components/import_toast.dart';
 import 'selection/study_id.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -64,6 +65,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   Future<String?>? _onRecoverPassword(String name) {
+    createToast("Please make a new account", Colors.blue);
     return null;
   }
 

@@ -109,13 +109,14 @@ class IOOGInstrument extends ChangeNotifier {
     return allFieldWidgets;
   }
 
-  void fillFieldsFromForm(int? index) async {
+  Future<void> fillFieldsFromForm(int? index) async {
     if (index == null) {
       printLog('No form index provided');
       return;
     }
 
     List<IOOGFieldWidget> fieldWidgets = await getAllFieldWidgets();
+    printLog(fieldWidgets);
     for (IOOGFieldWidget fieldWidget in fieldWidgets) {
       fieldWidget.fillField(_forms![index].getRecord());
     }

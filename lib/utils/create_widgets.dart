@@ -24,6 +24,12 @@ import 'logging.dart';
 IOOGFieldWidget? fieldWidget(
     IOOGProject project, Field field, FormManager formManager) {
   switch (field.getFieldName()) {
+    case 'multiple_visit_today':
+      return IOOGRadioGroup(
+        field: field,
+        formManager: formManager,
+        choices: field.createYesNoChoices(),
+      );
     case 'stage3':
       return Stage(
           field: field,
@@ -106,6 +112,8 @@ IOOGFieldWidget? fieldWidget(
       return IOOGTextField(
         field: field,
         formManager: formManager,
+        isInteger:
+            field.text_validation_type_or_show_slider_number == "integer",
       );
     case 'notes':
       return IOOGCommentsField(
@@ -129,9 +137,10 @@ IOOGFieldWidget? fieldWidget(
         field: field,
         formManager: formManager,
         choices: field.createYesNoChoices(),
+        defaultChoiceNumber: '0',
       );
     case 'dropdown':
-      return IOOGCheckGroup(
+      return IOOGRadioGroup(
         field: field,
         formManager: formManager,
         choices: field.createChoices(),

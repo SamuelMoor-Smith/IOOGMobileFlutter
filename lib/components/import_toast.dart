@@ -16,8 +16,8 @@ void showImportToast() {
   createToast("Import was successful", Colors.green);
 }
 
-void showImportErrorToast() {
-  createToast("Error occurred during import", Colors.red);
+void showImportErrorToast(String error) {
+  createToast("Error occurred during import: $error", Colors.red);
 }
 
 void showInvalidFormToast(String field) {

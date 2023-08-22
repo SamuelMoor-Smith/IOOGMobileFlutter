@@ -16,8 +16,17 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
     required Field field,
     required FormManager formManager,
     required Set<Choice> choices,
+    String? defaultChoiceNumber,
   }) : super(
-            key: key, choices: choices, field: field, formManager: formManager);
+            key: key,
+            choices: choices,
+            field: field,
+            formManager: formManager) {
+    if (defaultChoiceNumber != null) {
+      // fillChoiceByNum(defaultChoiceNumber);
+      // printLog(selectedChoices.first.number);
+    }
+  }
 
   // @override
   // validated() {
@@ -37,8 +46,10 @@ class IOOGRadioGroup extends IOOGMultipleChoice {
 
   @override
   fillField(dynamic rawRecord) {
+    printLog("Filling field ${getFieldName()}");
     var fieldName = getFieldName();
     if (rawRecord.containsKey(fieldName)) {
+      printLog('with value ${rawRecord[fieldName]}');
       fillChoiceByNum(rawRecord[fieldName]!);
     }
   }
@@ -88,49 +99,49 @@ class IOOGRadioGroupState<T extends IOOGRadioGroup>
   @override
   void initState() {
     super.initState();
-    if (widget.field.field_name == "audiogram_timing") {
+    if (widget.field.field_name == "audiogram_timing" ||
+        widget.field.field_annotation.contains('@DEFAULT=')) {
       widget.formManager
           .getFormStateNotifier()
           .addListener(() => updateChoice());
     }
   }
 
+  void _handleTap(Choice choice) {
+    setState(() {
+      if (widget.getSelectedChoices().contains(choice)) {
+        widget.unselectChoice(choice);
+      } else {
+        widget.selectChoice(choice);
+      }
+      widget.updateForm();
+    });
+  }
+
   @override
   List<Widget> buildFieldWidgets() {
     return widget
         .getChoices()
-        .map((choice) => ListTile(
-              leading: Radio<Choice>(
-                value: choice,
-                groupValue: widget.getSelectedChoices().isEmpty
-                    ? null
-                    : widget.getSelectedChoices().first,
-                onChanged: (Choice? value) {
-                  setState(() {
-                    if (widget.getSelectedChoices().contains(value)) {
-                      widget.unselectChoice(value!);
-                    } else {
-                      widget.selectChoice(value!);
-                    }
-                    widget.updateForm();
-                  });
-                },
-              ),
-              title: Text(
-                choice.name,
-                style: primaryTextStyle(),
-              ),
-              visualDensity: VisualDensity(vertical: -4),
+        .map((choice) => GestureDetector(
               onTap: () {
-                setState(() {
-                  if (widget.getSelectedChoices().contains(choice)) {
-                    widget.unselectChoice(choice);
-                  } else {
-                    widget.selectChoice(choice);
-                  }
-                  widget.updateForm();
-                });
+                _handleTap(choice);
               },
+              child: ListTile(
+                leading: Radio<Choice>(
+                  value: choice,
+                  groupValue: widget.getSelectedChoices().isEmpty
+                      ? null
+                      : widget.getSelectedChoices().first,
+                  onChanged: (Choice? value) {
+                    _handleTap(choice);
+                  },
+                ),
+                title: Text(
+                  choice.name,
+                  style: primaryTextStyle(),
+                ),
+                visualDensity: VisualDensity(vertical: -4),
+              ),
             ))
         .toList();
   }

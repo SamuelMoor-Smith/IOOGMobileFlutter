@@ -19,7 +19,7 @@ abstract class IOOGFieldWidget extends StatefulWidget {
 
   String? isValid() {
     if (shouldShow && isRequired()) {
-      if (isFilled()) {
+      if (isFilled() || field.field_name == "stage_of_cholesteatoma") {
         return null;
       } else {
         return '${getFieldLabel()} is required';
@@ -66,7 +66,26 @@ abstract class IOOGFieldWidget extends StatefulWidget {
   void fillField(dynamic rawRecord);
   void clearField();
 
+  bool checkBranchingLogicForPageLoad() {
+    String branchingLogic = field.getParsedBranchingLogic();
+    if (!branchingLogic.isEmptyOrNull) {
+      var expression = Expression.parse(branchingLogic);
+      try {
+        shouldShow = formManager.shouldShow(expression);
+        return shouldShow;
+      } catch (e) {
+        printError(
+            "Error evaluating branching logic for ${field.getFieldLabel()}: ${e.toString()}");
+      }
+    }
+    return true;
+  }
+
   void checkBranchingLogic(setState, mounted) {
+    if (field.field_name == 'classification') {
+      printLog('diagram should show: $shouldShow');
+      // printLog(formManager.getFormStateNotifier().value);
+    }
     String branchingLogic = field.getParsedBranchingLogic();
     if (!branchingLogic.isEmptyOrNull) {
       var expression = Expression.parse(branchingLogic);
@@ -93,6 +112,10 @@ abstract class IOOGFieldWidgetState<T extends IOOGFieldWidget>
   @override
   void initState() {
     super.initState();
+    printLog('now ${widget.field.field_name}');
+    if (widget.field.field_name == 'classification') {
+      printLog(widget.formManager.getFormStateNotifier().value);
+    }
     widget.checkBranchingLogic(setState, mounted);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       widget.checkBranchingLogic(setState, mounted);

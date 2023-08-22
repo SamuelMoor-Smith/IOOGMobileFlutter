@@ -32,6 +32,7 @@ class StudyIdPage extends StatelessWidget {
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SearchableList<String>(
+            autoFocusOnSearch: false,
             initialList: project.getStudyIds(),
             builder: (String studyId) => ListTile(
               title: Text(studyId),

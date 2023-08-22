@@ -37,6 +37,7 @@ class IOOGCheckGroup extends IOOGMultipleChoice {
     for (String name in rawRecord.keys) {
       if (name.startsWith(fieldName) && rawRecord[name] == "1") {
         fillChoiceByNum(name.split("___")[1]);
+        updateForm();
       }
     }
   }

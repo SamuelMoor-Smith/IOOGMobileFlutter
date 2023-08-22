@@ -45,12 +45,12 @@ Future<bool> importToREDCAP(
       return true;
     } else {
       printLog(responses[1].body);
-      showImportErrorToast();
+      showImportErrorToast(responses[1].body);
       return false;
     }
   } catch (e) {
     printError(e.toString());
-    showImportErrorToast();
+    showImportErrorToast(e.toString());
     return false;
   }
 }

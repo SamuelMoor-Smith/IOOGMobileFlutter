@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/utils/form_manager.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../../models/choice.dart';
 import '../../models/field/field.dart';
@@ -29,6 +30,8 @@ class Diagram extends IOOGCheckGroup {
 class _DiagramState extends IOOGCheckGroupState<Diagram> {
   @override
   List<Widget> buildFieldWidgets() {
+    printLog('diagram is shown ${widget.shouldShow}');
+    printLog(mounted);
     return [
       Padding(
         padding: EdgeInsets.all(16.0),

@@ -60,7 +60,7 @@ class _IOOGPageViewState extends State<IOOGPageView> {
       // If there is a form completed, fill the fields
       if (widget.instrument.isLoading() == null) {
         if (widget.instrument.getForms().isNotEmpty) {
-          widget.instrument.fillFieldsFromForm(0);
+          await widget.instrument.fillFieldsFromForm(0);
         }
       }
     } else {
@@ -68,7 +68,9 @@ class _IOOGPageViewState extends State<IOOGPageView> {
       var formIndex = widget.instrument.getFormIndex();
       if (formIndex != null) {
         // Fill the fields from the selected form
-        widget.instrument.fillFieldsFromForm(formIndex);
+        await widget.instrument.fillFieldsFromForm(formIndex).then((value) =>
+            printLog(
+                'form filled: ${widget.instrument.getFormManager().getFormStateNotifier().value}'));
       }
     }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/models/field/field.dart';
 import 'package:namer_app/utils/form_manager.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import '../../../models/choice.dart';
 import '../field_widget.dart';
@@ -43,6 +44,7 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
     for (Choice choice in choices) {
       if (choice.number == choiceNum) {
         selectChoice(choice);
+        updateForm();
       }
     }
   }
@@ -53,6 +55,7 @@ abstract class IOOGMultipleChoice extends IOOGFieldWidget {
       String defaultValue =
           field.field_annotation.split('=')[1].replaceAll('"', '');
 
+      printLog('default value: $defaultValue');
       // Find the choice that corresponds to the default value
       Choice defaultChoice =
           choices.firstWhere((choice) => choice.number == defaultValue);

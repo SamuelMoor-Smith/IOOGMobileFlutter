@@ -4,13 +4,19 @@ import 'package:namer_app/models/field/field.dart';
 import 'package:namer_app/utils/form_manager.dart';
 import 'package:namer_app/style/AppColors.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:flutter/services.dart';
 
 import '../field_widget.dart';
 
 class IOOGTextField extends IOOGTextWidget {
-  IOOGTextField(
-      {Key? key, required Field field, required FormManager formManager})
-      : super(key: key, field: field, formManager: formManager);
+  final bool isInteger; // Add the isInteger field here
+
+  IOOGTextField({
+    Key? key,
+    required Field field,
+    required FormManager formManager,
+    this.isInteger = false, // Default value if not provided
+  }) : super(key: key, field: field, formManager: formManager);
 
   @override
   IOOGTextWidgetState<IOOGTextField> createState() => _IOOGTextFieldState();
@@ -40,8 +46,22 @@ class _IOOGTextFieldState extends IOOGTextWidgetState<IOOGTextField> {
             filled: true,
           ),
           cursorColor: blackColor,
-          keyboardType: TextInputType.text,
+          keyboardType: (widget as IOOGTextField)
+                  .isInteger // Conditionally set the keyboardType
+              ? TextInputType.numberWithOptions(signed: true)
+              : TextInputType.text,
           textInputAction: TextInputAction.done,
+          inputFormatters: (widget as IOOGTextField).isInteger
+              ? <TextInputFormatter>[
+                  FilteringTextInputFormatter
+                      .digitsOnly // This ensures only digits can be entered
+                ]
+              : [], // No formatter for normal text
+          onFieldSubmitted: (value) {
+            // Handle submission if needed, otherwise this just triggers the 'Done' action
+            FocusScope.of(context)
+                .requestFocus(FocusNode()); // This line hides the keyboard
+          },
         ),
       ),
     );

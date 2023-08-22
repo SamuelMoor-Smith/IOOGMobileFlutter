@@ -27,7 +27,7 @@ int getNextPageNumber(
     int nextPageNumber = currentPageIndex + difference;
     while (
         pages != null && nextPageNumber >= 0 && nextPageNumber < pages.length) {
-      if (pages[nextPageNumber].isVisible()) {
+      if (pages[nextPageNumber].shouldShowPage()) {
         return nextPageNumber;
       }
       nextPageNumber += difference;

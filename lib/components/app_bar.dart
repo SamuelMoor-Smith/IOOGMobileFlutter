@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Color? backgroundColor;
-  final VoidCallback? onBackButtonPressed;
+  final Function? onBackButtonPressed;
 
   CustomAppBar({
     this.title = "",
@@ -13,8 +13,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final primaryColor = Theme.of(context).primaryColor; // Get primary color from the theme
+    final primaryColor =
+        Theme.of(context).primaryColor; // Get primary color from the theme
 
     return AppBar(
       title: Text(title),
