@@ -48,7 +48,7 @@ class _OvalState extends State<Oval> {
                           widget.group.selectedChoices.contains(widget.choice)
                               ? Colors.green
                               : Colors.black,
-                      width: 2.0,
+                      width: 3.0,
                     ),
                   ),
                 ),

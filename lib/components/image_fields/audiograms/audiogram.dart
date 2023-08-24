@@ -1,22 +1,22 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:namer_app/components/field_widgets/audiograms/audiogram_button.dart';
-import 'package:namer_app/components/field_widgets/audiograms/audiogram_button_group.dart';
-import 'package:namer_app/components/field_widgets/audiograms/leac.dart';
-import 'package:namer_app/components/field_widgets/audiograms/lebc.dart';
-import 'package:namer_app/components/field_widgets/audiograms/reac.dart';
+import 'package:namer_app/components/image_buttons/audiograms/audiogram_button.dart';
+import 'package:namer_app/components/image_buttons/audiograms/audiogram_button_group.dart';
+import 'package:namer_app/components/image_buttons/audiograms/leac.dart';
+import 'package:namer_app/components/image_buttons/audiograms/lebc.dart';
+import 'package:namer_app/components/image_buttons/audiograms/reac.dart';
 import 'package:namer_app/components/field_widgets/field_widget.dart';
 import 'package:namer_app/components/image_fields/audiograms/types.dart';
 
 import '../../../models/field/field.dart';
 import '../../../style/containers/field_container.dart';
 import '../../../utils/form_manager.dart';
-import '../../field_widgets/audiograms/rebc.dart';
+import '../../image_buttons/audiograms/rebc.dart';
 
 class Audiogram extends IOOGFieldWidget {
-  final double TOP_INIT = 132;
-  final double LEFT_INIT = 44.8 * 1.32;
+  final double TOP_INIT = 132 - 3.1;
+  final double LEFT_INIT = 44.8 * 1.32 - 3.1;
   final double TOP_DIFF = 44.7 / 2 * 1.32;
   final double LEFT_DIFF = 31 * 1.32;
 
@@ -52,8 +52,8 @@ class Audiogram extends IOOGFieldWidget {
             value: value,
             left: left,
             top: top,
-            width: 13.2,
-            height: 13.2);
+            width: 20,
+            height: 20);
 
         buttons.add(button);
       }

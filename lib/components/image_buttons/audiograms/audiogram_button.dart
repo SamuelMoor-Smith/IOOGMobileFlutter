@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/components/field_widgets/audiograms/audiogram_button_group.dart';
+import 'package:namer_app/components/image_buttons/audiograms/audiogram_button_group.dart';
 import 'package:provider/provider.dart';
 
 abstract class AudiogramButton extends StatefulWidget {

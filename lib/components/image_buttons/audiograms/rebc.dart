@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/components/field_widgets/audiograms/audiogram_button_group.dart';
+import 'package:namer_app/components/image_buttons/audiograms/audiogram_button_group.dart';
+import 'package:namer_app/utils/logging.dart';
 
 import 'audiogram_button.dart';
 
-class LEBCButton extends AudiogramButton {
-  LEBCButton({
+class REBCButton extends AudiogramButton {
+  REBCButton({
     Key? key,
     required AudiogramButtonGroup group,
     required String value,
@@ -23,10 +24,10 @@ class LEBCButton extends AudiogramButton {
         );
 
   @override
-  AudiogramButtonState<LEBCButton> createState() => _LEBCButtonState();
+  AudiogramButtonState<REBCButton> createState() => _REBCButtonState();
 }
 
-class _LEBCButtonState extends AudiogramButtonState<LEBCButton> {
+class _REBCButtonState extends AudiogramButtonState<REBCButton> {
   @override
   Widget buttonIcon() {
     return ColorFiltered(
@@ -34,7 +35,7 @@ class _LEBCButtonState extends AudiogramButtonState<LEBCButton> {
           ? ColorFilter.mode(Colors.black, BlendMode.srcIn)
           : ColorFilter.mode(Colors.grey, BlendMode.srcIn),
       child: Image.asset(
-        'assets/images/audiograms/lebc.png',
+        'assets/images/audiograms/rebc.png',
         fit: BoxFit.contain,
       ),
     );
