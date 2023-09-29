@@ -39,7 +39,8 @@ class LoginScreen extends StatelessWidget {
   Future<String?>? _onLogin(LoginData data) async {
     User? user;
     bool? projectInitialized;
-    if (data.name == "admin" && data.password == "qwerty-asdfg-zxcvb") {
+    if (data.name == "admin@ioog.net" &&
+        data.password == "qwerty-asdfg-zxcvb") {
       projectInitialized = await initializeProject(
           "https://redcapexternal.research.sickkids.ca/api/",
           "9ABAB83352AB9E42A551488003577920");
