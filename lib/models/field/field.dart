@@ -86,7 +86,7 @@ class Field {
 
   Set<Choice> createChoices() {
     return Set<Choice>.from(select_choices_or_calculations
-        .split(" | ")
+        .split(RegExp(r'\s?\|\s?'))
         .map((choiceString) => Choice.fromString(choiceString)));
   }
 

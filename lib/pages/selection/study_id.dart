@@ -28,6 +28,8 @@ class StudyIdPage extends StatelessWidget {
               onPressed: () => logout(context),
             ),
           ],
+          leading: null,
+          automaticallyImplyLeading: false,
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),

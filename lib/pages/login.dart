@@ -42,8 +42,8 @@ class LoginScreen extends StatelessWidget {
     if (data.name == "admin@ioog.net" &&
         data.password == "qwerty-asdfg-zxcvb") {
       projectInitialized = await initializeProject(
-          "https://redcapexternal.research.sickkids.ca/api/",
-          "9ABAB83352AB9E42A551488003577920");
+          "https://redcapdemo.vanderbilt.edu/api/",
+          "9EFBB80E7196CA113E2C9C1D92002A07");
       return null;
     } else {
       user = await UserSecureStorage.getUsername(data.name);
