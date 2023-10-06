@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/components/loading.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 import 'package:namer_app/utils/navigation.dart';
 
@@ -31,40 +32,42 @@ class StudyIdPage extends StatelessWidget {
           leading: null,
           automaticallyImplyLeading: false,
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SearchableList<String>(
-            autoFocusOnSearch: false,
-            initialList: project.getStudyIds(),
-            builder: (String studyId) => ListTile(
-              title: Text(studyId),
-              onTap: () {
-                project.setActiveStudyId(studyId);
-                nextPage(
-                    context,
-                    SelectInstrumentsPage(
-                        project)); // assuming nextPage takes context as an argument.
-              },
-            ),
-            filter: (value) => project
-                .getStudyIds()
-                .where(
-                  (element) => element.toLowerCase().contains(value),
-                )
-                .toList(),
-            inputDecoration: InputDecoration(
-              labelText: "Search Study Ids",
-              fillColor: Colors.white,
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.blue,
-                  width: 1.0,
+        body: project.isLoadingStudyIds()
+            ? Loading()
+            : Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SearchableList<String>(
+                  autoFocusOnSearch: false,
+                  initialList: project.getStudyIds(),
+                  builder: (String studyId) => ListTile(
+                    title: Text(studyId),
+                    onTap: () {
+                      project.setActiveStudyId(studyId);
+                      nextPage(
+                          context,
+                          SelectInstrumentsPage(
+                              project)); // assuming nextPage takes context as an argument.
+                    },
+                  ),
+                  filter: (value) => project
+                      .getStudyIds()
+                      .where(
+                        (element) => element.toLowerCase().contains(value),
+                      )
+                      .toList(),
+                  inputDecoration: InputDecoration(
+                    labelText: "Search Study Ids",
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.blue,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(10.0),
               ),
-            ),
-          ),
-        ),
         floatingActionButton: Padding(
           padding: const EdgeInsets.all(16.0),
           child: FloatingActionButton(
