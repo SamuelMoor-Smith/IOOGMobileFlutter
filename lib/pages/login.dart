@@ -33,6 +33,10 @@ class LoginScreen extends StatelessWidget {
     ];
     // wait for all 3 tasks to complete
     await Future.wait(futures);
+    if (futures[0] == false) {
+      createToast("REDCap server is not available", Colors.red);
+      return false;
+    }
     return true;
   }
 
@@ -44,6 +48,10 @@ class LoginScreen extends StatelessWidget {
       projectInitialized = await initializeProject(
           "https://redcapdemo.vanderbilt.edu/api/",
           "9EFBB80E7196CA113E2C9C1D92002A07");
+
+      if (projectInitialized == false) {
+        return "Incorrect credentials or server is down";
+      }
       return null;
     } else {
       user = await UserSecureStorage.getUsername(data.name);
@@ -52,12 +60,15 @@ class LoginScreen extends StatelessWidget {
     var success = user != null && data.password == user.password;
     if (success) {
       projectInitialized = await initializeProject(user.apiUrl, user.token);
+      if (projectInitialized == false) {
+        return "Incorrect credentials or server is down";
+      }
     }
 
     return success == true ? null : "Something went wrong";
   }
 
-  Future<String?>? _onSignup(SignupData data) {
+  Future<String?>? _onSignup(SignupData data) async {
     final user = UserSecureStorage.createUser(
       data.name,
       data.password,
@@ -66,7 +77,11 @@ class LoginScreen extends StatelessWidget {
     );
 
     UserSecureStorage.addUser(user);
-    initializeProject(user.apiUrl, user.token);
+    var success = await initializeProject(user.apiUrl, user.token);
+
+    if (success == false) {
+      return "Incorrect credentials or server is down";
+    }
 
     // APIConstants.apiUrl = user.apiUrl;
     // APIConstants.token = user.token;

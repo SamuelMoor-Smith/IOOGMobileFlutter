@@ -20,6 +20,8 @@ class IOOGProject extends ChangeNotifier {
 
   Future<void> setStudyIds() async {
     _studyIds ??= await getStudyIdsForProjectFromREDCAP(this);
+    printLog("Study Ids loaded");
+    printLog(_studyIds);
     _studyIdsGrabbed = true;
     notifyListeners();
   }
